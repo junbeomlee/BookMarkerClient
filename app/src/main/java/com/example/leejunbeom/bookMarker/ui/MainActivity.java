@@ -1,4 +1,4 @@
-package com.example.leejunbeom.bookMarker.View.Activities;
+package com.example.leejunbeom.bookMarker.ui;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,7 +8,6 @@ import android.widget.ImageView;
 
 import com.example.leejunbeom.test.R;
 
-import org.greenrobot.eventbus.EventBus;
 import org.opencv.android.Utils;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfKeyPoint;
