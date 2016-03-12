@@ -1,6 +1,5 @@
 package com.example.leejunbeom.test;
 
-import com.example.leejunbeom.bookMarker.A;
 
 import org.junit.Test;
 
@@ -13,8 +12,6 @@ public class ATest {
 
     @Test
     public void logTest() {
-        A a = new A();
-        A.log("string");
-       // assertEquals(A.getLog(), "string");
+
     }
 }
