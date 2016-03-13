@@ -32,5 +32,4 @@ public class EventBusTest {
         EventBus.getDefault().post(new test_event());
         assertEquals("event didnt delivered successfully", true, test_eventBusSubscriber.checkEvent());
     }
-
 }
