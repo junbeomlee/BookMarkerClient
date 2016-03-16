@@ -5,6 +5,7 @@ import com.example.leejunbeom.test.testObjectSets.eventBus.test_eventBusSubscrib
 
 import org.greenrobot.eventbus.EventBus;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runners.Parameterized;
 
@@ -25,7 +26,6 @@ public class EventBusTest {
         test_event test_event=new test_event();
         EventBus.getDefault().register(test_eventBusSubscriber);
     }
-
 
     @Test
     public void eventTest(){

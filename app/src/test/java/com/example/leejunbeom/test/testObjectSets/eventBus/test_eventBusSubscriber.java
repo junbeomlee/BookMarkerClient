@@ -20,6 +20,7 @@ public class test_eventBusSubscriber {
 
     @Subscribe
     public void onTest_event(test_event test_event) {
-       this.check=true;
+
+        this.check=true;
     }
 }
