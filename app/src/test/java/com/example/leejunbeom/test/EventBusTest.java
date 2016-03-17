@@ -4,6 +4,8 @@ import com.example.leejunbeom.test.testObjectSets.eventBus.test_event;
 import com.example.leejunbeom.test.testObjectSets.eventBus.test_eventBusSubscriber;
 
 import org.greenrobot.eventbus.EventBus;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -28,8 +30,9 @@ public class EventBusTest {
     }
 
     @Test
-    public void eventTest(){
+    public void eventTest() throws JSONException {
         EventBus.getDefault().post(new test_event());
         assertEquals("event didnt delivered successfully", true, test_eventBusSubscriber.checkEvent());
+
     }
 }
