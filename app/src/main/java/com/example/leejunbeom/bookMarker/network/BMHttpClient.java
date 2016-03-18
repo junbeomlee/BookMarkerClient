@@ -16,7 +16,7 @@ import cz.msebera.android.httpclient.entity.ContentType;
  */
 public class BMHttpClient {
 
-    private static final String BASE_URL = "https://api.twitter.com/1/";
+    private static final String BASE_URL = "http://54.238.172.227:8080/yeshow";
 
     private static AsyncHttpClient client = new AsyncHttpClient();
 

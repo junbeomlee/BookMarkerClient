@@ -11,8 +11,9 @@ public class JsonBuilder_impl implements JsonBuilder {
     @Override
     public JSONObject buildRequestData(JSONObject jsonObject, String code) throws JSONException {
         JSONObject requestData = new JSONObject();
-        requestData.put("reqData",jsonObject);
+        requestData.put("reqData",jsonObject.toString());
         requestData.put("reqCode",code);
         return requestData;
     }
+
 }

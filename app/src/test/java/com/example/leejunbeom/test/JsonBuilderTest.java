@@ -44,7 +44,6 @@ public class JsonBuilderTest {
         reqData=requestData.getJSONObject("reqData");
         JSONObject user=reqData.getJSONObject("user");
         assertEquals("jsonBuild Success", "jun", user.get("name"));
-
     }
 
 }
