@@ -8,11 +8,8 @@ import android.util.Log;
 public class BLogger {
 
     private static final String appName="BM_ANDROID_CLIENT";
-    public BLogger(){
-
-    }
 
     public static void log(Object object,String contents){
-        Log.d(appName + object.getClass()+object.toString(),contents);
+        Log.d(appName,contents);
     }
 }

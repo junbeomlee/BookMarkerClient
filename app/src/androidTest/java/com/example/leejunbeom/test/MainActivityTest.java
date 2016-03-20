@@ -2,6 +2,7 @@ package com.example.leejunbeom.test;
 
 import android.support.test.espresso.NoMatchingViewException;
 import android.support.test.espresso.ViewAssertion;
+import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.assertion.ViewAssertions;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.ActivityInstrumentationTestCase2;
@@ -34,7 +35,9 @@ public class MainActivityTest{
     public final ActivityRule<MainActivity> main = new ActivityRule<>(MainActivity.class);
 
     @Test
-    public void asd(){
+    public void viewTest(){
         onView(withId(R.id.imageView)).check(ViewAssertions.matches(isDisplayed()));
+        onView(withId(R.id.button)).check(ViewAssertions.matches(isDisplayed()));
+        onView(withId(R.id.button)).perform(ViewActions.click());
     }
 }
