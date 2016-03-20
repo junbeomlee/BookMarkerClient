@@ -1,14 +1,23 @@
 package com.example.leejunbeom.test;
 
+import android.app.Activity;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.InstrumentationTestCase;
+import android.test.suitebuilder.annotation.SmallTest;
 import android.util.Log;
 
+import com.example.leejunbeom.bookMarker.network.Network_impl;
 import com.example.leejunbeom.bookMarker.ui.MainActivity;
+import com.example.leejunbeom.bookMarker.util.json.JsonBuilder;
+import com.example.leejunbeom.bookMarker.util.json.JsonBuilder_impl;
+import com.example.leejunbeom.bookMarker.util.log.BMLogger;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,59 +26,79 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.StringEntity;
 
 /**
  * Created by Jun on 16. 3. 19..
  */
 
-@RunWith(AndroidJUnit4.class)
-public class AsyncHttpTest extends ActivityInstrumentationTestCase2<MainActivity>{
+public class AsyncHttpTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
     AsyncHttpClient httpClient;
+    private Activity myActivity;
+    public String aasd;
 
-    public AsyncHttpTest(Class<MainActivity> activityClass) {
-        super(activityClass);
+    public AsyncHttpTest() {
+        super(MainActivity.class);
     }
 
-    @Before
-    public void setUp(){
-        httpClient = new AsyncHttpClient();
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+        myActivity = this.getActivity();
     }
-    @Test
-    public void asd() throws Throwable {
 
+    @Override
+    protected void tearDown() throws Exception {
+        super.tearDown();
+    }
+
+    @SmallTest
+    public void test_shoudld_asynchttpjsonpost_work() throws Throwable {
+
+        //given
         final CountDownLatch signal = new CountDownLatch(1);
 
-        this.runTestOnUiThread(new Runnable() {
+        JSONObject storeData = new JSONObject();
+        storeData.put("store_number", 10011);
+        JsonBuilder jsonBuilder = new JsonBuilder_impl();
+        JSONObject finalReqData = jsonBuilder.buildRequestData(storeData, "ST00101");
+        final StringEntity entity = new StringEntity(finalReqData.toString());
+
+
+        //when
+        runTestOnUiThread(new Runnable() { // THIS IS THE KEY TO SUCCESS
             @Override
             public void run() {
-                httpClient
-                        .get(
-                                "https://api.twitter.com/1/users/show.json?screen_name=TwitterAPI&include_entities=true",
-                                new AsyncHttpResponseHandler() {
-                                    private Boolean _resultFlg;
+                if (Network_impl.getInstance().isOnline(myActivity))
+                    Network_impl.getInstance().post(myActivity, "/Store/GetList", entity, "application/json", new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            // Root JSON in response is an dictionary i.e { "data : [ ... ] }
+                            // Handle resulting parsed JSON response here
+                            signal.countDown();
 
-                                    @Override
-                                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                                        System.out.print("success" + responseBody.toString());
-                                    }
+                        }
 
-                                    @Override
-                                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                                        System.out.print("faile" + responseBody.toString());
-                                    }
-                                });
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
+                            // called when response HTTP status is "4XX" (eg. 401, 403, 404)
+                            signal.countDown();
+
+                        }
+                    });
             }
         });
 
+
         try {
-            Log.d("testAsyncHttpClient", "signal.await");
-            signal.await(20, TimeUnit.SECONDS); // wait for callback
+            signal.await(30, TimeUnit.SECONDS); // wait for callback
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
-        assertEquals("asd", 2, 1);
+        //then
+        assertEquals(0, signal.getCount());
+
     }
 }
