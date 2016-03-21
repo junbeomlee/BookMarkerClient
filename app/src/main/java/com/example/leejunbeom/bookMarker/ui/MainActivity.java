@@ -47,14 +47,13 @@ public class MainActivity extends AppCompatActivity {
     //@Inject
     //SIFT SIFT;
 
-    @Bind(R.id.button)
-    Button httpTestButton;
+    @Bind(R.id.bookAddButton)
+    Button bookAddButton;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
-    private GoogleApiClient client;
-
+   // private GoogleApiClient client;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     /* @Override
@@ -86,7 +84,11 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
     }
 
-    @OnClick(R.id.button)
+    @OnClick(R.id.bookAddButton)
+    public void onCallClick(){
+
+    }
+    /*@OnClick(R.id.button)
     public void onCallClick() {
         Log.d(BMLogger.LOG_TAG, "onCall 54");
         JsonBuilder jsonBuilder = new JsonBuilder_impl();
@@ -125,6 +127,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-    }
+    }*/
 
 }
