@@ -15,6 +15,8 @@ import com.example.leejunbeom.bookMarker.util.log.BMLogger;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestHandle;
+import com.loopj.android.http.RequestParams;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,9 +36,10 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 
 public class AsyncHttpTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
-    AsyncHttpClient httpClient;
+    //public final AsyncHttpClient httpClient = new AsyncHttpClient();
     private Activity myActivity;
     public String aasd;
+    int asd=0;
 
     public AsyncHttpTest() {
         super(MainActivity.class);
@@ -54,8 +57,51 @@ public class AsyncHttpTest extends ActivityInstrumentationTestCase2<MainActivity
     }
 
     @SmallTest
-    public void test_shoudld_asynchttpjsonpost_work() throws Throwable {
+    public void test_should_asynchttpstringpost_work() throws Throwable {
+        //given
+        final CountDownLatch signal = new CountDownLatch(1);
+        final AsyncHttpClient httpClient = new AsyncHttpClient();
+        JSONObject storeData = new JSONObject();
+        storeData.put("store_number", 10011);
+        JsonBuilder jsonBuilder = new JsonBuilder_impl();
+        JSONObject finalReqData = jsonBuilder.buildRequestData(storeData, "ST00101");
+        final RequestParams requseRequestParams = new RequestParams("req",finalReqData.toString());
 
+        //when
+        runTestOnUiThread(new Runnable() { // THIS IS THE KEY TO SUCCESS
+            @Override
+            public void run() {
+                httpClient.post("http://54.238.172.227:8080/yeshow/Store/GetList", requseRequestParams, new AsyncHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                        asd = 1;
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                        asd = 1;
+                    }
+
+                    public void onFinish() {
+                        signal.countDown();
+                    }
+                });
+            }
+        });
+
+
+        try {
+            signal.await(30, TimeUnit.SECONDS); // wait for callback
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        //then
+        assertEquals(1, asd);
+    }
+
+    /*@SmallTest
+    public void test_should_asynchttpjsonpost_work() throws Throwable {
         //given
         final CountDownLatch signal = new CountDownLatch(1);
 
@@ -76,15 +122,19 @@ public class AsyncHttpTest extends ActivityInstrumentationTestCase2<MainActivity
                         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                             // Root JSON in response is an dictionary i.e { "data : [ ... ] }
                             // Handle resulting parsed JSON response here
-                            signal.countDown();
 
+                            asd=1;
                         }
 
                         @Override
                         public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
                             // called when response HTTP status is "4XX" (eg. 401, 403, 404)
-                            signal.countDown();
+                            //signal.countDown();
+                            asd=1;
+                        }
 
+                        public void onFinish(){
+                            signal.countDown();
                         }
                     });
             }
@@ -100,5 +150,5 @@ public class AsyncHttpTest extends ActivityInstrumentationTestCase2<MainActivity
         //then
         assertEquals(0, signal.getCount());
 
-    }
+    }*/
 }

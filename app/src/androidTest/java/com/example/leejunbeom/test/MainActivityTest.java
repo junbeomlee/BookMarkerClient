@@ -37,7 +37,5 @@ public class MainActivityTest{
     @Test
     public void viewTest(){
         onView(withId(R.id.imageView)).check(ViewAssertions.matches(isDisplayed()));
-        onView(withId(R.id.button)).check(ViewAssertions.matches(isDisplayed()));
-        onView(withId(R.id.button)).perform(ViewActions.click());
     }
 }
