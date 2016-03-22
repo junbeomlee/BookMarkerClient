@@ -1,45 +1,14 @@
 package com.example.leejunbeom.bookMarker.ui;
 
 
-import android.accounts.NetworkErrorException;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
-import android.util.Log;
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.example.leejunbeom.bookMarker.dagger.injector;
-import com.example.leejunbeom.bookMarker.model.SIFT;
-import com.example.leejunbeom.bookMarker.network.BMHttpClient;
-import com.example.leejunbeom.bookMarker.network.Network;
-import com.example.leejunbeom.bookMarker.network.Network_impl;
-import com.example.leejunbeom.bookMarker.util.json.JsonBuilder;
-import com.example.leejunbeom.bookMarker.util.json.JsonBuilder_impl;
-import com.example.leejunbeom.bookMarker.util.log.BLogger;
-import com.example.leejunbeom.bookMarker.util.log.BMLogger;
 import com.example.leejunbeom.test.R;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
-import com.loopj.android.http.JsonHttpResponseHandler;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
-
-import javax.inject.Inject;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.entity.StringEntity;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -58,11 +27,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+        //startActivityForResult(intent, 2000);
         //injector.get().inject(this);
         //IntentIntegrator integrator = new IntentIntegrator(this);
         //integrator.setOrientationLocked(true);
         //integrator.initiateScan();
-        ButterKnife.bind(this);
+        //ButterKnife.bind(this);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
     }

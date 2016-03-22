@@ -1,7 +1,6 @@
 package com.example.leejunbeom.test;
 
-import com.example.leejunbeom.bookMarker.util.json.JsonBuilder;
-import com.example.leejunbeom.bookMarker.util.json.JsonBuilder_impl;
+import com.example.leejunbeom.bookMarker.util.json.NetworkJsonBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,10 +19,8 @@ import static org.junit.Assert.*;
 @Config(constants = BuildConfig.class, sdk = 21)
 public class JsonBuilderTest {
 
-    private  JsonBuilder jsonBuilder;
     @Before
     public void setUp(){
-        jsonBuilder = new JsonBuilder_impl();
     }
 
     @Test
@@ -34,7 +31,7 @@ public class JsonBuilderTest {
         JSONObject requestData=null;
         JSONObject reqData=null;
         try {
-            requestData = jsonBuilder.buildRequestData(jsonObject, "100");
+            requestData = NetworkJsonBuilder.buildRequestData(jsonObject, "100");
 
         }catch (JSONException e){
             e.printStackTrace();

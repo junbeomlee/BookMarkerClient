@@ -1,28 +1,19 @@
 package com.example.leejunbeom.test;
 
 import android.app.Activity;
-import android.support.test.runner.AndroidJUnit4;
 import android.test.ActivityInstrumentationTestCase2;
-import android.test.InstrumentationTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
-import android.util.Log;
 
+import com.example.leejunbeom.bookMarker.network.Network;
 import com.example.leejunbeom.bookMarker.network.Network_impl;
 import com.example.leejunbeom.bookMarker.ui.MainActivity;
-import com.example.leejunbeom.bookMarker.util.json.JsonBuilder;
-import com.example.leejunbeom.bookMarker.util.json.JsonBuilder_impl;
-import com.example.leejunbeom.bookMarker.util.log.BMLogger;
+import com.example.leejunbeom.bookMarker.util.json.NetworkJsonBuilder;
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestHandle;
 import com.loopj.android.http.RequestParams;
 
-import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -107,8 +98,7 @@ public class AsyncHttpTest extends ActivityInstrumentationTestCase2<MainActivity
 
         JSONObject storeData = new JSONObject();
         storeData.put("store_number", 10011);
-        JsonBuilder jsonBuilder = new JsonBuilder_impl();
-        JSONObject finalReqData = jsonBuilder.buildRequestData(storeData, "ST00101");
+        JSONObject finalReqData = NetworkJsonBuilder.buildRequestData(storeData, "ST00101");
         final StringEntity entity = new StringEntity(finalReqData.toString());
 
 

@@ -6,14 +6,12 @@ import org.json.JSONObject;
 /**
  * Created by Jun on 16. 3. 16..
  */
-public class JsonBuilder_impl implements JsonBuilder {
+public class NetworkJsonBuilder{
 
-    @Override
-    public JSONObject buildRequestData(JSONObject jsonObject, String code) throws JSONException {
+    public static JSONObject buildRequestData(JSONObject jsonObject, String code) throws JSONException {
         JSONObject requestData = new JSONObject();
         requestData.put("reqData",jsonObject);
         requestData.put("reqCode",code);
         return requestData;
     }
-
 }
