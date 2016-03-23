@@ -25,7 +25,7 @@ import butterknife.OnClick;
 /**
  * Created by Jun on 16. 3. 17..
  */
-public class QRCodeActivity extends AppCompatActivity {
+public class BookInfoActivity extends AppCompatActivity {
 
 
     public static final String KEY_SCAN_RESULT = "SCAN_RESULT";
@@ -58,7 +58,7 @@ public class QRCodeActivity extends AppCompatActivity {
             String data = scanResult.getContents();
             Toast.makeText(this, data,
                     Toast.LENGTH_LONG).show();
-            Log.d(BMLogger.LOG_TAG,data);
+            Log.d(BMLogger.LOG_TAG, data);
             //qrcodeInfo.append(intent.getStringExtra("Value"));
             qrcodeInfo.setText(data);
         }

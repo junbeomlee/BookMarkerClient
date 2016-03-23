@@ -1,11 +1,15 @@
 package com.example.leejunbeom.bookMarker.ui;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.leejunbeom.test.R;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -30,15 +34,15 @@ public class MainActivity extends AppCompatActivity {
         //Intent intent = new Intent("com.google.zxing.client.android.SCAN");
         //startActivityForResult(intent, 2000);
         //injector.get().inject(this);
-        //IntentIntegrator integrator = new IntentIntegrator(this);
-        //integrator.setOrientationLocked(true);
-        //integrator.initiateScan();
+        IntentIntegrator integrator = new IntentIntegrator(this);
+        integrator.setOrientationLocked(true);
+        integrator.initiateScan();
         //ButterKnife.bind(this);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
     }
 
-    /* @Override
+     @Override
      public void onActivityResult(int requestCode, int resultCode, Intent intent) {
          IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 
@@ -46,10 +50,10 @@ public class MainActivity extends AppCompatActivity {
              String data = scanResult.getContents();
 
              Toast.makeText(this, data,
-                         Toast.LENGTH_LONG).show();
+                     Toast.LENGTH_LONG).show();
 
          }
-     }*/
+     }
     @Override
     public void onResume() {
         super.onResume();

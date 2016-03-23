@@ -7,8 +7,7 @@ import android.support.test.espresso.assertion.ViewAssertions;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.example.leejunbeom.bookMarker.ui.MainActivity;
-import com.example.leejunbeom.bookMarker.ui.QRCodeActivity;
+import com.example.leejunbeom.bookMarker.ui.BookInfoActivity;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -18,7 +17,6 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.intent.Intents.intending;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.toPackage;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -28,10 +26,10 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
  */
 
 @RunWith(AndroidJUnit4.class)
-public class QRCodeActivityTest {
+public class BookInfoActivityTest {
 
     @Rule
-    public final ActivityRule<QRCodeActivity> main = new ActivityRule<>(QRCodeActivity.class,true,false);
+    public final ActivityRule<BookInfoActivity> main = new ActivityRule<>(BookInfoActivity.class,true,false);
 
     @Test
     public void viewTest(){
