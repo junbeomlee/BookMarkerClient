@@ -1,4 +1,4 @@
-package com.example.leejunbeom.bookMarker.ui;
+package com.example.leejunbeom.bookMarker.ui.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

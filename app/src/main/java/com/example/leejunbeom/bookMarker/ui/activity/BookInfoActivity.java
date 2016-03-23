@@ -1,4 +1,4 @@
-package com.example.leejunbeom.bookMarker.ui;
+package com.example.leejunbeom.bookMarker.ui.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;

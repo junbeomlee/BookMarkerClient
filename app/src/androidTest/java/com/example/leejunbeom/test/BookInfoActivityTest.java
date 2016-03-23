@@ -7,7 +7,7 @@ import android.support.test.espresso.assertion.ViewAssertions;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.example.leejunbeom.bookMarker.ui.BookInfoActivity;
+import com.example.leejunbeom.bookMarker.ui.activity.BookInfoActivity;
 
 import org.junit.Rule;
 import org.junit.Test;

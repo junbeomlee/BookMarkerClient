@@ -1,20 +1,12 @@
 package com.example.leejunbeom.test;
 
-import android.app.Instrumentation;
-import android.content.Intent;
 import android.support.test.espresso.NoMatchingViewException;
 import android.support.test.espresso.ViewAssertion;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.assertion.ViewAssertions;
 import android.support.test.runner.AndroidJUnit4;
-import android.test.ActivityInstrumentationTestCase2;
-import android.test.InstrumentationTestCase;
-import android.test.suitebuilder.annotation.SmallTest;
-import android.view.View;
 
-import com.example.leejunbeom.bookMarker.dagger.injector;
-import com.example.leejunbeom.bookMarker.model.SIFT;
-import com.example.leejunbeom.bookMarker.ui.MainActivity;
+import com.example.leejunbeom.bookMarker.ui.activity.MainActivity;
 
 
 import org.junit.Rule;

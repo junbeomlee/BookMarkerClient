@@ -4,13 +4,8 @@ import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.SmallTest;
 
-import com.example.leejunbeom.bookMarker.network.Network;
-import com.example.leejunbeom.bookMarker.network.Network_impl;
-import com.example.leejunbeom.bookMarker.ui.MainActivity;
-import com.example.leejunbeom.bookMarker.util.json.NetworkJsonBuilder;
+import com.example.leejunbeom.bookMarker.ui.activity.MainActivity;
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestHandle;
 import com.loopj.android.http.RequestParams;
 
 import org.json.JSONObject;
@@ -19,7 +14,6 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.entity.StringEntity;
 
 /**
  * Created by Jun on 16. 3. 19..

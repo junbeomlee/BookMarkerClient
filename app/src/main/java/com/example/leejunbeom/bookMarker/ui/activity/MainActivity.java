@@ -1,4 +1,4 @@
-package com.example.leejunbeom.bookMarker.ui;
+package com.example.leejunbeom.bookMarker.ui.activity;
 
 
 import android.content.Intent;
@@ -34,15 +34,15 @@ public class MainActivity extends AppCompatActivity {
         //Intent intent = new Intent("com.google.zxing.client.android.SCAN");
         //startActivityForResult(intent, 2000);
         //injector.get().inject(this);
-        IntentIntegrator integrator = new IntentIntegrator(this);
-        integrator.setOrientationLocked(true);
-        integrator.initiateScan();
+        //IntentIntegrator integrator = new IntentIntegrator(this);
+        //integrator.setOrientationLocked(true);
+        //integrator.initiateScan();
         //ButterKnife.bind(this);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
     }
 
-     @Override
+     /*@Override
      public void onActivityResult(int requestCode, int resultCode, Intent intent) {
          IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                      Toast.LENGTH_LONG).show();
 
          }
-     }
+     }*/
     @Override
     public void onResume() {
         super.onResume();

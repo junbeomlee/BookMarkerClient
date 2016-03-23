@@ -1,7 +1,7 @@
 package com.example.leejunbeom.bookMarker.dagger.component;
 
 import com.example.leejunbeom.bookMarker.dagger.module.AppModule;
-import com.example.leejunbeom.bookMarker.ui.MainActivity;
+import com.example.leejunbeom.bookMarker.ui.activity.MainActivity;
 
 import javax.inject.Singleton;
 
