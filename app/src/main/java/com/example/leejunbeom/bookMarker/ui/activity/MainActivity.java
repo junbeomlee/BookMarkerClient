@@ -7,53 +7,38 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.leejunbeom.bookMarker.dagger.injector;
+import com.example.leejunbeom.bookMarker.ui.presenter.MainPresenter;
+import com.example.leejunbeom.bookMarker.ui.screen_contracts.Mainscreen;
 import com.example.leejunbeom.test.R;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import javax.inject.Inject;
+
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Mainscreen{
 
-    //@Inject
-    //SIFT SIFT;
+    @Inject
+    MainPresenter mainPresenter;
 
     @Bind(R.id.bookAddButton)
     Button bookAddButton;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
+
    // private GoogleApiClient client;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Intent intent = new Intent("com.google.zxing.client.android.SCAN");
-        //startActivityForResult(intent, 2000);
-        //injector.get().inject(this);
-        //IntentIntegrator integrator = new IntentIntegrator(this);
-        //integrator.setOrientationLocked(true);
-        //integrator.initiateScan();
-        //ButterKnife.bind(this);
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        injector.get().inject(this);
+        ButterKnife.bind(this);
+
     }
 
-     /*@Override
-     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-
-         if ((scanResult != null) && (scanResult.getContents() != null)) {
-             String data = scanResult.getContents();
-
-             Toast.makeText(this, data,
-                     Toast.LENGTH_LONG).show();
-
-         }
-     }*/
     @Override
     public void onResume() {
         super.onResume();
@@ -61,47 +46,26 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.bookAddButton)
     public void onCallClick(){
+        this.mainPresenter.onBookAddButtonClick(this);
+    }
+
+    @Override
+    public void launchAddBookActivity() {
+        Intent intent = new Intent(this, BookAddActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void launchBookInfoActivity() {
 
     }
-    /*@OnClick(R.id.button)
-    public void onCallClick() {
-        Log.d(BMLogger.LOG_TAG, "onCall 54");
-        JsonBuilder jsonBuilder = new JsonBuilder_impl();
-        StringEntity entity = null;
-        try {
-            JSONObject storeData = new JSONObject();
-            storeData.put("store_number", 10011);
 
-            JSONObject finalReqData = jsonBuilder.buildRequestData(storeData, "ST00101");
-            entity = new StringEntity(finalReqData.toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+    @Override
+    public void deleteBook() {
 
-        Log.d(BMLogger.LOG_TAG, Boolean.toString(Network_impl.getInstance().isOnline(this)));
+    }
 
-        if (!Network_impl.getInstance().isOnline(this)) {
-            Log.d(BMLogger.LOG_TAG, "NetworkError");
-
-        }
-        Network_impl.getInstance().post(this.getApplicationContext(), "/Store/GetList", entity, "application/json", new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                // Root JSON in response is an dictionary i.e { "data : [ ... ] }
-                // Handle resulting parsed JSON response here
-                Log.d(BMLogger.LOG_TAG, response.toString());
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
-                // called when response HTTP status is "4XX" (eg. 401, 403, 404)
-                Log.d(BMLogger.LOG_TAG, res.toString());
-
-            }
-
-        });
-    }*/
-
+    public MainPresenter getMainPresenter(){
+        return this.mainPresenter;
+    }
 }
