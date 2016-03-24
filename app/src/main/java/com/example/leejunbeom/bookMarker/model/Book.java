@@ -3,6 +3,7 @@ package com.example.leejunbeom.bookMarker.model;
 /**
  * Created by Jun on 16. 3. 21..
  */
+
 public class Book {
 
     private String dataType;
@@ -41,5 +42,37 @@ public class Book {
                 ", isbn='" + isbn + '\'' +
                 ", symbolicRequest='" + symbolicRequest + '\'' +
                 '}';
+    }
+
+    public String getDataType() {
+        return dataType;
+    }
+
+    public String getTitileAuthorsType() {
+        return titileAuthorsType;
+    }
+
+    public String getEditionStateMent() {
+        return editionStateMent;
+    }
+
+    public String getFormMatters() {
+        return formMatters;
+    }
+
+    public String getPublicationMatter() {
+        return publicationMatter;
+    }
+
+    public String getGeneralAspects() {
+        return generalAspects;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public String getSymbolicRequest() {
+        return symbolicRequest;
     }
 }

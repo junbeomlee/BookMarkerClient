@@ -1,7 +1,13 @@
 package com.example.leejunbeom.bookMarker.dagger.module;
 
+import com.example.leejunbeom.bookMarker.jericho.Jericho;
 import com.example.leejunbeom.bookMarker.model.SIFT;
+import com.example.leejunbeom.bookMarker.network.Network;
+import com.example.leejunbeom.bookMarker.network.Network_impl;
+import com.example.leejunbeom.bookMarker.ui.presenter.BookAddPresenter;
 import com.example.leejunbeom.bookMarker.ui.presenter.MainPresenter;
+import com.example.leejunbeom.bookMarker.util.html.HtmlBookParser;
+import com.example.leejunbeom.bookMarker.util.html.HtmlParser;
 
 import javax.inject.Singleton;
 
@@ -24,5 +30,25 @@ public class AppModule {
     @Singleton
     MainPresenter provideMainPresenter(){
         return new MainPresenter();
+    }
+
+    @Provides
+    @Singleton
+    Jericho provideJericho(){
+        return new Jericho();
+    }
+
+
+
+    @Provides
+    @Singleton
+    HtmlParser provideHtmlParser(){
+        return new HtmlBookParser();
+    }
+
+    @Provides
+    @Singleton
+    BookAddPresenter provideBookAddPresenter(Jericho jericho,HtmlParser htmlParser){
+        return new BookAddPresenter(jericho,htmlParser);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.leejunbeom.bookMarker.dagger.component;
 
 import com.example.leejunbeom.bookMarker.dagger.module.AppModule;
+import com.example.leejunbeom.bookMarker.ui.activity.BookAddActivity;
 import com.example.leejunbeom.bookMarker.ui.activity.MainActivity;
 
 import javax.inject.Singleton;
@@ -14,4 +15,5 @@ import dagger.Component;
 @Singleton
 public interface AppComponent {
     void inject(MainActivity mainActivity);
+    void inject(BookAddActivity bookAddActivity);
 }
