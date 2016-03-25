@@ -19,6 +19,38 @@ public class Book {
 
     }
 
+    public void setDataType(String dataType) {
+        this.dataType = dataType;
+    }
+
+    public void setTitileAuthorsType(String titileAuthorsType) {
+        this.titileAuthorsType = titileAuthorsType;
+    }
+
+    public void setEditionStateMent(String editionStateMent) {
+        this.editionStateMent = editionStateMent;
+    }
+
+    public void setFormMatters(String formMatters) {
+        this.formMatters = formMatters;
+    }
+
+    public void setPublicationMatter(String publicationMatter) {
+        this.publicationMatter = publicationMatter;
+    }
+
+    public void setGeneralAspects(String generalAspects) {
+        this.generalAspects = generalAspects;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public void setSymbolicRequest(String symbolicRequest) {
+        this.symbolicRequest = symbolicRequest;
+    }
+
     public Book(String dataType, String titileAuthorsType, String editionStateMent, String formMatters, String publicationMatter, String generalAspects, String isbn, String symbolicRequest) {
         this.dataType = dataType;
         this.titileAuthorsType = titileAuthorsType;

@@ -12,6 +12,7 @@ import java.net.URL;
 public class Jericho {
 
 
+    //private final String libraryUrl="http://library.cau.ac.kr/search/DetailView.ax?sid=1&";
     public Source getURLtoText(String UrlString) {
         Source source = null;
         try {

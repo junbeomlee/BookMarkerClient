@@ -25,7 +25,13 @@ public class HtmlBookParser implements HtmlParser{
 
         Element metaDataBodyInfoList= htmltoString.getElementById("metaDataBody");
         List<Element> ElmentList=metaDataBodyInfoList.getAllElements(HTMLElementName.TR);
-
+        Book book = new Book();
+        for (Element elemet:ElmentList) {
+            Segment bookAttribute=elemet.getAllElements().get(1).getContent();
+            Segment bookAttributeValue=ElmentList.get(0).getAllElements().get(2).getContent();
+            String bookAttributeValueString=bookAttributeValue.toString().replaceAll("\\s+", "");
+            this.setBookAttribute(book,bookAttribute.toString().replaceAll("\\s+",""),bookAttributeValueString);
+        }
         ///개인 저자 , 주제명 제외
         Segment dataType=ElmentList.get(0).getAllElements().get(2).getContent();
         String dataTypeString=dataType.toString().replaceAll("\\s+", "");
@@ -57,5 +63,35 @@ public class HtmlBookParser implements HtmlParser{
         //System.out.print(ElmentList.get(0).toString());
         return new Book(dataTypeString,titelAuthorsTypeString,editionStatementString,formMattersString,publicationMatterString,generalAspectsString
                         ,ISBNString,symbolicRequestString);
+    }
+
+    public void setBookAttribute(Book book, String attribute, String bookAttributeValueString){
+
+        switch (attribute){
+            case "자료유형:":
+                book.setDataType(bookAttributeValueString);
+                break;
+            case "서명/저자:":
+                book.setTitileAuthorsType(bookAttributeValueString);
+                break;
+            case "판사항:":
+                book.setEditionStateMent(bookAttributeValueString);
+                break;
+            case "발행사항:":
+                book.setPublicationMatter(bookAttributeValueString);
+                break;
+            case "일반사항:":
+                book.setGeneralAspects(bookAttributeValueString);
+                break;
+            case "ISBN:":
+                book.setIsbn(bookAttributeValueString);
+                break;
+            case "청구기호:":
+                book.setSymbolicRequest(bookAttributeValueString);
+                break;
+            default:
+                break;
+        }
+
     }
 }

@@ -80,4 +80,9 @@ dependencies {
 
     compile 'net.htmlparser.jericho:jericho-html:3.1'
     //
+
+    compile 'io.reactivex:rxandroid:0.24.0'
+
+    compile 'com.squareup.okhttp3:okhttp:3.2.0'
+    testCompile 'com.squareup.okhttp3:mockwebserver:3.2.0'
 }

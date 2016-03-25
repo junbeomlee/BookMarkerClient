@@ -23,6 +23,9 @@ import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowHandler;
 import org.robolectric.shadows.ShadowToast;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertEquals;
@@ -92,6 +95,26 @@ public class BookAddActivityTest {
         ShadowHandler.idleMainLooper();
         assertEquals(ShadowToast.getTextOfLatestToast(), "http://library.cau.ac.kr/search/DetailView.ax?sid=1&cid=5241729");
 
+        ///////////////======================
+        Robolectric.flushBackgroundThreadScheduler();
+        Robolectric.getBackgroundThreadScheduler().idleConstantly(true);
+
+        // A latch used to lock UI Thread.
+        final CountDownLatch lock = new CountDownLatch(1);
+
+        try
+        {
+            lock.await(1000, TimeUnit.MILLISECONDS);
+        }
+        catch (InterruptedException e)
+        {
+            lock.notifyAll();
+        }
+
+        // Flush all UI tasks out of queue and force them to execute.
+        Robolectric.flushForegroundThreadScheduler();
+        Robolectric.getForegroundThreadScheduler().idleConstantly(true);
+        ///////////////======================
         TextView textView = (TextView) bookAddActivity.findViewById(R.id.bookTitle);
         assertEquals("Book Title equals","양안시와사시/진가헌,최혜정,이준범편저",textView.getText());
     }
