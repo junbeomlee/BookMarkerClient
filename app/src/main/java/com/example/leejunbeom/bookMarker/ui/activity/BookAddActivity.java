@@ -56,21 +56,16 @@ public class BookAddActivity extends AppCompatActivity implements BookAddScreen{
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-        //Log.d(BMLogger.LOG_TAG, "started");
-        //Log.d(BMLogger.LOG_TAG, scanResult.toString());
-        //Log.d(BMLogger.LOG_TAG, scanResult.getContents().toString());
         if ((scanResult != null) && (scanResult.getContents() != null)) {
             String data = scanResult.getContents();
             Toast.makeText(this, data,
                   Toast.LENGTH_LONG).show();
-            //Log.d(BMLogger.LOG_TAG, data);
-            //qrcodeInfo.append(intent.getStringExtra("Value"));
-            //Jericho jericho=new Jericho();
-            //Source htmlSource=jericho.getURLtoText("http://library.cau.ac.kr/search/DetailView.ax?sid=1&cid=5241729");
-            //Toast.makeText(this,htmlSource,Toast.LENGTH_LONG).show();
+
             this.bookAddPresenter.getBookData(data);
         }
+
     }
 
     @OnClick(R.id.confirmButton)

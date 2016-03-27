@@ -40,6 +40,7 @@ public class reactivexTest {
                 just("http://library.cau.ac.kr/search/DetailView.ax?sid=1&cid=63353").map(new Func1<String, Book>() {
             @Override
             public Book call(String s) {
+
                 Source htmltoString = jericho.getURLtoText(s);
                 Book book = (Book) htmlParser.sourceToObject(htmltoString);
                 return book;

@@ -1,6 +1,7 @@
 package com.example.leejunbeom.bookMarker.dagger.module;
 
 import com.example.leejunbeom.bookMarker.jericho.Jericho;
+import com.example.leejunbeom.bookMarker.model.Book;
 import com.example.leejunbeom.bookMarker.model.SIFT;
 import com.example.leejunbeom.bookMarker.network.Network;
 import com.example.leejunbeom.bookMarker.network.Network_impl;

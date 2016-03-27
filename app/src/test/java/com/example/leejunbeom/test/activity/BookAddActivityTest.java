@@ -41,7 +41,6 @@ import static org.robolectric.Shadows.shadowOf;
 @Config(constants = BuildConfig.class, sdk = 21)
 public class BookAddActivityTest {
 
-
     BookAddActivity bookAddActivity;
     Button bookAddButton;
 
