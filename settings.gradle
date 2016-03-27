@@ -1,2 +1,4 @@
-include ':app'
+include ':app', ':swipeMenuListViewLibrary', ':swipeMenuListViewDemo'
 include ':Library:opencv'
+project(':swipeMenuListViewLibrary').projectDir = new File('Library/SwipeMenuListView/library')
+project(':swipeMenuListViewDemo').projectDir = new File('Library/SwipeMenuListView/demo')

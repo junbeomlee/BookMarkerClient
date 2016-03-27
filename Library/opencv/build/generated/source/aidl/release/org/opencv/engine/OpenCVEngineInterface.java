@@ -1,6 +1,6 @@
 /*
  * This file is auto-generated.  DO NOT MODIFY.
- * Original file: /Users/leejunbeom/AndroidStudioProjects/BookMarker/Library/opencv/src/org/opencv/engine/OpenCVEngineInterface.aidl
+ * Original file: C:\\Users\\noduritoto\\Desktop\\noduritest4\\BookMarkerClient\\Library\\opencv\\src\\org\\opencv\\engine\\OpenCVEngineInterface.aidl
  */
 package org.opencv.engine;
 /**
