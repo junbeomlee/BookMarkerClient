@@ -44,7 +44,7 @@ public class AsyncHttpTest extends ActivityInstrumentationTestCase2<MainActivity
     @SmallTest
     public void test_should_asynchttpstringpost_work() throws Throwable {
         //given
-        final CountDownLatch signal = new CountDownLatch(1);
+        /*final CountDownLatch signal = new CountDownLatch(1);
         final AsyncHttpClient httpClient = new AsyncHttpClient();
         JSONObject storeData = new JSONObject();
         storeData.put("store_number", 10011);
@@ -82,7 +82,7 @@ public class AsyncHttpTest extends ActivityInstrumentationTestCase2<MainActivity
         }
 
         //then
-        assertEquals(1, asd);
+        assertEquals(1, asd);*/
     }
 
     /*@SmallTest
