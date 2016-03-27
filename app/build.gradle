@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'com.uphyca.android-aspectj'
 
 
 android {
@@ -88,4 +89,6 @@ dependencies {
     //swipe menu listview
     compile project(':swipeMenuListViewLibrary')
     //
+
+
 }
