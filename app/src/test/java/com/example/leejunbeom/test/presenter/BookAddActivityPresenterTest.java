@@ -14,7 +14,7 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Created by Jun on 16. 3. 24..
  */
-public class BookAddPresenterTest {
+public class BookAddActivityPresenterTest {
 
     //@Inject
     //BookAddPresenter bookAddPresenter;

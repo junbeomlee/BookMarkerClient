@@ -2,13 +2,10 @@ package com.example.leejunbeom.test.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.leejunbeom.bookMarker.ui.activity.BookAddActivity;
-import com.example.leejunbeom.bookMarker.ui.activity.MainActivity;
-import com.example.leejunbeom.bookMarker.ui.presenter.MainPresenter;
 import com.example.leejunbeom.test.BuildConfig;
 import com.example.leejunbeom.test.R;
 
