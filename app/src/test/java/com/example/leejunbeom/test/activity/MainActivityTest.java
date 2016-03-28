@@ -45,7 +45,6 @@ public class MainActivityTest {
     public void tearDown() {
 
     }
-
     @Test
     public void should_bookAddactivity_start_test() {
 

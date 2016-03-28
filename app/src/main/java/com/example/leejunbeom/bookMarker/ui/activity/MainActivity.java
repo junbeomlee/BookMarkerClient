@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 
+import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.example.leejunbeom.bookMarker.dagger.injector;
 import com.example.leejunbeom.bookMarker.ui.presenter.MainPresenter;
 import com.example.leejunbeom.bookMarker.ui.screen_contracts.Mainscreen;
@@ -33,6 +34,9 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
         setContentView(R.layout.activity_main);
         injector.get().inject(this);
         ButterKnife.bind(this);
+
+        //SwipeMenuListView listView;
+        //listView.setMenuCreator();
     }
 
     @Override
