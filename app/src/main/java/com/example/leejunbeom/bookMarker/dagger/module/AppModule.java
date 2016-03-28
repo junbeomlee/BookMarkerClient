@@ -2,6 +2,7 @@ package com.example.leejunbeom.bookMarker.dagger.module;
 
 import com.example.leejunbeom.bookMarker.jericho.Jericho;
 import com.example.leejunbeom.bookMarker.model.Book;
+import com.example.leejunbeom.bookMarker.model.BookController;
 import com.example.leejunbeom.bookMarker.model.SIFT;
 import com.example.leejunbeom.bookMarker.network.Network;
 import com.example.leejunbeom.bookMarker.network.Network_impl;
@@ -39,8 +40,6 @@ public class AppModule {
         return new Jericho();
     }
 
-
-
     @Provides
     @Singleton
     HtmlParser provideHtmlParser(){
@@ -49,7 +48,15 @@ public class AppModule {
 
     @Provides
     @Singleton
-    BookAddPresenter provideBookAddPresenter(Jericho jericho,HtmlParser htmlParser){
-        return new BookAddPresenter(jericho,htmlParser);
+    BookController provideBookController(){
+        return new BookController();
     }
+
+    @Provides
+    @Singleton
+    BookAddPresenter provideBookAddPresenter(Jericho jericho,HtmlParser htmlParser,BookController bookController){
+        return new BookAddPresenter(jericho,htmlParser,bookController);
+    }
+
+
 }

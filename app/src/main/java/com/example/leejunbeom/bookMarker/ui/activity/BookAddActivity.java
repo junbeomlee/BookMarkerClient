@@ -29,6 +29,12 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+
+/**
+ * 제일 처음 qrcode인식을 띄우고 실패할경우 액티비티 종료
+ * 성공할 경우 network콜을 통해 html소스를 book객체로 변환후 book정보를 띄운다.
+ * BookController에 book을 저장한다.
+ */
 public class BookAddActivity extends AppCompatActivity implements BookAddScreen{
 
     @Inject
@@ -58,12 +64,14 @@ public class BookAddActivity extends AppCompatActivity implements BookAddScreen{
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-        if ((scanResult != null) && (scanResult.getContents() != null)) {
+        if ((scanResult != null) && (scanResult.getContents() != null) && !scanResult.getContents().equals("")) {
             String data = scanResult.getContents();
             Toast.makeText(this, data,
                   Toast.LENGTH_LONG).show();
-
             this.bookAddPresenter.getBookData(data);
+        }else{
+            // failed to detect qrCode
+            bookAddPresenter.finishActivity(this);
         }
 
     }

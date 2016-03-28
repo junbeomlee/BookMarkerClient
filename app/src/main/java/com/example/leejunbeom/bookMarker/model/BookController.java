@@ -1,5 +1,7 @@
 package com.example.leejunbeom.bookMarker.model;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 

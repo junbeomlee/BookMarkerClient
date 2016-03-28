@@ -100,7 +100,7 @@ public class BookAddActivityTest {
 
         try
         {
-            lock.await(1000, TimeUnit.MILLISECONDS);
+            lock.await(3000, TimeUnit.MILLISECONDS);
         }
         catch (InterruptedException e)
         {
@@ -135,6 +135,20 @@ public class BookAddActivityTest {
         Button confirmButton = (Button) this.bookAddActivity.findViewById(R.id.confirmButton);
         confirmButton.performClick();
 
+        ShadowActivity activityShadow = shadowOf(bookAddActivity);
+        assertTrue(activityShadow.isFinishing());
+    }
+
+    @Test
+    public void should_finishActivity_when_get_null_result_test(){
+        Intent intent = shadowOf(bookAddActivity).getNextStartedActivity();
+
+        shadowOf(bookAddActivity).receiveResult(
+                intent,
+                Activity.RESULT_OK,
+                new Intent().putExtra(com.google.zxing.client.android.Intents.Scan.RESULT,""));
+
+        ShadowHandler.idleMainLooper();
         ShadowActivity activityShadow = shadowOf(bookAddActivity);
         assertTrue(activityShadow.isFinishing());
     }
