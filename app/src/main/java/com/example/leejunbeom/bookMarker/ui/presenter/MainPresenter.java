@@ -5,7 +5,7 @@ import com.example.leejunbeom.bookMarker.ui.activity.MainActivity;
 /**
  * Created by Jun on 16. 3. 24..
  */
-public class MainPresenter {
+public class MainPresenter implements MainPresenter_interface{
 
     public void onBookAddButtonClick(MainActivity mainActivity) {
         mainActivity.launchAddBookActivity();

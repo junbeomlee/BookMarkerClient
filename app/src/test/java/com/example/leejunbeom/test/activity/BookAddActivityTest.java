@@ -100,7 +100,7 @@ public class BookAddActivityTest {
 
         try
         {
-            lock.await(3000, TimeUnit.MILLISECONDS);
+            lock.await(5000, TimeUnit.MILLISECONDS);
         }
         catch (InterruptedException e)
         {

@@ -14,7 +14,7 @@ import dagger.Component;
  */
 @Component(modules = {AppModule.class})
 @Singleton
-public interface AppComponent {
+public interface AppComponent extends MyComponent{
     void inject(MainActivity mainActivity);
     void inject(BookAddActivity bookAddActivity);
     void inject(BookInfoActivity bookInfoActivity);

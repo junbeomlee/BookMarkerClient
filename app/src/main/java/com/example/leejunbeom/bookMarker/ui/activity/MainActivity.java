@@ -9,10 +9,12 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.baoyz.swipemenulistview.SwipeMenuListView;
+import com.example.leejunbeom.bookMarker.dagger.application.AppApplication;
 import com.example.leejunbeom.bookMarker.dagger.injector;
 import com.example.leejunbeom.bookMarker.model.Book;
 import com.example.leejunbeom.bookMarker.model.BookController;
 import com.example.leejunbeom.bookMarker.ui.presenter.MainPresenter;
+import com.example.leejunbeom.bookMarker.ui.presenter.MainPresenter_interface;
 import com.example.leejunbeom.bookMarker.ui.screen_contracts.Mainscreen;
 import com.example.leejunbeom.bookMarker.util.log.BMLogger;
 import com.example.leejunbeom.test.R;
@@ -38,7 +40,10 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity implements Mainscreen{
 
     @Inject
-    MainPresenter mainPresenter;
+    MainPresenter_interface mainPresenter;
+
+    @Inject
+    Book book;
 
     @Bind(R.id.bookAddButton)
     Button bookAddButton;
@@ -48,11 +53,12 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        injector.get().inject(this);
+        //injector.get().inject(this);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         //SwipeMenuListView listView;
         //listView.setMenuCreator();
+        ((AppApplication) getApplication()).component().inject(this);
     }
 
     @Override
@@ -81,12 +87,16 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
 
     }
 
-    public MainPresenter getMainPresenter(){
+    public MainPresenter_interface getMainPresenter(){
         return this.mainPresenter;
     }
 
     @Subscribe
     public void onSetBookList(BookController bookController){
         Toast.makeText(this,bookController.toString(),Toast.LENGTH_LONG).show();
+    }
+
+    public Book getBook(){
+        return this.book;
     }
 }

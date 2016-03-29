@@ -9,6 +9,7 @@ import com.example.leejunbeom.bookMarker.ui.activity.BookAddActivity;
 import com.example.leejunbeom.bookMarker.ui.activity.MainActivity;
 import com.example.leejunbeom.test.BuildConfig;
 import com.example.leejunbeom.test.R;
+import com.example.leejunbeom.test.dagger.TestApplication;
 
 import org.greenrobot.eventbus.EventBus;
 import org.junit.After;
@@ -17,14 +18,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.annotation.Implements;
 import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowHandler;
 import org.robolectric.shadows.ShadowToast;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -37,8 +36,7 @@ import static org.robolectric.Shadows.shadowOf;
  */
 
 @RunWith(RobolectricGradleTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = 21)
-@Implements(isInAndroidSdk = false)
+@Config(constants = BuildConfig.class, sdk = 21,application = TestApplication.class)
 public class MainActivityTest {
 
 
@@ -81,5 +79,10 @@ public class MainActivityTest {
 
         ShadowHandler.idleMainLooper();
         assertEquals(ShadowToast.getTextOfLatestToast(), bookController.toString());
+    }
+
+    @Test
+    public void should_inject_mockBook_work_test() {
+        assertEquals("Fail inject mock book", "asd", this.mainActivity.getBook().getDataType());
     }
 }
