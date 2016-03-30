@@ -4,25 +4,19 @@ package com.example.leejunbeom.bookMarker.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.example.leejunbeom.bookMarker.dagger.application.AppApplication;
-import com.example.leejunbeom.bookMarker.dagger.injector;
 import com.example.leejunbeom.bookMarker.model.Book;
 import com.example.leejunbeom.bookMarker.model.BookController;
+import com.example.leejunbeom.bookMarker.ui.presenter.MainPresenter_impl;
 import com.example.leejunbeom.bookMarker.ui.presenter.MainPresenter;
-import com.example.leejunbeom.bookMarker.ui.presenter.MainPresenter_interface;
 import com.example.leejunbeom.bookMarker.ui.screen_contracts.Mainscreen;
-import com.example.leejunbeom.bookMarker.util.log.BMLogger;
 import com.example.leejunbeom.test.R;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -40,7 +34,7 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity implements Mainscreen{
 
     @Inject
-    MainPresenter_interface mainPresenter;
+    MainPresenter mainPresenter;
 
     @Inject
     Book book;
@@ -87,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
 
     }
 
-    public MainPresenter_interface getMainPresenter(){
+    public MainPresenter getMainPresenter(){
         return this.mainPresenter;
     }
 

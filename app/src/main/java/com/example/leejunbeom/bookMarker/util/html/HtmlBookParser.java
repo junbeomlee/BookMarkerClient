@@ -28,7 +28,7 @@ public class HtmlBookParser implements HtmlParser{
         Book book = new Book();
         for (Element elemet:ElmentList) {
             Segment bookAttribute=elemet.getAllElements().get(1).getContent();
-            Segment bookAttributeValue=ElmentList.get(0).getAllElements().get(2).getContent();
+            Segment bookAttributeValue=elemet.getAllElements().get(2).getContent();
             String bookAttributeValueString=bookAttributeValue.toString().replaceAll("\\s+", "");
             this.setBookAttribute(book,bookAttribute.toString().replaceAll("\\s+",""),bookAttributeValueString);
         }

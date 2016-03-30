@@ -1,18 +1,14 @@
 package com.example.leejunbeom.bookMarker.dagger.module;
 
-import com.example.leejunbeom.bookMarker.jericho.Jericho;
+import com.example.leejunbeom.bookMarker.network.jericho.Jericho;
 import com.example.leejunbeom.bookMarker.model.Book;
 import com.example.leejunbeom.bookMarker.model.BookController;
-import com.example.leejunbeom.bookMarker.model.SIFT;
-import com.example.leejunbeom.bookMarker.network.Network;
-import com.example.leejunbeom.bookMarker.network.Network_impl;
 import com.example.leejunbeom.bookMarker.ui.presenter.BookAddPresenter;
+import com.example.leejunbeom.bookMarker.ui.presenter.BookAddPresenter_impl;
 import com.example.leejunbeom.bookMarker.ui.presenter.MainPresenter;
-import com.example.leejunbeom.bookMarker.ui.presenter.MainPresenter_interface;
+import com.example.leejunbeom.bookMarker.ui.presenter.MainPresenter_impl;
 import com.example.leejunbeom.bookMarker.util.html.HtmlBookParser;
 import com.example.leejunbeom.bookMarker.util.html.HtmlParser;
-
-import org.mockito.Mockito;
 
 import javax.inject.Singleton;
 
@@ -33,8 +29,8 @@ public class AppModule {
 
     @Provides
     @Singleton
-    MainPresenter_interface provideMainPresenter(){
-        return new MainPresenter();
+    MainPresenter provideMainPresenter(){
+        return new MainPresenter_impl();
     }
 
     @Provides
@@ -57,8 +53,8 @@ public class AppModule {
 
     @Provides
     @Singleton
-    BookAddPresenter provideBookAddPresenter(Jericho jericho,HtmlParser htmlParser,BookController bookController){
-        return new BookAddPresenter(jericho,htmlParser,bookController);
+    BookAddPresenter provideBookAddPresenter(Jericho jerichoImpl,HtmlParser htmlParser,BookController bookController){
+        return new BookAddPresenter_impl(jerichoImpl,htmlParser,bookController);
     }
 
     @Provides

@@ -8,17 +8,15 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.leejunbeom.bookMarker.dagger.injector;
-import com.example.leejunbeom.bookMarker.jericho.Jericho;
+import com.example.leejunbeom.bookMarker.dagger.application.AppApplication;
 import com.example.leejunbeom.bookMarker.model.Book;
 import com.example.leejunbeom.bookMarker.ui.presenter.BookAddPresenter;
+import com.example.leejunbeom.bookMarker.ui.presenter.BookAddPresenter_impl;
 import com.example.leejunbeom.bookMarker.ui.screen_contracts.BookAddScreen;
 import com.example.leejunbeom.bookMarker.util.log.BMLogger;
 import com.example.leejunbeom.test.R;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-
-import net.htmlparser.jericho.Source;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -51,7 +49,7 @@ public class BookAddActivity extends AppCompatActivity implements BookAddScreen{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_add);
 
-        injector.get().inject(this);
+        ((AppApplication) getApplication()).component().inject(this);
         ButterKnife.bind(this);
 
         IntentIntegrator integrator = new IntentIntegrator(this);

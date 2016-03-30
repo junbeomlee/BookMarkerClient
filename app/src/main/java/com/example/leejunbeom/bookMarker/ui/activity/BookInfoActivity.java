@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 
-import com.example.leejunbeom.bookMarker.dagger.injector;
+import com.example.leejunbeom.bookMarker.dagger.application.AppApplication;
 import com.example.leejunbeom.bookMarker.ui.screen_contracts.BookInfoScreen;
 import com.example.leejunbeom.test.R;
 
@@ -31,7 +31,7 @@ public class BookInfoActivity extends AppCompatActivity implements BookInfoScree
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_info);
-        injector.get().inject(this);
+        ((AppApplication) getApplication()).component().inject(this);
         ButterKnife.bind(this);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.

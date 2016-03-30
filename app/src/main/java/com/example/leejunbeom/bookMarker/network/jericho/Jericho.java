@@ -1,4 +1,4 @@
-package com.example.leejunbeom.bookMarker.jericho;
+package com.example.leejunbeom.bookMarker.network.jericho;
 
 import net.htmlparser.jericho.Source;
 
@@ -10,6 +10,7 @@ import java.net.URL;
  * Created by Jun on 16. 3. 22..
  */
 public class Jericho {
+
 
 
     //private final String libraryUrl="http://library.cau.ac.kr/search/DetailView.ax?sid=1&";

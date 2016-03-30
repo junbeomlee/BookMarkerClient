@@ -1,13 +1,12 @@
 package com.example.leejunbeom.test;
 
-import com.example.leejunbeom.bookMarker.jericho.Jericho;
+import com.example.leejunbeom.bookMarker.network.jericho.Jericho;
 import com.example.leejunbeom.bookMarker.model.Book;
 import com.example.leejunbeom.bookMarker.util.html.HtmlBookParser;
 import com.example.leejunbeom.bookMarker.util.html.HtmlParser;
 
 import net.htmlparser.jericho.Source;
 
-import org.greenrobot.eventbus.EventBus;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,11 +24,11 @@ import static org.junit.Assert.assertEquals;
  */
 public class reactivexTest {
 
-    private Jericho jericho;
+    private Jericho jerichoImpl;
     private HtmlParser htmlParser;
     @Before
     public void setUp(){
-        this.jericho= new Jericho();
+        this.jerichoImpl = new Jericho();
         this.htmlParser = new HtmlBookParser();
     }
 
@@ -41,7 +40,7 @@ public class reactivexTest {
             @Override
             public Book call(String s) {
 
-                Source htmltoString = jericho.getURLtoText(s);
+                Source htmltoString = jerichoImpl.getURLtoText(s);
                 Book book = (Book) htmlParser.sourceToObject(htmltoString);
                 return book;
             }
