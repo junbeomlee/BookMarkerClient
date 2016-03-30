@@ -1,9 +1,8 @@
 package com.example.leejunbeom.test.presenter;
 
-import com.example.leejunbeom.bookMarker.dagger.injector;
-import com.example.leejunbeom.bookMarker.jericho.Jericho;
+import com.example.leejunbeom.bookMarker.network.jericho.Jericho;
 import com.example.leejunbeom.bookMarker.model.BookController;
-import com.example.leejunbeom.bookMarker.ui.presenter.BookAddPresenter;
+import com.example.leejunbeom.bookMarker.ui.presenter.BookAddPresenter_impl;
 import com.example.leejunbeom.bookMarker.util.html.HtmlParser;
 import com.example.leejunbeom.test.BuildConfig;
 
@@ -13,8 +12,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
-
-import javax.inject.Inject;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -27,10 +24,11 @@ import static org.junit.Assert.assertNotNull;
 public class BookAddActivityPresenterTest {
 
     //@Inject
-    BookAddPresenter bookAddPresenter;
+    BookAddPresenter_impl bookAddPresenter;
     BookController bookController;
-    Jericho jericho;
+    Jericho jerichoImpl;
     HtmlParser htmlParser;
+
     @Before
     public void setUp(){
 

@@ -4,23 +4,19 @@ package com.example.leejunbeom.bookMarker.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.baoyz.swipemenulistview.SwipeMenuListView;
-import com.example.leejunbeom.bookMarker.dagger.injector;
+import com.example.leejunbeom.bookMarker.dagger.application.AppApplication;
 import com.example.leejunbeom.bookMarker.model.Book;
 import com.example.leejunbeom.bookMarker.model.BookController;
+import com.example.leejunbeom.bookMarker.ui.presenter.MainPresenter_impl;
 import com.example.leejunbeom.bookMarker.ui.presenter.MainPresenter;
 import com.example.leejunbeom.bookMarker.ui.screen_contracts.Mainscreen;
-import com.example.leejunbeom.bookMarker.util.log.BMLogger;
 import com.example.leejunbeom.test.R;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -48,11 +44,12 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        injector.get().inject(this);
+        //injector.get().inject(this);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         //SwipeMenuListView listView;
         //listView.setMenuCreator();
+        ((AppApplication) getApplication()).component().inject(this);
     }
 
     @Override

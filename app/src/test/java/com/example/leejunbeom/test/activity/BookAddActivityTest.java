@@ -100,7 +100,7 @@ public class BookAddActivityTest {
 
         try
         {
-            lock.await(3000, TimeUnit.MILLISECONDS);
+            lock.await(5000, TimeUnit.MILLISECONDS);
         }
         catch (InterruptedException e)
         {
@@ -112,7 +112,7 @@ public class BookAddActivityTest {
         Robolectric.getForegroundThreadScheduler().idleConstantly(true);
         ///////////////======================
         TextView textView = (TextView) bookAddActivity.findViewById(R.id.bookTitle);
-        assertEquals("Book Title equals","양안시와사시/진가헌,최혜정,이준범편저",textView.getText());
+        assertEquals("양안시와사시/진가헌,최혜정,이준범편저",textView.getText());
     }
 
     @Test

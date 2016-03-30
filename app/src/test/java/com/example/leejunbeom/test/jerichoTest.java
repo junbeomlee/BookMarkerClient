@@ -1,6 +1,6 @@
 package com.example.leejunbeom.test;
 
-import com.example.leejunbeom.bookMarker.jericho.Jericho;
+import com.example.leejunbeom.bookMarker.network.jericho.Jericho;
 import com.example.leejunbeom.bookMarker.model.Book;
 import com.example.leejunbeom.bookMarker.util.html.HtmlBookParser;
 import com.example.leejunbeom.bookMarker.util.html.HtmlParser;
@@ -18,6 +18,8 @@ import org.robolectric.annotation.Config;
 
 import java.util.List;
 
+import rx.Observable;
+
 import static org.junit.Assert.*;
 
 /**
@@ -32,22 +34,20 @@ public class jerichoTest {
     HtmlParser htmLBookparser;
     @Before
     public void setUp(){
-        jericho=new Jericho();
         htmLBookparser=new HtmlBookParser();
+        jericho = new Jericho(htmLBookparser);
     }
 
     @After
     public void tearDown(){
 
-
     }
-
     @Test
     public void should_htmlparseintobookobject_test(){
-        Source htmltoString = jericho.getURLtoText("http://library.cau.ac.kr/search/DetailView.ax?sid=1&cid=5241729");
-        assertNotNull("htmlToString are null", htmltoString);
-        Book book = (Book)htmLBookparser.sourceToObject(htmltoString);
-        assertEquals("book are equal","Book{dataType='국내서단행본', titileAuthorsType='양안시와사시/진가헌,최혜정,이준범편저', editionStateMent='개정3판', formMatters='서울:대학서림,2011', publicationMatter='323p.:삽화;26cm', generalAspects='색인수록<br/>', isbn='9788980168866', symbolicRequest='617.762진가헌양3'}",book.toString());
+        Observable<Book> observableBook=jericho.postBook("cid=5241729");
+        assertNotNull("htmlToString are null", observableBook);
+        //Book book = (Book)htmLBookparser.sourceToObject(htmltoString);
+        //assertEquals("Book{dataType='국내서단행본', titileAuthorsType='양안시와사시/진가헌,최혜정,이준범편저', editionStateMent='개정3판', formMatters='null', publicationMatter='서울:대학서림,2011', generalAspects='색인수록<br/>', isbn='9788980168866', symbolicRequest='617.762진가헌양3'}",book.toString());
     }
 
     @Test

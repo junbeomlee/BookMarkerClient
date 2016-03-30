@@ -1,4 +1,4 @@
-package com.example.leejunbeom.bookMarker.dagger.module;
+package com.example.leejunbeom.test.dagger;
 
 import com.example.leejunbeom.bookMarker.network.jericho.Jericho;
 import com.example.leejunbeom.bookMarker.model.Book;
@@ -10,22 +10,18 @@ import com.example.leejunbeom.bookMarker.ui.presenter.MainPresenter_impl;
 import com.example.leejunbeom.bookMarker.util.html.HtmlBookParser;
 import com.example.leejunbeom.bookMarker.util.html.HtmlParser;
 
+import org.mockito.Mockito;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
 
 /**
- * Created by Jun on 16. 3. 12..
+ * Created by Jun on 16. 3. 28..
  */
 @Module
-public class AppModule {
-
-   /* @Provides
-    @Singleton
-    SIFT provideTest(){
-        return new SIFT();
-    }*/
+public class TestModule {
 
     @Provides
     @Singleton

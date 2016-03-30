@@ -1,11 +1,6 @@
 package com.example.leejunbeom.test;
 
-import com.example.leejunbeom.bookMarker.jericho.Jericho;
-import com.example.leejunbeom.bookMarker.model.Book;
 import com.example.leejunbeom.bookMarker.ui.activity.MainActivity;
-import com.example.leejunbeom.bookMarker.util.html.HtmlBookParser;
-
-import net.htmlparser.jericho.Source;
 
 import org.junit.After;
 import org.junit.Before;

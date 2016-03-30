@@ -1,4 +1,4 @@
-package com.example.leejunbeom.test;
+package com.example.leejunbeom.test.model;
 
 import com.example.leejunbeom.bookMarker.model.Book;
 import com.example.leejunbeom.bookMarker.model.BookController;
