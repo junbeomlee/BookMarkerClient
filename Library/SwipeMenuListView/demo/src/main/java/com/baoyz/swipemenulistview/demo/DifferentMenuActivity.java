@@ -24,6 +24,7 @@
 package com.baoyz.swipemenulistview.demo;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -51,14 +52,15 @@ public class DifferentMenuActivity  extends Activity {
     private List<ApplicationInfo> mAppList;
     private AppAdapter mAdapter;
 
+    // eventbus, butterknife, dagger2
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list);
+        setContentView(R.layout.activity_list);  // butterknife
 
         mAppList = getPackageManager().getInstalledApplications(0);
 
-        SwipeMenuListView listView = (SwipeMenuListView) findViewById(R.id.listView);
+        SwipeMenuListView listView = (SwipeMenuListView) findViewById(R.id.listView); // butterknife
         mAdapter = new AppAdapter();
         listView.setAdapter(mAdapter);
 
@@ -79,6 +81,9 @@ public class DifferentMenuActivity  extends Activity {
                         createMenu3(menu);
                         break;
                 }
+            }
+            public void create(SwipeMenu menu, Context context){
+                System.out.print("we dont use this method..");
             }
 
             private void createMenu1(SwipeMenu menu) {
@@ -132,7 +137,8 @@ public class DifferentMenuActivity  extends Activity {
                 menu.addMenuItem(item2);
             }
         };
-        // set creator
+
+        // set creator, creator를 위해 이너무명클래스선언
         listView.setMenuCreator(creator);
 
         // step 2. listener item click event
