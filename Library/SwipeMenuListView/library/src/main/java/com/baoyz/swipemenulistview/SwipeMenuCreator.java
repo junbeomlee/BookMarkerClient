@@ -12,5 +12,5 @@ import android.content.Context;
 public interface SwipeMenuCreator {
 
 	void create(SwipeMenu menu);
-	void create(SwipeMenu menu, Context context);
+	//void create(SwipeMenu menu, Context context);
 }

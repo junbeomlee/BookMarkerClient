@@ -31,7 +31,7 @@ public class SwipeMenuCreatorTest {
     }
 
     @Test
-    public void test_create(SwipeMenu menu){
+    public void test_create(){
         createMenu1(menu);
 
     }

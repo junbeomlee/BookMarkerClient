@@ -30,7 +30,8 @@ public class TestApplication extends AppApplication {
 
     @Override public void onCreate() {
         super.onCreate();
-        component=DaggerTestApplication_TestApplicationComponent.builder().testModule(new TestModule()).build();
+        component = DaggerTestApplication_TestApplicationComponent.builder().testModule(new TestModule()).build();
+
     }
 
     @Override public ApplicationComponent component() {
