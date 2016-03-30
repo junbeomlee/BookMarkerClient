@@ -35,16 +35,15 @@ public class AppModule {
 
     @Provides
     @Singleton
-    Jericho provideJericho(){
-        return new Jericho();
-    }
-
-    @Provides
-    @Singleton
     HtmlParser provideHtmlParser(){
         return new HtmlBookParser();
     }
 
+    @Provides
+    @Singleton
+    Jericho provideJericho(HtmlParser htmlParser){
+        return new Jericho(htmlParser);
+    }
     @Provides
     @Singleton
     BookController provideBookController(){
@@ -53,16 +52,7 @@ public class AppModule {
 
     @Provides
     @Singleton
-    BookAddPresenter provideBookAddPresenter(Jericho jerichoImpl,HtmlParser htmlParser,BookController bookController){
-        return new BookAddPresenter_impl(jerichoImpl,htmlParser,bookController);
+    BookAddPresenter provideBookAddPresenter(Jericho jerichoImpl,BookController bookController){
+        return new BookAddPresenter_impl(jerichoImpl,bookController);
     }
-
-    @Provides
-    @Singleton
-    Book provideBook(){
-        Book book=new Book();
-        return book;
-    }
-
-
 }

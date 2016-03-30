@@ -28,11 +28,6 @@ public class TestModule {
     MainPresenter provideMainPresenter(){
         return new MainPresenter_impl();
     }
-    @Provides
-    @Singleton
-    Jericho provideJericho(){
-        return new Jericho();
-    }
 
     @Provides
     @Singleton
@@ -42,21 +37,18 @@ public class TestModule {
 
     @Provides
     @Singleton
+    Jericho provideJericho(HtmlParser htmlParser){
+        return new Jericho(htmlParser);
+    }
+    @Provides
+    @Singleton
     BookController provideBookController(){
         return new BookController();
     }
 
     @Provides
     @Singleton
-    BookAddPresenter provideBookAddPresenter(Jericho jerichoImpl,HtmlParser htmlParser,BookController bookController){
-        return new BookAddPresenter_impl(jerichoImpl,htmlParser,bookController);
-    }
-
-    @Provides
-    @Singleton
-    Book provideBook(){
-        Book book=Mockito.mock(Book.class);
-        Mockito.when(book.getDataType()).thenReturn("asd");
-        return book;
+    BookAddPresenter provideBookAddPresenter(Jericho jerichoImpl,BookController bookController){
+        return new BookAddPresenter_impl(jerichoImpl,bookController);
     }
 }

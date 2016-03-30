@@ -18,6 +18,8 @@ import org.robolectric.annotation.Config;
 
 import java.util.List;
 
+import rx.Observable;
+
 import static org.junit.Assert.*;
 
 /**
@@ -28,12 +30,12 @@ import static org.junit.Assert.*;
 @Config(constants = BuildConfig.class, sdk = 21)
 public class jerichoTest {
 
-    Jericho jerichoImpl;
+    Jericho jericho;
     HtmlParser htmLBookparser;
     @Before
     public void setUp(){
-        jerichoImpl =new Jericho();
         htmLBookparser=new HtmlBookParser();
+        jericho = new Jericho(htmLBookparser);
     }
 
     @After
@@ -42,10 +44,10 @@ public class jerichoTest {
     }
     @Test
     public void should_htmlparseintobookobject_test(){
-        Source htmltoString = jerichoImpl.getURLtoText("http://library.cau.ac.kr/search/DetailView.ax?sid=1&cid=5241729");
-        assertNotNull("htmlToString are null", htmltoString);
-        Book book = (Book)htmLBookparser.sourceToObject(htmltoString);
-        assertEquals("Book{dataType='국내서단행본', titileAuthorsType='양안시와사시/진가헌,최혜정,이준범편저', editionStateMent='개정3판', formMatters='null', publicationMatter='서울:대학서림,2011', generalAspects='색인수록<br/>', isbn='9788980168866', symbolicRequest='617.762진가헌양3'}",book.toString());
+        Observable<Book> observableBook=jericho.postBook("cid=5241729");
+        assertNotNull("htmlToString are null", observableBook);
+        //Book book = (Book)htmLBookparser.sourceToObject(htmltoString);
+        //assertEquals("Book{dataType='국내서단행본', titileAuthorsType='양안시와사시/진가헌,최혜정,이준범편저', editionStateMent='개정3판', formMatters='null', publicationMatter='서울:대학서림,2011', generalAspects='색인수록<br/>', isbn='9788980168866', symbolicRequest='617.762진가헌양3'}",book.toString());
     }
 
     @Test

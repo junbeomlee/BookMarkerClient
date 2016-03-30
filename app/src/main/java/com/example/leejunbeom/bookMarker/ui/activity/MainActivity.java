@@ -36,9 +36,6 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
     @Inject
     MainPresenter mainPresenter;
 
-    @Inject
-    Book book;
-
     @Bind(R.id.bookAddButton)
     Button bookAddButton;
 
@@ -88,9 +85,5 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
     @Subscribe
     public void onSetBookList(BookController bookController){
         Toast.makeText(this,bookController.toString(),Toast.LENGTH_LONG).show();
-    }
-
-    public Book getBook(){
-        return this.book;
     }
 }

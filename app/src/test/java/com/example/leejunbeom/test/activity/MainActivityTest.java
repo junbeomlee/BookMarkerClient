@@ -80,9 +80,4 @@ public class MainActivityTest {
         ShadowHandler.idleMainLooper();
         assertEquals(ShadowToast.getTextOfLatestToast(), bookController.toString());
     }
-
-    @Test
-    public void should_inject_mockBook_work_test() {
-        assertEquals("Fail inject mock book", "asd", this.mainActivity.getBook().getDataType());
-    }
 }
