@@ -152,7 +152,7 @@ public class DifferentMenuActivity  extends Activity {
                         break;
                     case 1:
                         // delete
-//					delete(item);
+//					    delete(item);
                         mAppList.remove(position);
                         mAdapter.notifyDataSetChanged();
                         break;

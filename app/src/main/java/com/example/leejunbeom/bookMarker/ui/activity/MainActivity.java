@@ -1,12 +1,30 @@
 package com.example.leejunbeom.bookMarker.ui.activity;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.TypedValue;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baoyz.swipemenulistview.SwipeMenu;
+import com.baoyz.swipemenulistview.SwipeMenuCreator;
+import com.baoyz.swipemenulistview.SwipeMenuItem;
+import com.baoyz.swipemenulistview.SwipeMenuListView;
+import com.example.leejunbeom.bookMarker.SwipeMenuListView.SwipeMenuCreator_impl;
 import com.example.leejunbeom.bookMarker.dagger.application.AppApplication;
 import com.example.leejunbeom.bookMarker.model.Book;
 import com.example.leejunbeom.bookMarker.model.BookController;
@@ -17,6 +35,12 @@ import com.example.leejunbeom.test.R;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 import javax.inject.Inject;
 
@@ -33,11 +57,18 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity implements Mainscreen{
 
+    private AppAdapter mAdapter;
+    private List<Book> mBookList;
+
     @Inject
     MainPresenter mainPresenter;
+    //SwipeMenuCreator smc;
 
     @Bind(R.id.bookAddButton)
     Button bookAddButton;
+
+    @Bind(R.id.listView)
+    private SwipeMenuListView listView;
 
    // private GoogleApiClient client;
     @Override
@@ -47,9 +78,35 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
         //injector.get().inject(this);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
-        //SwipeMenuListView listView;
         //listView.setMenuCreator();
         ((AppApplication) getApplication()).component().inject(this);
+
+        //SMLV work
+        //listView = (SwipeMenuListView) findViewById(R.id.listView);
+
+        /*mBookList = new ArrayList<Book>();
+        Book bookExample = new Book();
+        bookExample.setSymbolicRequest("1234");
+
+        mAdapter = new AppAdapter();
+
+        listView.setAdapter(mAdapter);*/
+
+       // SwipeMenuCreator smc = new SwipeMenuCreator(this);
+        //listView.setMenuCreator(smc);
+
+
+        ArrayList<String> myString = new ArrayList<String>();
+        myString.add("asd");
+        myString.add("1111");
+
+        ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,myString);
+        //listView = (SwipeMenuListView) findViewById(R.id.listView);
+        listView.setAdapter(adapter);
+
+        SwipeMenuCreator creator = new SwipeMenuCreator_impl(this.getApplicationContext());
+
+        listView.setMenuCreator(creator);
     }
 
     @Override
@@ -86,4 +143,42 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
     public void onSetBookList(BookController bookController){
         Toast.makeText(this,bookController.toString(),Toast.LENGTH_LONG).show();
     }
+
+    class AppAdapter extends BaseAdapter {
+
+
+        @Override
+        public int getCount() {
+            return mBookList.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return mBookList.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            //TextView textView = new TextView();
+            //textView.setText(mBookList.get(position));
+
+            TextView textView = (TextView) convertView.findViewById(R.id.listViewText);
+            textView.setText(mBookList.get(0).getSymbolicRequest());
+
+            return convertView;
+        }
+    }
+
+    private int dp2px(int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+                getResources().getDisplayMetrics());
+    }
+
 }
+
+
