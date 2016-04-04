@@ -32,6 +32,7 @@ import com.example.leejunbeom.bookMarker.ui.presenter.MainPresenter_impl;
 import com.example.leejunbeom.bookMarker.ui.presenter.MainPresenter;
 import com.example.leejunbeom.bookMarker.ui.screen_contracts.Mainscreen;
 import com.example.leejunbeom.test.R;
+import com.example.leejunbeom.bookMarker.SwipeMenuListView.BookAdapter_impl;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -58,8 +59,9 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity implements Mainscreen{
 
     private AppAdapter mAdapter;
-    private BookA bAdapter;
+    private BookAdapter_impl bAdapter;
     private List<Book> mBookList;
+    private BookController mBookController;
 
     @Inject
     MainPresenter mainPresenter;
@@ -101,12 +103,13 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
         myString.add("asd");
         myString.add("1111");
 
-        ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,myString);
+        //ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,myString);
         //listView = (SwipeMenuListView) findViewById(R.id.listView);
-        listView.setAdapter(adapter);
 
+        mBookController = new BookController();
+        bAdapter = new BookAdapter_impl(this.getApplicationContext(), mBookController);
+        listView.setAdapter(bAdapter);
         SwipeMenuCreator creator = new SwipeMenuCreator_impl(this.getApplicationContext());
-
         listView.setMenuCreator(creator);
     }
 
@@ -168,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
             //TextView textView = new TextView();
             //textView.setText(mBookList.get(position));
 
-            TextView textView = (TextView) convertView.findViewById(R.id.listViewText);
+            TextView textView = (TextView) convertView.findViewById(R.id.book_name);
             textView.setText(mBookList.get(0).getSymbolicRequest());
 
             return convertView;

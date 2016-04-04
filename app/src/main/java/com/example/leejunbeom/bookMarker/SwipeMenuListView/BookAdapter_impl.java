@@ -12,17 +12,27 @@ import com.example.leejunbeom.bookMarker.model.Book;
 import com.example.leejunbeom.bookMarker.model.BookController;
 import com.example.leejunbeom.test.R;
 
+import java.util.List;
+
 /**
  * Created by noduritoto on 2016-04-04.
  */
 
-class BookAdapter_impl extends BaseAdapter {
+public class BookAdapter_impl extends BaseAdapter {
     private Context mContext;
     private BookController mBookController;
+    private List<Book> listBook;
 
     public BookAdapter_impl(Context context, BookController bookController) {
         this.mContext = context;
         this.mBookController = bookController;
+        this.listBook = bookController.getBookList();
+    }
+
+    public BookAdapter_impl(Context context, List<Book> listBook){
+        this.mContext = context;
+        //this.mBookController = bookController;
+        this.listBook = listBook;
     }
 
     @Override
