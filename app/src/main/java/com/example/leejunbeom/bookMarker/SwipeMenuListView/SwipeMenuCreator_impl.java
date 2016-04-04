@@ -1,9 +1,15 @@
 package com.example.leejunbeom.bookMarker.SwipeMenuListView;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.TypedValue;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
@@ -21,9 +27,7 @@ public class SwipeMenuCreator_impl implements SwipeMenuCreator {
     private Context mContext;
 
     @Inject
-    public SwipeMenuCreator_impl (Context context) {
-        this.mContext = context;
-    }
+    public SwipeMenuCreator_impl (Context context) { this.mContext = context; }
 
     @Override
     public void create(SwipeMenu menu) {
@@ -41,10 +45,6 @@ public class SwipeMenuCreator_impl implements SwipeMenuCreator {
         }
     }
 
-
-    public void create(SwipeMenu menu, Context context) {
-        System.out.print("we dont use this method..");
-    }
 
     private void createMenu1(SwipeMenu menu) {
         SwipeMenuItem item1 = new SwipeMenuItem(
@@ -98,10 +98,10 @@ public class SwipeMenuCreator_impl implements SwipeMenuCreator {
     }
 
 
+
+
     private int dp2px(int dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
-                    mContext.getResources().getDisplayMetrics());
+                mContext.getResources().getDisplayMetrics());
     }
-
-    //void create(SwipeMenu menu, Context context);
 }

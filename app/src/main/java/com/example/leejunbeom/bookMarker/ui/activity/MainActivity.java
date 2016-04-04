@@ -58,6 +58,7 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity implements Mainscreen{
 
     private AppAdapter mAdapter;
+    private BookA bAdapter;
     private List<Book> mBookList;
 
     @Inject
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
     Button bookAddButton;
 
     @Bind(R.id.listView)
-    private SwipeMenuListView listView;
+    SwipeMenuListView listView;
 
    // private GoogleApiClient client;
     @Override
