@@ -12,6 +12,7 @@ import com.example.leejunbeom.bookMarker.model.Book;
 import com.example.leejunbeom.bookMarker.model.BookController;
 import com.example.leejunbeom.test.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,16 +21,18 @@ import java.util.List;
 
 public class BookAdapter_impl extends BaseAdapter {
     private Context mContext;
-    private BookController mBookController;
-    private List<Book> listBook;
+    //private BookController mBookController;
+    ArrayList<Book> listBook;
 
+    /*
     public BookAdapter_impl(Context context, BookController bookController) {
         this.mContext = context;
-        this.mBookController = bookController;
-        this.listBook = bookController.getBookList();
+        //this.mBookController = bookController;
+       //this.listBook = bookController.getBookList();
     }
+    */
 
-    public BookAdapter_impl(Context context, List<Book> listBook){
+    public BookAdapter_impl(Context context, ArrayList<Book> listBook){
         this.mContext = context;
         //this.mBookController = bookController;
         this.listBook = listBook;
@@ -37,12 +40,14 @@ public class BookAdapter_impl extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mBookController.getBookList().size();
+        //return mBookController.getBookList().size();
+        return listBook.size();
     }
 
     @Override
     public Book getItem(int position) {
-        return mBookController.getBookList().get(position);
+        //return mBookController.getBookList().get(position);
+        return listBook.get(position);
     }
 
     @Override

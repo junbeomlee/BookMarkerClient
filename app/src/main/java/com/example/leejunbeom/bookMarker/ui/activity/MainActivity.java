@@ -58,9 +58,9 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity implements Mainscreen{
 
-    private AppAdapter mAdapter;
+    //private AppAdapter mAdapter;
     private BookAdapter_impl bAdapter;
-    private List<Book> mBookList;
+    private ArrayList<Book> mBookList;
     private BookController mBookController;
 
     @Inject
@@ -103,11 +103,22 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
         myString.add("asd");
         myString.add("1111");
 
+
+        //Book 예시
+        this.mBookList = new ArrayList<Book>();
+        Book book1 = new Book();
+        Book book2 = new Book();
+        book1.setSymbolicRequest("1234");
+        book2.setSymbolicRequest("4567");
+        this.mBookList.add(book1);
+        this.mBookList.add(book2);
+
+
         //ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,myString);
         //listView = (SwipeMenuListView) findViewById(R.id.listView);
 
-        mBookController = new BookController();
-        bAdapter = new BookAdapter_impl(this.getApplicationContext(), mBookController);
+
+        bAdapter = new BookAdapter_impl(this.getApplicationContext(), this.mBookList);
         listView.setAdapter(bAdapter);
         SwipeMenuCreator creator = new SwipeMenuCreator_impl(this.getApplicationContext());
         listView.setMenuCreator(creator);
