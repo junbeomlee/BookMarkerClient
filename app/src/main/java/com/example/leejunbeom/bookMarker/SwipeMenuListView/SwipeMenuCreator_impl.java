@@ -32,6 +32,7 @@ public class SwipeMenuCreator_impl implements SwipeMenuCreator {
     @Override
     public void create(SwipeMenu menu) {
         // Create different menus depending on the view type
+
         /*
         switch (menu.getViewType()) {
             case 0:
@@ -52,11 +53,11 @@ public class SwipeMenuCreator_impl implements SwipeMenuCreator {
     private void createMenu1(SwipeMenu menu) {
         SwipeMenuItem item1 = new SwipeMenuItem(
                 mContext);
-        item1.setBackground(new ColorDrawable(Color.rgb(0xE5, 0x18,
-                0x5E)));
+        item1.setBackground(new ColorDrawable(Color.RED));
         item1.setWidth(dp2px(90));
         item1.setIcon(R.drawable.ic_action_discard);
         menu.addMenuItem(item1);
+
         /*
         SwipeMenuItem item2 = new SwipeMenuItem(
                 mContext);
@@ -66,6 +67,7 @@ public class SwipeMenuCreator_impl implements SwipeMenuCreator {
         item2.setIcon(R.drawable.ic_action_good);
         menu.addMenuItem(item2);
         */
+
     }
 
     private void createMenu2(SwipeMenu menu) {

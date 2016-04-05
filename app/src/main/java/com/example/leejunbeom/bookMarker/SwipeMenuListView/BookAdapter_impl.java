@@ -2,6 +2,7 @@ package com.example.leejunbeom.bookMarker.SwipeMenuListView;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -69,6 +70,8 @@ public class BookAdapter_impl extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
+
         if (convertView == null) {
             convertView = View.inflate(mContext.getApplicationContext(),
                     R.layout.item_list_app, null);
@@ -85,15 +88,16 @@ public class BookAdapter_impl extends BaseAdapter {
         BookHolder holder = (BookHolder) convertView.getTag();
         Book book = getItem(position);
         holder.book_name.setText(book.getSymbolicRequest());
-
         return convertView;
     }
 
     class BookHolder{
         TextView book_name;
+        //ImageView iv_icon;
 
         public BookHolder(View view){
             book_name = (TextView) view.findViewById(R.id.book_name);
+            //iv_icon = (ImageView) view.findViewById(R.id.iv_icon);
             view.setTag(this);
         }
     }
