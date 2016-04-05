@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -113,15 +114,49 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
         this.mBookList.add(book1);
         this.mBookList.add(book2);
 
-
-        //ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,myString);
-        //listView = (SwipeMenuListView) findViewById(R.id.listView);
-
-
         bAdapter = new BookAdapter_impl(this.getApplicationContext(), this.mBookList);
         listView.setAdapter(bAdapter);
         SwipeMenuCreator creator = new SwipeMenuCreator_impl(this.getApplicationContext());
         listView.setMenuCreator(creator);
+
+        // clickListener Impl
+        listView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
+                Book item = mBookList.get(position); // 예시
+                switch (index) {
+                    case 0:
+                        // not open
+                        // delete
+//					    delete(item);
+                        mBookList.remove(position);
+                        bAdapter.notifyDataSetChanged();
+                        Toast.makeText(getApplicationContext(),
+                                        item.getSymbolicRequest() + " is deleted",
+                                        Toast.LENGTH_LONG).show();
+                        break;
+                    /*
+                    case 1:
+                        // delete
+//					    delete(item);
+                        mBookList.remove(position);
+                        bAdapter.notifyDataSetChanged();
+                        break;
+                     */
+                }
+                return false;
+            }
+        });
+        //Long Click Listener Implement
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view,
+                                           int position, long id) {
+                Toast.makeText(getApplicationContext(), mBookList.get(position).getSymbolicRequest() + " is long clicked", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+
     }
 
     @Override
