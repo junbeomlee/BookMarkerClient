@@ -28,7 +28,6 @@ public class BookControllerTest {
         Book book = new Book();
         book.setSymbolicRequest("801이준범");
         bookController.addBook(book);
-
         assertEquals("fald book add in the list",1,bookController.getBookList().size());
         assertEquals("fail book add ", "801이준범", bookController.getBookList().get(0).getSymbolicRequest());
     }

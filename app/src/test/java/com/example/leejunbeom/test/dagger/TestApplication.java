@@ -3,7 +3,7 @@ package com.example.leejunbeom.test.dagger;
 //import com.example.leejunbeom.bookMarker.dagger.DaggerTestApplication_TestApplicationComponent;
 import com.example.leejunbeom.bookMarker.dagger.application.AppApplication;
 import com.example.leejunbeom.bookMarker.ui.activity.BookAddActivity;
-import com.example.leejunbeom.bookMarker.ui.activity.BookInfoActivity;
+import com.example.leejunbeom.bookMarker.ui.activity.NaviActivity;
 import com.example.leejunbeom.bookMarker.ui.activity.MainActivity;
 
 import javax.inject.Singleton;
@@ -23,7 +23,7 @@ public class TestApplication extends AppApplication {
     public interface TestApplicationComponent extends ApplicationComponent {
         void inject(MainActivity mainActivity);
         void inject(BookAddActivity bookAddActivity);
-        void inject(BookInfoActivity bookInfoActivity);
+        void inject(NaviActivity naviActivity);
     }
 
     private TestApplicationComponent component;

@@ -31,7 +31,7 @@ import butterknife.OnClick;
  * bookAddbutton을누르면 bookAddActivity로 넘어 간다.
  */
 
-public class MainActivity extends AppCompatActivity implements Mainscreen{
+public class MainActivity extends AppCompatActivity implements Mainscreen {
 
     @Inject
     MainPresenter mainPresenter;
@@ -73,11 +73,6 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
 
     }
 
-    @Override
-    public void deleteBook() {
-
-    }
-
     public MainPresenter getMainPresenter(){
         return this.mainPresenter;
     }
@@ -85,5 +80,17 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
     @Subscribe
     public void onSetBookList(BookController bookController){
         Toast.makeText(this,bookController.toString(),Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 }

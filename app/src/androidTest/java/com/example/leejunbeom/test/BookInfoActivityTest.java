@@ -7,7 +7,7 @@ import android.support.test.espresso.assertion.ViewAssertions;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.example.leejunbeom.bookMarker.ui.activity.BookInfoActivity;
+import com.example.leejunbeom.bookMarker.ui.activity.NaviActivity;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -29,7 +29,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 public class BookInfoActivityTest {
 
     @Rule
-    public final ActivityRule<BookInfoActivity> main = new ActivityRule<>(BookInfoActivity.class,true,false);
+    public final ActivityRule<NaviActivity> main = new ActivityRule<>(NaviActivity.class,true,false);
 
     @Test
     public void viewTest(){

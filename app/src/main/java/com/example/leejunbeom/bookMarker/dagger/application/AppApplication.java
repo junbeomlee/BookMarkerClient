@@ -4,7 +4,7 @@ import android.app.Application;
 
 import com.example.leejunbeom.bookMarker.dagger.module.AppModule;
 import com.example.leejunbeom.bookMarker.ui.activity.BookAddActivity;
-import com.example.leejunbeom.bookMarker.ui.activity.BookInfoActivity;
+import com.example.leejunbeom.bookMarker.ui.activity.NaviActivity;
 import com.example.leejunbeom.bookMarker.ui.activity.MainActivity;
 
 import javax.inject.Singleton;
@@ -21,7 +21,7 @@ public class AppApplication extends Application {
     public interface ApplicationComponent {
         void inject(MainActivity mainActivity);
         void inject(BookAddActivity bookAddActivity);
-        void inject(BookInfoActivity bookInfoActivity);
+        void inject(NaviActivity naviActivity);
     }
 
     private ApplicationComponent component;

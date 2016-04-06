@@ -4,19 +4,14 @@ import com.example.leejunbeom.bookMarker.network.jericho.Jericho;
 import com.example.leejunbeom.bookMarker.model.Book;
 import com.example.leejunbeom.bookMarker.model.BookController;
 import com.example.leejunbeom.bookMarker.ui.screen_contracts.BookAddScreen;
-import com.example.leejunbeom.bookMarker.util.html.HtmlParser;
-
-import net.htmlparser.jericho.Source;
+import com.example.leejunbeom.bookMarker.ui.screen_contracts.NaviScreen;
 
 import org.greenrobot.eventbus.EventBus;
 
 import javax.inject.Inject;
 
-import rx.Observable;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -49,10 +44,9 @@ public class BookAddPresenter_impl implements BookAddPresenter{
                         EventBus.getDefault().post(bookController);
                     }
                 });
-
-
     }
 
+    @Override
     public void finishActivity(BookAddScreen bookAddScreen) {
         bookAddScreen.finishBookAddActivity();
     }
