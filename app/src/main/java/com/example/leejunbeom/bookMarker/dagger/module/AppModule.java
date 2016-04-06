@@ -62,19 +62,17 @@ public class AppModule {
         return new BookAddPresenter_impl(jerichoImpl,bookController);
     }
 
-<<<<<<< HEAD
+
     @Provides
     @Singleton
     NaviPresenter provideNaviPresenter(BookController bookController){
         return new NaviPresenter_impl(bookController);
     }
-=======
+
     //SMLV work
     @Provides
     @Singleton
     SwipeMenuCreator provideSwipeMenuCreator(Context context) {
         return new SwipeMenuCreator_impl(context);
     }
-
->>>>>>> a53b461809e2528ffad053253b5a67384203f11e
 }

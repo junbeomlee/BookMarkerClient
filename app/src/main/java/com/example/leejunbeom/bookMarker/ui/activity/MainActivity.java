@@ -1,48 +1,30 @@
 package com.example.leejunbeom.bookMarker.ui.activity;
 
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
-import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.example.leejunbeom.bookMarker.SwipeMenuListView.SwipeMenuCreator_impl;
 import com.example.leejunbeom.bookMarker.dagger.application.AppApplication;
 import com.example.leejunbeom.bookMarker.model.Book;
 import com.example.leejunbeom.bookMarker.model.BookController;
-import com.example.leejunbeom.bookMarker.ui.presenter.MainPresenter_impl;
 import com.example.leejunbeom.bookMarker.ui.presenter.MainPresenter;
 import com.example.leejunbeom.bookMarker.ui.screen_contracts.Mainscreen;
 import com.example.leejunbeom.test.R;
-import com.example.leejunbeom.bookMarker.SwipeMenuListView.BookAdapter_impl;
+import com.example.leejunbeom.bookMarker.ui.adapter.BookAdapter_impl;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 
 import javax.inject.Inject;
 
@@ -85,41 +67,28 @@ public class MainActivity extends AppCompatActivity implements Mainscreen {
         //listView.setMenuCreator();
         ((AppApplication) getApplication()).component().inject(this);
 
-        //SMLV work
-        //listView = (SwipeMenuListView) findViewById(R.id.listView);
-
-        /*mBookList = new ArrayList<Book>();
-        Book bookExample = new Book();
-        bookExample.setSymbolicRequest("1234");
-
-        mAdapter = new AppAdapter();
-
-        listView.setAdapter(mAdapter);*/
-
-       // SwipeMenuCreator smc = new SwipeMenuCreator(this);
-        //listView.setMenuCreator(smc);
-
-
-        ArrayList<String> myString = new ArrayList<String>();
-        myString.add("asd");
-        myString.add("1111");
-
 
         //Book 예시
+        /*
         this.mBookList = new ArrayList<Book>();
         Book book1 = new Book();
         Book book2 = new Book();
         book1.setSymbolicRequest("1234");
         book2.setSymbolicRequest("4567");
         this.mBookList.add(book1);
-        this.mBookList.add(book2);
+        this.mBookList.add(book2);*/
 
         bAdapter = new BookAdapter_impl(this.getApplicationContext(), this.mBookList);
         listView.setAdapter(bAdapter);
         SwipeMenuCreator creator = new SwipeMenuCreator_impl(this.getApplicationContext());
         listView.setMenuCreator(creator);
 
-        // clickListener Impl
+        addListener();
+
+    }
+
+    public void addListener(){
+
         listView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
@@ -129,25 +98,18 @@ public class MainActivity extends AppCompatActivity implements Mainscreen {
                         // not open
                         // delete
 //					    delete(item);
-                        mBookList.remove(position);
-                        bAdapter.notifyDataSetChanged();
-                        Toast.makeText(getApplicationContext(),
-                                        item.getSymbolicRequest() + " is deleted",
-                                        Toast.LENGTH_LONG).show();
+                        //mBookList.remove(position);
+                        //bAdapter.notifyDataSetChanged();
+                        //Toast.makeText(getApplicationContext(),
+                        //        item.getSymbolicRequest() + " is deleted",
+                        //        Toast.LENGTH_LONG).show();
                         break;
-                    /*
-                    case 1:
-                        // delete
-//					    delete(item);
-                        mBookList.remove(position);
-                        bAdapter.notifyDataSetChanged();
-                        break;
-                     */
                 }
                 return false;
             }
         });
         //Long Click Listener Implement
+
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view,
@@ -156,7 +118,6 @@ public class MainActivity extends AppCompatActivity implements Mainscreen {
                 return false;
             }
         });
-
     }
 
     @Override
@@ -187,40 +148,6 @@ public class MainActivity extends AppCompatActivity implements Mainscreen {
     @Subscribe
     public void onSetBookList(BookController bookController){
         Toast.makeText(this,bookController.toString(),Toast.LENGTH_LONG).show();
-    }
-    class AppAdapter extends BaseAdapter {
-
-
-        @Override
-        public int getCount() {
-            return mBookList.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return mBookList.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            //TextView textView = new TextView();
-            //textView.setText(mBookList.get(position));
-
-            TextView textView = (TextView) convertView.findViewById(R.id.book_name);
-            textView.setText(mBookList.get(0).getSymbolicRequest());
-
-            return convertView;
-        }
-    }
-
-    private int dp2px(int dp) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
-                getResources().getDisplayMetrics());
     }
 }
 

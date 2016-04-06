@@ -1,4 +1,4 @@
-package com.example.leejunbeom.bookMarker.SwipeMenuListView;
+package com.example.leejunbeom.bookMarker.ui.adapter;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -21,33 +21,24 @@ import java.util.List;
  */
 
 public class BookAdapter_impl extends BaseAdapter {
-    private Context mContext;
-    //private BookController mBookController;
-    ArrayList<Book> listBook;
 
-    /*
-    public BookAdapter_impl(Context context, BookController bookController) {
-        this.mContext = context;
-        //this.mBookController = bookController;
-       //this.listBook = bookController.getBookList();
-    }
-    */
+    private Context mContext;
+    ArrayList<Book> listBook;
 
     public BookAdapter_impl(Context context, ArrayList<Book> listBook){
         this.mContext = context;
-        //this.mBookController = bookController;
         this.listBook = listBook;
     }
 
     @Override
     public int getCount() {
-        //return mBookController.getBookList().size();
+
         return listBook.size();
     }
 
     @Override
     public Book getItem(int position) {
-        //return mBookController.getBookList().get(position);
+
         return listBook.get(position);
     }
 
@@ -78,13 +69,6 @@ public class BookAdapter_impl extends BaseAdapter {
             new BookHolder(convertView);
         }
 
-        /*
-        ViewHolder holder = (ViewHolder) convertView.getTag();
-        ApplicationInfo item = getItem(position);
-        holder.iv_icon.setImageDrawable(item.loadIcon(mContext.getPackageManager()));
-        holder.tv_name.setText(item.loadLabel(mContext.getPackageManager()));
-        */
-
         BookHolder holder = (BookHolder) convertView.getTag();
         Book book = getItem(position);
         holder.book_name.setText(book.getSymbolicRequest());
@@ -97,21 +81,7 @@ public class BookAdapter_impl extends BaseAdapter {
 
         public BookHolder(View view){
             book_name = (TextView) view.findViewById(R.id.book_name);
-            //iv_icon = (ImageView) view.findViewById(R.id.iv_icon);
             view.setTag(this);
         }
     }
-
-    /*
-    class ViewHolder {
-        ImageView iv_icon;
-        TextView tv_name;
-
-        public ViewHolder(View view) {
-            iv_icon = (ImageView) view.findViewById(R.id.iv_icon);
-            tv_name = (TextView) view.findViewById(R.id.tv_name);
-            view.setTag(this);
-        }
-    }
-    */
 }
