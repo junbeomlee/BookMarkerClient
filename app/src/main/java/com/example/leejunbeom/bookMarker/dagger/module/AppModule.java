@@ -1,5 +1,9 @@
 package com.example.leejunbeom.bookMarker.dagger.module;
 
+import android.content.Context;
+
+import com.baoyz.swipemenulistview.SwipeMenuCreator;
+import com.example.leejunbeom.bookMarker.SwipeMenuListView.SwipeMenuCreator_impl;
 import com.example.leejunbeom.bookMarker.network.jericho.Jericho;
 import com.example.leejunbeom.bookMarker.model.Book;
 import com.example.leejunbeom.bookMarker.model.BookController;
@@ -58,9 +62,19 @@ public class AppModule {
         return new BookAddPresenter_impl(jerichoImpl,bookController);
     }
 
+<<<<<<< HEAD
     @Provides
     @Singleton
     NaviPresenter provideNaviPresenter(BookController bookController){
         return new NaviPresenter_impl(bookController);
     }
+=======
+    //SMLV work
+    @Provides
+    @Singleton
+    SwipeMenuCreator provideSwipeMenuCreator(Context context) {
+        return new SwipeMenuCreator_impl(context);
+    }
+
+>>>>>>> a53b461809e2528ffad053253b5a67384203f11e
 }
