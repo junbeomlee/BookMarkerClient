@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements Mainscreen {
     //private AppAdapter mAdapter;
     private BookAdapter_impl bAdapter;
     private ArrayList<Book> mBookList;
-    private BookController mBookController;
 
     @Inject
     MainPresenter mainPresenter;
@@ -67,22 +66,10 @@ public class MainActivity extends AppCompatActivity implements Mainscreen {
         //listView.setMenuCreator();
         ((AppApplication) getApplication()).component().inject(this);
 
-
-        //Book 예시
-        /*
-        this.mBookList = new ArrayList<Book>();
-        Book book1 = new Book();
-        Book book2 = new Book();
-        book1.setSymbolicRequest("1234");
-        book2.setSymbolicRequest("4567");
-        this.mBookList.add(book1);
-        this.mBookList.add(book2);*/
-
-        bAdapter = new BookAdapter_impl(this.getApplicationContext(), this.mBookList);
+        bAdapter = new BookAdapter_impl(this.getApplicationContext());
         listView.setAdapter(bAdapter);
         SwipeMenuCreator creator = new SwipeMenuCreator_impl(this.getApplicationContext());
         listView.setMenuCreator(creator);
-
         addListener();
 
     }
@@ -125,11 +112,17 @@ public class MainActivity extends AppCompatActivity implements Mainscreen {
         super.onResume();
     }
 
+    /**
+     * test
+     */
     @OnClick(R.id.bookAddButton)
     public void onCallClick(){
         this.mainPresenter.onBookAddButtonClick(this);
     }
 
+    /**
+     * test
+     */
     @Override
     public void launchAddBookActivity() {
         Intent intent = new Intent(this, BookAddActivity.class);
@@ -141,13 +134,26 @@ public class MainActivity extends AppCompatActivity implements Mainscreen {
 
     }
 
+
+
+    /**
+     * test
+     * @param bookController
+     */
+    @Subscribe
+    public void onSetBookList(BookController bookController){
+        this.bAdapter.setBookData(bookController.getBookList());
+        this.bAdapter.notifyDataSetChanged();
+        //Toast.makeText(this,bookController.toString(),Toast.LENGTH_LONG).show();
+    }
+
+
     public MainPresenter getMainPresenter(){
         return this.mainPresenter;
     }
 
-    @Subscribe
-    public void onSetBookList(BookController bookController){
-        Toast.makeText(this,bookController.toString(),Toast.LENGTH_LONG).show();
+    public SwipeMenuListView getListView() {
+        return listView;
     }
 }
 

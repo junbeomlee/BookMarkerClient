@@ -19,31 +19,23 @@ import rx.functions.Func1;
  */
 public class Jericho {
 
-    private final String libraryUrl="http://library.cau.ac.kr/search/DetailView.ax?";
-    private HtmlParser htmlParser;
 
-    @Inject
-    public Jericho(HtmlParser htmlParser) {
-        this.htmlParser = htmlParser;
-    }
 
-    public Observable<Book> postBook(String UrlString){
-        return Observable.just(libraryUrl+UrlString).map(new Func1<String, Book>() {
-            @Override
-            public Book call(String bookPostUrl) {
-                Source htmltoString = null;
-                try {
-                    htmltoString = new Source(new URL(bookPostUrl));
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                Book book = (Book) htmlParser.sourceToObject(htmltoString);
-                return book;
+
+
+        //private final String libraryUrl="http://library.cau.ac.kr/search/DetailView.ax?sid=1&";
+        public Source getURLtoText(String UrlString) {
+            Source source = null;
+            try {
+                source = new Source(new URL(UrlString));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        });
-    }
+            return source;
+        }
+
 
 
 }

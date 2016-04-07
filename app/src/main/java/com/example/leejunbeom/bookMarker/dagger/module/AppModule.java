@@ -48,7 +48,7 @@ public class AppModule {
     @Provides
     @Singleton
     Jericho provideJericho(HtmlParser htmlParser){
-        return new Jericho(htmlParser);
+        return new Jericho();
     }
     @Provides
     @Singleton

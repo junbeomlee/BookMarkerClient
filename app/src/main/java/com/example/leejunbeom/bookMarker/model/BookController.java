@@ -10,9 +10,9 @@ import java.util.List;
  */
 public class BookController {
 
-    private List<Book> bookList=new ArrayList<Book>();
+    private ArrayList<Book> bookList=new ArrayList<Book>();
 
-    public List<Book> getBookList(){
+    public ArrayList<Book> getBookList(){
          return this.bookList;
     }
 
