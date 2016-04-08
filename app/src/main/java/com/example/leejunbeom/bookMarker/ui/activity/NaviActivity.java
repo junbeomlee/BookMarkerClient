@@ -6,6 +6,7 @@ import android.widget.Button;
 
 import com.example.leejunbeom.bookMarker.dagger.application.AppApplication;
 import com.example.leejunbeom.bookMarker.ui.screen_contracts.BookInfoScreen;
+import com.example.leejunbeom.bookMarker.ui.screen_contracts.NaviScreen;
 import com.example.leejunbeom.test.R;
 
 import butterknife.Bind;
@@ -22,7 +23,7 @@ import butterknife.OnClick;
  * 서치버튼을 누르면 custom카메라 액티비티를 띄워서 서칭을 시작한다.
  */
 
-public class BookInfoActivity extends AppCompatActivity implements BookInfoScreen{
+public class NaviActivity extends AppCompatActivity implements NaviScreen {
 
     @Bind(R.id.searchButton)
     Button searchButton;

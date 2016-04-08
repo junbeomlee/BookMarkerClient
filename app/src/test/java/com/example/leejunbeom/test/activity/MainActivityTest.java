@@ -3,6 +3,7 @@ package com.example.leejunbeom.test.activity;
 import android.content.Intent;
 import android.widget.Button;
 
+import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.example.leejunbeom.bookMarker.model.Book;
 import com.example.leejunbeom.bookMarker.model.BookController;
 import com.example.leejunbeom.bookMarker.ui.activity.BookAddActivity;
@@ -16,6 +17,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.RuntimeEnvironment;
@@ -25,10 +27,13 @@ import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowHandler;
 import org.robolectric.shadows.ShadowToast;
 
+import java.util.ArrayList;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.when;
 import static org.robolectric.Shadows.shadowOf;
 
 /**
@@ -65,7 +70,6 @@ public class MainActivityTest {
         assertThat("ADDBook activtiy start fail",startedIntent.getComponent().getClassName(),
                 equalTo(BookAddActivity.class.getName()));
     }
-
     /*@Test
     public void should_toast_sizeof_booklist_eventbus_test(){
 
@@ -80,4 +84,23 @@ public class MainActivityTest {
         ShadowHandler.idleMainLooper();
         assertEquals(ShadowToast.getTextOfLatestToast(), bookController.toString());
     }*/
+
+    @Test
+    public void should_bookListdata_change_test(){
+        BookController bookControllerMock=Mockito.mock(BookController.class);
+
+
+        ArrayList<Book> bookArrayList=new ArrayList<Book>();
+        Book book1 = new Book();
+        Book book2 = new Book();
+        book1.setSymbolicRequest("1234");
+        book2.setSymbolicRequest("4567");
+        bookArrayList.add(book1);
+        bookArrayList.add(book2);
+        when(bookControllerMock.getBookList()).thenReturn(bookArrayList);
+        mainActivity.onSetBookList(bookControllerMock);
+
+        SwipeMenuListView listView=mainActivity.getListView();
+        assertEquals("update listView fail", 2, listView.getCount());
+    }
 }

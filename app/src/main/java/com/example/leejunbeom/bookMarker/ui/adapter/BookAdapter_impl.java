@@ -18,12 +18,11 @@ import java.util.ArrayList;
 public class BookAdapter_impl extends BaseAdapter {
 
     private Context mContext;
-    ArrayList<Book> listBook;
+    ArrayList<Book> listBook=new ArrayList<Book>();
 
 
     public BookAdapter_impl(Context applicationContext) {
         this.mContext=applicationContext;
-        this.listBook= new ArrayList<Book>();
     }
 
     public void setBookData(ArrayList<Book> listBook){

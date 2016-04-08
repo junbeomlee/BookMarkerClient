@@ -68,18 +68,7 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
         //listView.setMenuCreator();
         ((AppApplication) getApplication()).component().inject(this);
 
-
-        //Book 예시
-        this.mBookList = new ArrayList<Book>();
-        Book book1 = new Book();
-        Book book2 = new Book();
-        book1.setSymbolicRequest("1234");
-        book2.setSymbolicRequest("4567");
-        this.mBookList.add(book1);
-        this.mBookList.add(book2);
-
         bAdapter = new BookAdapter_impl(this.getApplicationContext());
-        bAdapter.setBookData(mBookList);
         listView.setAdapter(bAdapter);
         SwipeMenuCreator creator = new SwipeMenuCreator_impl(this.getApplicationContext());
         listView.setMenuCreator(creator);
@@ -129,6 +118,9 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
         this.mainPresenter.onBookAddButtonClick(this);
     }
 
+    /**
+     * test
+     */
     @Override
     public void launchAddBookActivity() {
         Intent intent = new Intent(this, BookAddActivity.class);
@@ -151,11 +143,11 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
 
     @Subscribe
     public void onSetBookList(BookController bookController){
-        //Toast.makeText(this,bookController.toString(),Toast.LENGTH_LONG).show();
         this.bAdapter.setBookData(bookController.getBookList());
         this.bAdapter.notifyDataSetChanged();
-       // listView.setAdapter(bAdapter);
-        //SwipeMenuCreator creator = new SwipeMenuCreator_impl(this.getApplicationContext());
-        //listView.setMenuCreator(creator);
+    }
+
+    public SwipeMenuListView getListView() {
+        return listView;
     }
 }
