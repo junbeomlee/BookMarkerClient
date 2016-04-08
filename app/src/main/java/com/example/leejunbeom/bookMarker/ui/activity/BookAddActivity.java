@@ -11,8 +11,8 @@ import android.widget.Toast;
 import com.example.leejunbeom.bookMarker.dagger.application.AppApplication;
 import com.example.leejunbeom.bookMarker.model.Book;
 import com.example.leejunbeom.bookMarker.ui.presenter.BookAddPresenter;
+import com.example.leejunbeom.bookMarker.ui.presenter.BookAddPresenter_impl;
 import com.example.leejunbeom.bookMarker.ui.screen_contracts.BookAddScreen;
-import com.example.leejunbeom.bookMarker.ui.screen_contracts.NaviScreen;
 import com.example.leejunbeom.bookMarker.util.log.BMLogger;
 import com.example.leejunbeom.test.R;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -33,7 +33,7 @@ import butterknife.OnClick;
  * 성공할 경우 network콜을 통해 html소스를 book객체로 변환후 book정보를 띄운다.
  * BookController에 book을 저장한다.
  */
-public class BookAddActivity extends AppCompatActivity implements BookAddScreen {
+public class BookAddActivity extends AppCompatActivity implements BookAddScreen{
 
     @Inject
     BookAddPresenter bookAddPresenter;
@@ -87,6 +87,6 @@ public class BookAddActivity extends AppCompatActivity implements BookAddScreen 
     @Subscribe
     public void onSetBookInfo(Book book){
         this.bookTitieView.setText(book.getTitileAuthorsType());
-        Log.d(BMLogger.LOG_TAG, book.toString());
+        Log.d(BMLogger.LOG_TAG,book.toString());
     }
 }

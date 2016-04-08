@@ -1,20 +1,15 @@
 package com.example.leejunbeom.bookMarker.ui.adapter;
 
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.leejunbeom.bookMarker.model.Book;
-import com.example.leejunbeom.bookMarker.model.BookController;
 import com.example.leejunbeom.test.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by noduritoto on 2016-04-04.

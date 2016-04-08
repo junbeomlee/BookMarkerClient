@@ -62,18 +62,22 @@ public class MainActivityTest {
 
         //then
         Intent startedIntent = shadowActivity.getNextStartedActivity();
-        assertThat("ADDBook activtiy start fail", startedIntent.getComponent().getClassName(),
+        assertThat("ADDBook activtiy start fail",startedIntent.getComponent().getClassName(),
                 equalTo(BookAddActivity.class.getName()));
     }
 
-    @Test
-    public void should_listview_update_test(){
+    /*@Test
+    public void should_toast_sizeof_booklist_eventbus_test(){
+
+        //EventBus.getDefault().register(this.mainActivity);
         BookController bookController=new BookController();
         Book book= new Book();
         book.setSymbolicRequest("801이준범");
         bookController.addBook(book);
 
         EventBus.getDefault().post(bookController);
-        assertEquals("listview update fail",1,mainActivity.getListView().getCount());
-    }
+
+        ShadowHandler.idleMainLooper();
+        assertEquals(ShadowToast.getTextOfLatestToast(), bookController.toString());
+    }*/
 }

@@ -1,8 +1,6 @@
 package com.baoyz.swipemenulistview;
 
 
-import android.content.Context;
-
 /**
  * 
  * @author baoyz
@@ -12,5 +10,4 @@ import android.content.Context;
 public interface SwipeMenuCreator {
 
 	void create(SwipeMenu menu);
-	//void create(SwipeMenu menu, Context context);
 }

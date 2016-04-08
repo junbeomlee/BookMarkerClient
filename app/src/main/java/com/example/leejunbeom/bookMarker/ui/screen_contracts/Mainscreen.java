@@ -6,4 +6,5 @@ package com.example.leejunbeom.bookMarker.ui.screen_contracts;
 public interface Mainscreen {
     void launchAddBookActivity();
     void launchBookInfoActivity();
+    void deleteBook();
 }

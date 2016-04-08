@@ -1,17 +1,12 @@
 package com.example.leejunbeom.test.adapter;
 
-import android.app.Activity;
 import android.view.View;
 
 import com.example.leejunbeom.bookMarker.model.Book;
 import com.example.leejunbeom.bookMarker.ui.activity.MainActivity;
 import com.example.leejunbeom.bookMarker.ui.adapter.BookAdapter_impl;
 import com.example.leejunbeom.test.BuildConfig;
-import com.example.leejunbeom.test.testObjectSets.eventBus.test_event;
-import com.example.leejunbeom.test.testObjectSets.eventBus.test_eventBusSubscriber;
 
-import org.greenrobot.eventbus.EventBus;
-import org.json.JSONException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +15,6 @@ import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

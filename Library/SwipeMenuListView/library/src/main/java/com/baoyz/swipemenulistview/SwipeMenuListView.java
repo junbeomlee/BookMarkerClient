@@ -287,7 +287,6 @@ public class SwipeMenuListView extends ListView {
         this.mMenuCreator = menuCreator;
     }
 
-
     public void setOnMenuItemClickListener(
             OnMenuItemClickListener onMenuItemClickListener) {
         this.mOnMenuItemClickListener = onMenuItemClickListener;

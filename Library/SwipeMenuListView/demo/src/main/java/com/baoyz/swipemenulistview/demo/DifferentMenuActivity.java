@@ -24,7 +24,6 @@
 package com.baoyz.swipemenulistview.demo;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -52,15 +51,14 @@ public class DifferentMenuActivity  extends Activity {
     private List<ApplicationInfo> mAppList;
     private AppAdapter mAdapter;
 
-    // eventbus, butterknife, dagger2
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list);  // butterknife
+        setContentView(R.layout.activity_list);
 
         mAppList = getPackageManager().getInstalledApplications(0);
 
-        SwipeMenuListView listView = (SwipeMenuListView) findViewById(R.id.listView); // butterknife
+        SwipeMenuListView listView = (SwipeMenuListView) findViewById(R.id.listView);
         mAdapter = new AppAdapter();
         listView.setAdapter(mAdapter);
 
@@ -81,9 +79,6 @@ public class DifferentMenuActivity  extends Activity {
                         createMenu3(menu);
                         break;
                 }
-            }
-            public void create(SwipeMenu menu, Context context){
-                System.out.print("we dont use this method..");
             }
 
             private void createMenu1(SwipeMenu menu) {
@@ -137,8 +132,7 @@ public class DifferentMenuActivity  extends Activity {
                 menu.addMenuItem(item2);
             }
         };
-
-        // set creator, creator를 위해 이너무명클래스선언
+        // set creator
         listView.setMenuCreator(creator);
 
         // step 2. listener item click event
@@ -152,7 +146,7 @@ public class DifferentMenuActivity  extends Activity {
                         break;
                     case 1:
                         // delete
-//					    delete(item);
+//					delete(item);
                         mAppList.remove(position);
                         mAdapter.notifyDataSetChanged();
                         break;

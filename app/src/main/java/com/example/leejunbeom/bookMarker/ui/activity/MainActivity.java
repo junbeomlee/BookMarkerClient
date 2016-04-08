@@ -16,10 +16,11 @@ import com.example.leejunbeom.bookMarker.SwipeMenuListView.SwipeMenuCreator_impl
 import com.example.leejunbeom.bookMarker.dagger.application.AppApplication;
 import com.example.leejunbeom.bookMarker.model.Book;
 import com.example.leejunbeom.bookMarker.model.BookController;
+import com.example.leejunbeom.bookMarker.ui.adapter.BookAdapter_impl;
+import com.example.leejunbeom.bookMarker.ui.presenter.MainPresenter_impl;
 import com.example.leejunbeom.bookMarker.ui.presenter.MainPresenter;
 import com.example.leejunbeom.bookMarker.ui.screen_contracts.Mainscreen;
 import com.example.leejunbeom.test.R;
-import com.example.leejunbeom.bookMarker.ui.adapter.BookAdapter_impl;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -39,15 +40,14 @@ import butterknife.OnClick;
  * bookAddbutton을누르면 bookAddActivity로 넘어 간다.
  */
 
-public class MainActivity extends AppCompatActivity implements Mainscreen {
+public class MainActivity extends AppCompatActivity implements Mainscreen{
 
-    //private AppAdapter mAdapter;
+
     private BookAdapter_impl bAdapter;
     private ArrayList<Book> mBookList;
 
     @Inject
     MainPresenter mainPresenter;
-    //SwipeMenuCreator smc;
 
     @Bind(R.id.bookAddButton)
     Button bookAddButton;
@@ -55,7 +55,8 @@ public class MainActivity extends AppCompatActivity implements Mainscreen {
     @Bind(R.id.listView)
     SwipeMenuListView listView;
 
-   // private GoogleApiClient client;
+
+    // private GoogleApiClient client;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,15 +64,26 @@ public class MainActivity extends AppCompatActivity implements Mainscreen {
         //injector.get().inject(this);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
+        //SwipeMenuListView listView;
         //listView.setMenuCreator();
         ((AppApplication) getApplication()).component().inject(this);
 
+
+        //Book 예시
+        this.mBookList = new ArrayList<Book>();
+        Book book1 = new Book();
+        Book book2 = new Book();
+        book1.setSymbolicRequest("1234");
+        book2.setSymbolicRequest("4567");
+        this.mBookList.add(book1);
+        this.mBookList.add(book2);
+
         bAdapter = new BookAdapter_impl(this.getApplicationContext());
+        bAdapter.setBookData(mBookList);
         listView.setAdapter(bAdapter);
         SwipeMenuCreator creator = new SwipeMenuCreator_impl(this.getApplicationContext());
         listView.setMenuCreator(creator);
         addListener();
-
     }
 
     public void addListener(){
@@ -79,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements Mainscreen {
         listView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
-                Book item = mBookList.get(position); // 예시
+                //Book item = mBookList.get(position); // 예시
                 switch (index) {
                     case 0:
                         // not open
@@ -112,17 +124,11 @@ public class MainActivity extends AppCompatActivity implements Mainscreen {
         super.onResume();
     }
 
-    /**
-     * test
-     */
     @OnClick(R.id.bookAddButton)
     public void onCallClick(){
         this.mainPresenter.onBookAddButtonClick(this);
     }
 
-    /**
-     * test
-     */
     @Override
     public void launchAddBookActivity() {
         Intent intent = new Intent(this, BookAddActivity.class);
@@ -134,27 +140,22 @@ public class MainActivity extends AppCompatActivity implements Mainscreen {
 
     }
 
+    @Override
+    public void deleteBook() {
 
-
-    /**
-     * test
-     * @param bookController
-     */
-    @Subscribe
-    public void onSetBookList(BookController bookController){
-        this.bAdapter.setBookData(bookController.getBookList());
-        this.bAdapter.notifyDataSetChanged();
-        //Toast.makeText(this,bookController.toString(),Toast.LENGTH_LONG).show();
     }
-
 
     public MainPresenter getMainPresenter(){
         return this.mainPresenter;
     }
 
-    public SwipeMenuListView getListView() {
-        return listView;
+    @Subscribe
+    public void onSetBookList(BookController bookController){
+        //Toast.makeText(this,bookController.toString(),Toast.LENGTH_LONG).show();
+        this.bAdapter.setBookData(bookController.getBookList());
+        this.bAdapter.notifyDataSetChanged();
+       // listView.setAdapter(bAdapter);
+        //SwipeMenuCreator creator = new SwipeMenuCreator_impl(this.getApplicationContext());
+        //listView.setMenuCreator(creator);
     }
 }
-
-
