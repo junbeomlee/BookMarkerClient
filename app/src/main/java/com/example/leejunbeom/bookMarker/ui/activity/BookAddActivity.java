@@ -58,6 +58,7 @@ public class BookAddActivity extends AppCompatActivity implements BookAddScreen{
         EventBus.getDefault().register(this);
     }
 
+    //test
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 
@@ -79,14 +80,33 @@ public class BookAddActivity extends AppCompatActivity implements BookAddScreen{
         bookAddPresenter.finishActivity(this);
     }
 
+
+    //test
     @Override
     public void finishBookAddActivity() {
         finish();
     }
 
+
+    //test
     @Subscribe
     public void onSetBookInfo(Book book){
         this.bookTitieView.setText(book.getTitileAuthorsType());
-        Log.d(BMLogger.LOG_TAG,book.toString());
+        Log.d(BMLogger.LOG_TAG, book.toString());
+    }
+
+    //test
+    public BookAddPresenter getBookAddPresenter() {
+        return bookAddPresenter;
+    }
+
+    //test
+    public Button getConfirmButton() {
+        return confirmButton;
+    }
+
+    //test
+    public TextView getBookTitieView() {
+        return bookTitieView;
     }
 }

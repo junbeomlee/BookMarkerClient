@@ -65,20 +65,6 @@ public class BookAddActivityTest {
     }
 
     @Test
-    public void should_qrcode_Recognition_work__test() throws ClassNotFoundException {
-
-        /*Intent intent = shadowOf(bookAddActivity).getNextStartedActivity();
-
-        shadowOf(bookAddActivity).receiveResult(
-                intent,
-                Activity.RESULT_OK,
-                new Intent().putExtra(com.google.zxing.client.android.Intents.Scan.RESULT, "leebduk@gmail.com"));
-
-        ShadowHandler.idleMainLooper();
-        assertEquals(ShadowToast.getTextOfLatestToast(), "leebduk@gmail.com");*/
-    }
-
-    @Test
     public void should_getbookinfo_fromhtml_and_parsetoBook_test(){
 
         Intent intent = shadowOf(bookAddActivity).getNextStartedActivity();
@@ -122,11 +108,10 @@ public class BookAddActivityTest {
 
     @Test
     public void should_gui_set_properly_test(){
-        Button confirmButton = (Button) this.bookAddActivity.findViewById(R.id.confirmButton);
-        assertNotNull("confirmButton init fail", confirmButton);
 
-        TextView bookTitle = (TextView) this.bookAddActivity.findViewById(R.id.bookTitle);
-        assertNotNull("bookTitle init fail", bookTitle);
+        assertNotNull("confirmButton init fail", bookAddActivity.getConfirmButton());
+        assertNotNull("bookTitle init fail", bookAddActivity.getBookTitieView());
+        assertNotNull("mainpresenter init fail", bookAddActivity.getBookAddPresenter());
     }
 
     @Test

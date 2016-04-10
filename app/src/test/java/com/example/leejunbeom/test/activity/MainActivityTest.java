@@ -44,7 +44,6 @@ import static org.robolectric.Shadows.shadowOf;
 @Config(constants = BuildConfig.class, sdk = 21,application = TestApplication.class)
 public class MainActivityTest {
 
-
     MainActivity mainActivity;
     Button bookAddButton;
     @Before
@@ -56,6 +55,13 @@ public class MainActivityTest {
     @After
     public void tearDown() {
 
+    }
+
+    @Test
+    public void should_mainactivity_setUp_properly_test(){
+        assertNotNull("fail setup listview", mainActivity.getListView());
+        assertNotNull("fail setUp bookaddbutton",mainActivity.getAddButton());
+        assertNotNull("fail setup mainpresenter",mainActivity.getMainPresenter());
     }
     @Test
     public void should_bookAddactivity_start_test() {

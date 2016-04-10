@@ -43,6 +43,7 @@ public class NaviActivity extends AppCompatActivity implements NaviScreen{
     @Inject
     NaviPresenter naviPresenter;
 
+    //test
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,39 +73,31 @@ public class NaviActivity extends AppCompatActivity implements NaviScreen{
     @Override
     protected void onStart() {
         super.onStart();
-        //EventBus.getDefault().register(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        //       EventBus.getDefault().unregister(this);
     }
 
 
-
+    //test
     public Button getSearchButton() {
         return searchButton;
     }
 
-    public void setSearchButton(Button searchButton) {
-        this.searchButton = searchButton;
-    }
-
+    //test
     public TextView getSymbolicRequestText() {
         return symbolicRequestText;
     }
 
-    public void setSymbolicRequestText(TextView symbolicRequestText) {
-        this.symbolicRequestText = symbolicRequestText;
-    }
-
+    //test
     public String getSymbolicRequest() {
         return symbolicRequest;
     }
 
-    public void setSymbolicRequest(String symbolicRequest) {
-        this.symbolicRequest = symbolicRequest;
+    //test
+    public NaviPresenter getNaviPresenter() {
+        return naviPresenter;
     }
-
 }

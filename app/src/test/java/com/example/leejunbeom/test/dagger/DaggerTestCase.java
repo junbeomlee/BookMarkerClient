@@ -23,9 +23,7 @@ public class DaggerTestCase {
     @Component(modules = {AppModule.class})
     public interface TestComponent{
         void inject(MainPresenterTest mainPresenterTest);
-
         void inject(NaviPresenterTest naviPresenterTest);
-
         void inject(BookAddPresenterTest bookAddPresenterTest);
     }
     public static TestComponent getTestComponent(){

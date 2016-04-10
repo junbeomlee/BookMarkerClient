@@ -20,7 +20,7 @@ public class NaviPresenter_impl implements NaviPresenter{
 
     @Override
     public void onBookSearchButtonClick(NaviScreen naviScreen) {
-
+        naviScreen.launchSearchActivity();
     }
 
     @Override

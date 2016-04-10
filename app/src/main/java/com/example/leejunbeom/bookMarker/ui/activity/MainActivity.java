@@ -153,12 +153,19 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
         this.bAdapter.notifyDataSetChanged();
     }
 
+    //test
     public SwipeMenuListView getListView() {
         return listView;
     }
 
+    //test
     public MainPresenter getMainPresenter(){
         return this.mainPresenter;
+    }
+
+    // test
+    public Button getAddButton() {
+        return bookAddButton;
     }
 }
 
