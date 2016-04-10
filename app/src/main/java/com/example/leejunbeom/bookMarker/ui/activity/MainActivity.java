@@ -78,19 +78,13 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
                 //Book item = mBookList.get(position); // 예시
                 switch (index) {
                     case 0:
-                        // not open
-                        // delete
-//					    delete(item);
-                        //mBookList.remove(position);
-                        //bAdapter.notifyDataSetChanged();
-                        //Toast.makeText(getApplicationContext(),
-                        //        item.getSymbolicRequest() + " is deleted",
-                        //        Toast.LENGTH_LONG).show();
+                        onCallMenuItemClick(position);
                         break;
                 }
                 return false;
             }
         });
+
         //Long Click Listener Implement
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -98,18 +92,11 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
                 onCallItemClick(position);
             }
         });
-
-        //
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view,
-                                           int position, long id) {
-                //Toast.makeText(getApplicationContext(), mBookList.get(position).getSymbolicRequest() + " is long clicked", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
     }
 
+    private void onCallMenuItemClick(int position){
+        this.mainPresenter.onListViewMenuItemClick(position);
+    }
     private void onCallItemClick(int position){
         this.mainPresenter.onListViewItemClick(position, this);
     }
@@ -135,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
         startActivity(intent);
     }
 
+    //test
     @Override
     public void launchNaviActivity(Book book) {
         Intent intent = new Intent(this,NaviActivity.class);

@@ -4,6 +4,7 @@ import com.example.leejunbeom.bookMarker.dagger.application.AppApplication;
 import com.example.leejunbeom.bookMarker.ui.activity.BookAddActivity;
 import com.example.leejunbeom.bookMarker.ui.activity.NaviActivity;
 import com.example.leejunbeom.bookMarker.ui.activity.MainActivity;
+import com.example.leejunbeom.bookMarker.ui.activity.SearchActivity;
 import com.example.leejunbeom.test.presenter.MainPresenterTest;
 
 import javax.inject.Singleton;
@@ -23,6 +24,7 @@ public class TestApplication extends AppApplication {
         void inject(MainActivity mainActivity);
         void inject(BookAddActivity bookAddActivity);
         void inject(NaviActivity naviActivity);
+        void inject(SearchActivity searchActivity);
     }
 
     private TestApplicationComponent component;

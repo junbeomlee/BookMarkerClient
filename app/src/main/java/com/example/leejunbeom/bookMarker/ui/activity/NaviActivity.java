@@ -58,6 +58,7 @@ public class NaviActivity extends AppCompatActivity implements NaviScreen{
         naviPresenter.getMap(symbolicRequest);
     }
 
+
     @OnClick(R.id.searchButton)
     public void onSearchButton(){
         naviPresenter.onBookSearchButtonClick(this);

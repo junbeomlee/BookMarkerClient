@@ -5,6 +5,8 @@ import com.example.leejunbeom.bookMarker.model.BookController;
 import com.example.leejunbeom.bookMarker.ui.activity.MainActivity;
 import com.example.leejunbeom.bookMarker.ui.screen_contracts.Mainscreen;
 
+import org.greenrobot.eventbus.EventBus;
+
 import javax.inject.Inject;
 
 /**
@@ -27,6 +29,12 @@ public class MainPresenter_impl implements MainPresenter {
     public void onListViewItemClick(int position, Mainscreen mainscreen) {
         Book book=this.bookController.getItem(position);
         mainscreen.launchNaviActivity(book);
+    }
+
+    @Override
+    public void onListViewMenuItemClick(int position) {
+        this.bookController.deleteItem(position);
+        EventBus.getDefault().post(bookController);
     }
 
     public BookController getBookController() {

@@ -12,15 +12,23 @@ public class BookController {
 
     private ArrayList<Book> bookList=new ArrayList<Book>();
 
+    //test
     public ArrayList<Book> getBookList(){
          return this.bookList;
     }
 
+    //test
     public void addBook(Book book){
         this.bookList.add(book);
     }
 
+    //test
     public Book getItem(int position) {
         return this.bookList.get(position);
+    }
+
+    //test
+    public void deleteItem(int position) {
+        this.bookList.remove(position);
     }
 }
