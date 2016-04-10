@@ -56,4 +56,8 @@ public class BookAddPresenter_impl implements BookAddPresenter{
     public void finishActivity(BookAddScreen bookAddScreen) {
         bookAddScreen.finishBookAddActivity();
     }
+
+    public BookController getBookController() {
+        return bookController;
+    }
 }

@@ -19,4 +19,8 @@ public class BookController {
     public void addBook(Book book){
         this.bookList.add(book);
     }
+
+    public Book getItem(int position) {
+        return this.bookList.get(position);
+    }
 }

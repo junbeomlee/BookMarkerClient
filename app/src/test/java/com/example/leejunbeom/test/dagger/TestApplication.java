@@ -4,6 +4,7 @@ import com.example.leejunbeom.bookMarker.dagger.application.AppApplication;
 import com.example.leejunbeom.bookMarker.ui.activity.BookAddActivity;
 import com.example.leejunbeom.bookMarker.ui.activity.NaviActivity;
 import com.example.leejunbeom.bookMarker.ui.activity.MainActivity;
+import com.example.leejunbeom.test.presenter.MainPresenterTest;
 
 import javax.inject.Singleton;
 

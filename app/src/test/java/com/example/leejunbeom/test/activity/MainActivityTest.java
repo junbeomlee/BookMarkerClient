@@ -70,26 +70,11 @@ public class MainActivityTest {
         assertThat("ADDBook activtiy start fail",startedIntent.getComponent().getClassName(),
                 equalTo(BookAddActivity.class.getName()));
     }
-    /*@Test
-    public void should_toast_sizeof_booklist_eventbus_test(){
-
-        //EventBus.getDefault().register(this.mainActivity);
-        BookController bookController=new BookController();
-        Book book= new Book();
-        book.setSymbolicRequest("801이준범");
-        bookController.addBook(book);
-
-        EventBus.getDefault().post(bookController);
-
-        ShadowHandler.idleMainLooper();
-        assertEquals(ShadowToast.getTextOfLatestToast(), bookController.toString());
-    }*/
 
     @Test
     public void should_bookListdata_change_test(){
+
         BookController bookControllerMock=Mockito.mock(BookController.class);
-
-
         ArrayList<Book> bookArrayList=new ArrayList<Book>();
         Book book1 = new Book();
         Book book2 = new Book();

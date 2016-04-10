@@ -7,6 +7,8 @@ import com.example.leejunbeom.bookMarker.ui.presenter.BookAddPresenter;
 import com.example.leejunbeom.bookMarker.ui.presenter.BookAddPresenter_impl;
 import com.example.leejunbeom.bookMarker.ui.presenter.MainPresenter;
 import com.example.leejunbeom.bookMarker.ui.presenter.MainPresenter_impl;
+import com.example.leejunbeom.bookMarker.ui.presenter.NaviPresenter;
+import com.example.leejunbeom.bookMarker.ui.presenter.NaviPresenter_impl;
 import com.example.leejunbeom.bookMarker.util.html.HtmlBookParser;
 import com.example.leejunbeom.bookMarker.util.html.HtmlParser;
 
@@ -25,12 +27,6 @@ public class TestModule {
 
     @Provides
     @Singleton
-    MainPresenter provideMainPresenter(){
-        return new MainPresenter_impl();
-    }
-
-    @Provides
-    @Singleton
     HtmlParser provideHtmlParser(){
         return new HtmlBookParser();
     }
@@ -46,9 +42,22 @@ public class TestModule {
         return new BookController();
     }
 
+
+    @Provides
+    @Singleton
+    MainPresenter provideMainPresenter(BookController bookController){
+        return new MainPresenter_impl(bookController);
+    }
+
     @Provides
     @Singleton
     BookAddPresenter provideBookAddPresenter(Jericho jerichoImpl,BookController bookController){
         return new BookAddPresenter_impl(jerichoImpl,bookController);
+    }
+
+    @Provides
+    @Singleton
+    NaviPresenter provideNaviPresenter(BookController bookController){
+        return new NaviPresenter_impl(bookController);
     }
 }

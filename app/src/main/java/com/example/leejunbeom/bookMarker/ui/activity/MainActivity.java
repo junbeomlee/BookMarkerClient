@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
@@ -17,15 +16,12 @@ import com.example.leejunbeom.bookMarker.dagger.application.AppApplication;
 import com.example.leejunbeom.bookMarker.model.Book;
 import com.example.leejunbeom.bookMarker.model.BookController;
 import com.example.leejunbeom.bookMarker.ui.adapter.BookAdapter_impl;
-import com.example.leejunbeom.bookMarker.ui.presenter.MainPresenter_impl;
 import com.example.leejunbeom.bookMarker.ui.presenter.MainPresenter;
 import com.example.leejunbeom.bookMarker.ui.screen_contracts.Mainscreen;
 import com.example.leejunbeom.test.R;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
-import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -42,9 +38,7 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity implements Mainscreen{
 
-
     private BookAdapter_impl bAdapter;
-    private ArrayList<Book> mBookList;
 
     @Inject
     MainPresenter mainPresenter;
@@ -75,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
         addListener();
     }
 
+
     public void addListener(){
 
         listView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
@@ -97,15 +92,26 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
             }
         });
         //Long Click Listener Implement
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                onCallItemClick(position);
+            }
+        });
 
+        //
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view,
                                            int position, long id) {
-                Toast.makeText(getApplicationContext(), mBookList.get(position).getSymbolicRequest() + " is long clicked", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), mBookList.get(position).getSymbolicRequest() + " is long clicked", Toast.LENGTH_SHORT).show();
                 return false;
             }
         });
+    }
+
+    private void onCallItemClick(int position){
+        this.mainPresenter.onListViewItemClick(position, this);
     }
 
     @Override
@@ -113,10 +119,12 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
         super.onResume();
     }
 
+
     @OnClick(R.id.bookAddButton)
     public void onCallClick(){
         this.mainPresenter.onBookAddButtonClick(this);
     }
+
 
     /**
      * test
@@ -128,19 +136,17 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
     }
 
     @Override
-    public void launchBookInfoActivity() {
-
+    public void launchNaviActivity(Book book) {
+        Intent intent = new Intent(this,NaviActivity.class);
+        intent.putExtra("symbolicRequest",book.getSymbolicRequest());
+        startActivity(intent);
     }
 
-    @Override
-    public void deleteBook() {
 
-    }
-
-    public MainPresenter getMainPresenter(){
-        return this.mainPresenter;
-    }
-
+    /**
+     * test
+     * @param bookController
+     */
     @Subscribe
     public void onSetBookList(BookController bookController){
         this.bAdapter.setBookData(bookController.getBookList());
@@ -150,4 +156,9 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
     public SwipeMenuListView getListView() {
         return listView;
     }
+
+    public MainPresenter getMainPresenter(){
+        return this.mainPresenter;
+    }
 }
+

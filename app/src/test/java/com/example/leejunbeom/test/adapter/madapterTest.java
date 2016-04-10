@@ -32,6 +32,7 @@ public class madapterTest {
     private MainActivity mainActivity;
     private Book book1;
     private Book book2;
+
     @Before
     public void setUp(){
         bookList = new ArrayList<Book>();
