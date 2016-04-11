@@ -3,9 +3,8 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="distributionType" value="LOCAL" />
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleHome" value="D:\AndroidStudio\Android\Android Studio\gradle\gradle-2.8" />
         <option name="gradleJvm" value="1.8" />
         <option name="modules">
           <set>
@@ -14,6 +13,9 @@
             <option value="$PROJECT_DIR$/Library/SwipeMenuListView/demo" />
             <option value="$PROJECT_DIR$/Library/SwipeMenuListView/library" />
             <option value="$PROJECT_DIR$/Library/opencv" />
+            <option value="$PROJECT_DIR$/Library/tess-two/eyes-two" />
+            <option value="$PROJECT_DIR$/Library/tess-two/tess-two" />
+            <option value="$PROJECT_DIR$/Library/tess-two/tess-two-test" />
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>
