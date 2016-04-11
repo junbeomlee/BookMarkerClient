@@ -94,4 +94,9 @@ public class MainActivityTest {
         SwipeMenuListView listView=mainActivity.getListView();
         assertEquals("update listView fail", 2, listView.getCount());
     }
+
+    @Test
+    public void test_should_toast_message_when_network_is_unable() throws Exception {
+        //mainActivity
+    }
 }

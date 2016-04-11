@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.example.leejunbeom.bookMarker.dagger.application.AppApplication;
 import com.example.leejunbeom.bookMarker.model.Book;
+import com.example.leejunbeom.bookMarker.network.Network_impl;
 import com.example.leejunbeom.bookMarker.ui.presenter.BookAddPresenter;
 import com.example.leejunbeom.bookMarker.ui.presenter.BookAddPresenter_impl;
 import com.example.leejunbeom.bookMarker.ui.screen_contracts.BookAddScreen;
@@ -67,7 +68,10 @@ public class BookAddActivity extends AppCompatActivity implements BookAddScreen{
             String data = scanResult.getContents();
             Toast.makeText(this, data,
                   Toast.LENGTH_LONG).show();
-            this.bookAddPresenter.getBookData(data);
+
+            bookAddPresenter.finishActivity(this);
+
+
         }else{
             // failed to detect qrCode
             bookAddPresenter.finishActivity(this);

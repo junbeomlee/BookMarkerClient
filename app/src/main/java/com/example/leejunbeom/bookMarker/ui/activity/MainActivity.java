@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
@@ -15,6 +16,7 @@ import com.example.leejunbeom.bookMarker.SwipeMenuListView.SwipeMenuCreator_impl
 import com.example.leejunbeom.bookMarker.dagger.application.AppApplication;
 import com.example.leejunbeom.bookMarker.model.Book;
 import com.example.leejunbeom.bookMarker.model.BookController;
+import com.example.leejunbeom.bookMarker.network.Network_impl;
 import com.example.leejunbeom.bookMarker.ui.adapter.BookAdapter_impl;
 import com.example.leejunbeom.bookMarker.ui.presenter.MainPresenter;
 import com.example.leejunbeom.bookMarker.ui.screen_contracts.Mainscreen;
@@ -112,14 +114,17 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
         this.mainPresenter.onBookAddButtonClick(this);
     }
 
-
     /**
      * test
      */
     @Override
     public void launchAddBookActivity() {
-        Intent intent = new Intent(this, BookAddActivity.class);
-        startActivity(intent);
+        if(Network_impl.getInstance().isOnline(this)){
+            Intent intent = new Intent(this, BookAddActivity.class);
+            startActivity(intent);
+        }
+        Toast.makeText(this, "Network Error!!",
+                Toast.LENGTH_LONG).show();
     }
 
     //test
