@@ -1,7 +1,7 @@
 package com.example.leejunbeom.test;
 
 import com.example.leejunbeom.bookMarker.network.jericho.Jericho;
-import com.example.leejunbeom.bookMarker.model.Book;
+import com.example.leejunbeom.bookMarker.model.pojo.Book;
 import com.example.leejunbeom.bookMarker.util.html.HtmlBookParser;
 import com.example.leejunbeom.bookMarker.util.html.HtmlParser;
 

@@ -1,8 +1,7 @@
 package com.example.leejunbeom.bookMarker.ui.presenter;
 
-import com.example.leejunbeom.bookMarker.model.Book;
+import com.example.leejunbeom.bookMarker.model.pojo.Book;
 import com.example.leejunbeom.bookMarker.model.BookController;
-import com.example.leejunbeom.bookMarker.ui.activity.MainActivity;
 import com.example.leejunbeom.bookMarker.ui.screen_contracts.Mainscreen;
 
 import org.greenrobot.eventbus.EventBus;

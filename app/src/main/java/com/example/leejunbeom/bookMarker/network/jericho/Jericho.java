@@ -1,6 +1,6 @@
 package com.example.leejunbeom.bookMarker.network.jericho;
 
-import com.example.leejunbeom.bookMarker.model.Book;
+import com.example.leejunbeom.bookMarker.model.pojo.Book;
 import com.example.leejunbeom.bookMarker.util.html.HtmlParser;
 
 import net.htmlparser.jericho.Source;

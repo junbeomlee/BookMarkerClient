@@ -1,11 +1,10 @@
 package com.example.leejunbeom.test.activity;
 
 import android.content.Intent;
-import android.net.ConnectivityManager;
 import android.widget.Button;
 
 import com.baoyz.swipemenulistview.SwipeMenuListView;
-import com.example.leejunbeom.bookMarker.model.Book;
+import com.example.leejunbeom.bookMarker.model.pojo.Book;
 import com.example.leejunbeom.bookMarker.model.BookController;
 import com.example.leejunbeom.bookMarker.ui.activity.BookAddActivity;
 import com.example.leejunbeom.bookMarker.ui.activity.MainActivity;
@@ -13,7 +12,6 @@ import com.example.leejunbeom.test.BuildConfig;
 import com.example.leejunbeom.test.R;
 import com.example.leejunbeom.test.dagger.TestApplication;
 
-import org.greenrobot.eventbus.EventBus;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,12 +19,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricGradleTestRunner;
-import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
-import org.robolectric.annotation.Implements;
 import org.robolectric.shadows.ShadowActivity;
-import org.robolectric.shadows.ShadowHandler;
-import org.robolectric.shadows.ShadowToast;
 
 import java.util.ArrayList;
 
@@ -85,8 +79,8 @@ public class MainActivityTest {
         ArrayList<Book> bookArrayList=new ArrayList<Book>();
         Book book1 = new Book();
         Book book2 = new Book();
-        book1.setSymbolicRequest("1234");
-        book2.setSymbolicRequest("4567");
+        book1.setMark("1234");
+        book2.setMark("4567");
         bookArrayList.add(book1);
         bookArrayList.add(book2);
         when(bookControllerMock.getBookList()).thenReturn(bookArrayList);

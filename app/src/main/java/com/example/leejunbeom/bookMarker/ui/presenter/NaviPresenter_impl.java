@@ -1,6 +1,5 @@
 package com.example.leejunbeom.bookMarker.ui.presenter;
 
-import com.example.leejunbeom.bookMarker.model.Book;
 import com.example.leejunbeom.bookMarker.model.BookController;
 import com.example.leejunbeom.bookMarker.ui.screen_contracts.NaviScreen;
 

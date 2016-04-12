@@ -14,7 +14,7 @@ import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.example.leejunbeom.bookMarker.SwipeMenuListView.SwipeMenuCreator_impl;
 import com.example.leejunbeom.bookMarker.dagger.application.AppApplication;
-import com.example.leejunbeom.bookMarker.model.Book;
+import com.example.leejunbeom.bookMarker.model.pojo.Book;
 import com.example.leejunbeom.bookMarker.model.BookController;
 import com.example.leejunbeom.bookMarker.network.Network_impl;
 import com.example.leejunbeom.bookMarker.ui.adapter.BookAdapter_impl;
@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
     @Override
     public void launchNaviActivity(Book book) {
         Intent intent = new Intent(this,NaviActivity.class);
-        intent.putExtra("symbolicRequest",book.getSymbolicRequest());
+        intent.putExtra("mark",book.getMark());
         startActivity(intent);
     }
 

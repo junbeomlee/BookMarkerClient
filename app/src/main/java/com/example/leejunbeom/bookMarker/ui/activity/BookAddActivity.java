@@ -9,10 +9,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.leejunbeom.bookMarker.dagger.application.AppApplication;
-import com.example.leejunbeom.bookMarker.model.Book;
-import com.example.leejunbeom.bookMarker.network.Network_impl;
+import com.example.leejunbeom.bookMarker.model.pojo.Book;
 import com.example.leejunbeom.bookMarker.ui.presenter.BookAddPresenter;
-import com.example.leejunbeom.bookMarker.ui.presenter.BookAddPresenter_impl;
 import com.example.leejunbeom.bookMarker.ui.screen_contracts.BookAddScreen;
 import com.example.leejunbeom.bookMarker.util.log.BMLogger;
 import com.example.leejunbeom.test.R;
@@ -94,7 +92,7 @@ public class BookAddActivity extends AppCompatActivity implements BookAddScreen{
     //test
     @Subscribe
     public void onSetBookInfo(Book book){
-        this.bookTitieView.setText(book.getTitileAuthorsType());
+        this.bookTitieView.setText(book.getTitle()+book.getAuthor());
         Log.d(BMLogger.LOG_TAG, book.toString());
     }
 

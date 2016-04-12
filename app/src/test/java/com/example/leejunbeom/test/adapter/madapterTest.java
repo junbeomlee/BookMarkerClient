@@ -2,7 +2,7 @@ package com.example.leejunbeom.test.adapter;
 
 import android.view.View;
 
-import com.example.leejunbeom.bookMarker.model.Book;
+import com.example.leejunbeom.bookMarker.model.pojo.Book;
 import com.example.leejunbeom.bookMarker.ui.activity.MainActivity;
 import com.example.leejunbeom.bookMarker.ui.adapter.BookAdapter_impl;
 import com.example.leejunbeom.test.BuildConfig;
@@ -38,8 +38,8 @@ public class madapterTest {
         bookList = new ArrayList<Book>();
         book1 = new Book();
         book2 = new Book();
-        book1.setSymbolicRequest("1234");
-        book2.setSymbolicRequest("4567");
+        book1.setMark("1234");
+        book2.setMark("4567");
         bookList.add(book1);
         bookList.add(book2);
 
@@ -50,8 +50,8 @@ public class madapterTest {
 
     @Test
     public void testGetItem() {
-        assertEquals("John was expected.", book1.getSymbolicRequest(),
-                ((Book) bookAdapter.getItem(0)).getSymbolicRequest());
+        assertEquals("John was expected.", book1.getMark(),
+                ((Book) bookAdapter.getItem(0)).getMark());
     }
 
 
@@ -75,7 +75,7 @@ public class madapterTest {
     @Test
     public void testDataChange(){
         Book newBook = new Book();
-        newBook.setSymbolicRequest("testDataChange");
+        newBook.setMark("testDataChange");
         bookList.add(newBook);
         bookAdapter.setBookData(bookList);
 

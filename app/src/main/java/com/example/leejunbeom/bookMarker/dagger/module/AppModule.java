@@ -1,8 +1,9 @@
 package com.example.leejunbeom.bookMarker.dagger.module;
 
+import com.example.leejunbeom.bookMarker.model.PostApi;
 import com.example.leejunbeom.bookMarker.network.jericho.Jericho;
-import com.example.leejunbeom.bookMarker.model.Book;
 import com.example.leejunbeom.bookMarker.model.BookController;
+import com.example.leejunbeom.bookMarker.network.okhttp.OkHttp;
 import com.example.leejunbeom.bookMarker.ui.presenter.BookAddPresenter;
 import com.example.leejunbeom.bookMarker.ui.presenter.BookAddPresenter_impl;
 import com.example.leejunbeom.bookMarker.ui.presenter.MainPresenter;
@@ -44,6 +45,18 @@ public class AppModule {
 
     @Provides
     @Singleton
+    OkHttp provideOkHttp(){
+        return new OkHttp();
+    }
+
+    @Provides
+    @Singleton
+    PostApi providePostApi(OkHttp okHttp){
+        return new PostApi(okHttp);
+    }
+
+    @Provides
+    @Singleton
     BookController provideBookController(){
         return new BookController();
     }
@@ -57,8 +70,8 @@ public class AppModule {
 
     @Provides
     @Singleton
-    BookAddPresenter provideBookAddPresenter(Jericho jerichoImpl,BookController bookController){
-        return new BookAddPresenter_impl(jerichoImpl,bookController);
+    BookAddPresenter provideBookAddPresenter(PostApi postApi,BookController bookController){
+        return new BookAddPresenter_impl(postApi,bookController);
     }
 
     @Provides

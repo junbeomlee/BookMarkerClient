@@ -1,9 +1,8 @@
 package com.example.leejunbeom.bookMarker.model;
 
-import org.greenrobot.eventbus.EventBus;
+import com.example.leejunbeom.bookMarker.model.pojo.Book;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Jun on 16. 3. 28..

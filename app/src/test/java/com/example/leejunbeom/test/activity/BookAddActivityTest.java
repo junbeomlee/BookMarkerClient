@@ -98,7 +98,7 @@ public class BookAddActivityTest {
         Robolectric.getForegroundThreadScheduler().idleConstantly(true);
         ///////////////======================
         TextView textView = (TextView) bookAddActivity.findViewById(R.id.bookTitle);
-        assertEquals("양안시와사시/진가헌,최혜정,이준범편저",textView.getText());
+        assertEquals("양안시와 사시진가헌, 최혜정, 이준범 편저",textView.getText());
     }
 
     @Test

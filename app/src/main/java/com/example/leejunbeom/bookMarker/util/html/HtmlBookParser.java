@@ -1,17 +1,14 @@
 package com.example.leejunbeom.bookMarker.util.html;
 
-import com.example.leejunbeom.bookMarker.model.Book;
+import com.example.leejunbeom.bookMarker.model.pojo.Book;
 
 import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.HTMLElementName;
 import net.htmlparser.jericho.Segment;
 import net.htmlparser.jericho.Source;
-import net.htmlparser.jericho.TextExtractor;
 
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Jun on 16. 3. 22..
@@ -37,7 +34,7 @@ public class HtmlBookParser implements HtmlParser{
     }
 
     public void setBookAttribute(Book book, String attribute, String bookAttributeValueString){
-
+/*
         switch (attribute){
             case "자료유형:":
                 book.setDataType(bookAttributeValueString);
@@ -63,6 +60,6 @@ public class HtmlBookParser implements HtmlParser{
             default:
                 break;
         }
-
+*/
     }
 }

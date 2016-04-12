@@ -53,7 +53,7 @@ public class NaviActivity extends AppCompatActivity implements NaviScreen{
 //        EventBus.getDefault().register(this);
 
         Intent intent= getIntent();
-        symbolicRequest=intent.getStringExtra("symbolicRequest");
+        symbolicRequest=intent.getStringExtra("mark");
         symbolicRequestText.setText(symbolicRequest);
         naviPresenter.getMap(symbolicRequest);
     }

@@ -22,8 +22,6 @@ public class OkHttp {
     public String doPostRequest(String url, String requestData) throws IOException {
 
         RequestBody formBody = new FormEncodingBuilder().add("cid",requestData).build();
-
-
         //RequestBody body = RequestBody.create(MEDIA_TYPE_MARKDOWN,requestData);
         Request request = new Request.Builder()
                 .url(url)

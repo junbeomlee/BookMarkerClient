@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.leejunbeom.bookMarker.model.Book;
+import com.example.leejunbeom.bookMarker.model.pojo.Book;
 import com.example.leejunbeom.test.R;
 
 import java.util.ArrayList;
@@ -70,7 +70,7 @@ public class BookAdapter_impl extends BaseAdapter {
 
         BookHolder holder = (BookHolder) convertView.getTag();
         Book book = getItem(position);
-        holder.book_name.setText(book.getSymbolicRequest());
+        holder.book_name.setText(book.getMark());
         return convertView;
     }
 

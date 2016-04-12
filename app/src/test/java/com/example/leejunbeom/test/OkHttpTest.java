@@ -33,7 +33,7 @@ public class OkHttpTest {
     @Test
     public void eventTest() throws JSONException {
         try {
-            String response=okHttp.doPostRequest("http://52.79.133.224/book/getbook/","5440880");
+            String response=okHttp.doPostRequest("http://52.79.133.224/book/getbook/","34679");
             JSONObject jsonObject=new JSONObject(response);
             System.out.print(jsonObject.toString());
         } catch (IOException e) {

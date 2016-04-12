@@ -1,6 +1,6 @@
 package com.example.leejunbeom.test.model;
 
-import com.example.leejunbeom.bookMarker.model.Book;
+import com.example.leejunbeom.bookMarker.model.pojo.Book;
 import com.example.leejunbeom.bookMarker.model.BookController;
 
 import org.junit.After;
@@ -21,7 +21,7 @@ public class BookControllerTest {
     public void setUp() {
         this.bookController = new BookController();
         Book book = new Book();
-        book.setSymbolicRequest("801이준범");
+        book.setMark("801이준범");
         bookController.addBook(book);
     }
 
@@ -35,12 +35,12 @@ public class BookControllerTest {
 
 
         assertEquals("fald book add in the list", 1, bookController.getBookList().size());
-        assertEquals("fail book add ", "801이준범", bookController.getBookList().get(0).getSymbolicRequest());
+        assertEquals("fail book add ", "801이준범", bookController.getBookList().get(0).getMark());
     }
 
     @Test
     public void testGetItemTest() throws Exception {
-        assertEquals("fail getItem","801이준범",bookController.getItem(0).getSymbolicRequest());
+        assertEquals("fail getItem","801이준범",bookController.getItem(0).getMark());
     }
 
     @Test

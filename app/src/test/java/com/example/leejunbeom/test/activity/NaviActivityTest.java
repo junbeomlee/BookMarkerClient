@@ -42,7 +42,7 @@ public class NaviActivityTest {
          * intent를 넣어서 activity 생성
          */
         Intent intent = new Intent(ShadowApplication.getInstance().getApplicationContext(), NaviActivity.class);
-        intent.putExtra("symbolicRequest","123123");
+        intent.putExtra("mark","123123");
         naviActivity = Robolectric.buildActivity(NaviActivity.class).withIntent(intent).create().get();
     }
 
