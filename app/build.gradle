@@ -78,4 +78,5 @@ dependencies {
     compile 'io.reactivex:rxandroid:0.24.0'
     compile project(':swipeMenuListViewLibrary')
     compile 'org.mockito:mockito-core:2.+'
+    compile 'com.squareup.okhttp:okhttp:2.5.0'
 }

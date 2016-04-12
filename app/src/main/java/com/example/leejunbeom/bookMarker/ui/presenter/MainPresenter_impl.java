@@ -37,6 +37,11 @@ public class MainPresenter_impl implements MainPresenter {
         EventBus.getDefault().post(bookController);
     }
 
+    @Override
+    public void refreshListViewData() {
+        EventBus.getDefault().post(bookController);
+    }
+
     public BookController getBookController() {
         return bookController;
     }

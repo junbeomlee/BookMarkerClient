@@ -106,8 +106,13 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
     @Override
     public void onResume() {
         super.onResume();
+        mainPresenter.refreshListViewData();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
 
     @OnClick(R.id.bookAddButton)
     public void onCallClick(){
@@ -122,9 +127,10 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
         if(Network_impl.getInstance().isOnline(this)){
             Intent intent = new Intent(this, BookAddActivity.class);
             startActivity(intent);
+        }else {
+            Toast.makeText(this, "Network Error!!",
+                    Toast.LENGTH_LONG).show();
         }
-        Toast.makeText(this, "Network Error!!",
-                Toast.LENGTH_LONG).show();
     }
 
     //test

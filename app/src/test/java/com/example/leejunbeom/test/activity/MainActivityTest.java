@@ -1,6 +1,7 @@
 package com.example.leejunbeom.test.activity;
 
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.widget.Button;
 
 import com.baoyz.swipemenulistview.SwipeMenuListView;
@@ -95,6 +96,7 @@ public class MainActivityTest {
         assertEquals("update listView fail", 2, listView.getCount());
     }
 
+    // TODO: 16. 4. 11.
     @Test
     public void test_should_toast_message_when_network_is_unable() throws Exception {
         //mainActivity

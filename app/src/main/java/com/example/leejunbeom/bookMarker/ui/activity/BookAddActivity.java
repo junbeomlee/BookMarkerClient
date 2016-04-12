@@ -69,8 +69,7 @@ public class BookAddActivity extends AppCompatActivity implements BookAddScreen{
             Toast.makeText(this, data,
                   Toast.LENGTH_LONG).show();
 
-            bookAddPresenter.finishActivity(this);
-
+            this.bookAddPresenter.getBookData(data);
 
         }else{
             // failed to detect qrCode
