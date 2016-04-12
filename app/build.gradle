@@ -55,27 +55,28 @@ configurations {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.2.0'
-    compile 'com.android.support:support-annotations:23.2.0'
-    compile 'org.greenrobot:eventbus:3.0.0'
-    compile 'com.google.dagger:dagger:2.0'
     apt 'com.google.dagger:dagger-compiler:2.0'
     provided 'javax.annotation:jsr250-api:1.0'
-    compile 'javax.inject:javax.inject:1'
-    compile 'com.jakewharton:butterknife:7.0.1'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile project(':Library:opencv')
-    compile 'com.loopj.android:android-async-http:1.4.9'
     testCompile "org.robolectric:robolectric:3.0"
+    testCompile "org.mockito:mockito-core:2.+"
+    testCompile "com.google.dagger:dagger-compiler:2.0"
+    androidTestApt "com.google.dagger:dagger-compiler:2.0"
+    compile project(':swipeMenuListViewLibrary')
+    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.android.support:support-annotations:23.3.0'
+    compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.google.dagger:dagger:2.0'
+    compile 'javax.inject:javax.inject:1'
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.loopj.android:android-async-http:1.4.9'
     compile 'org.json:json:20141113'
     compile 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
     compile 'com.google.zxing:core:3.2.1'
     compile 'com.google.android.gms:play-services-appindexing:8.1.0'
-    testCompile "org.mockito:mockito-core:2.+"
-    testCompile "com.google.dagger:dagger-compiler:2.0"
-    androidTestApt "com.google.dagger:dagger-compiler:2.0"
     compile 'net.htmlparser.jericho:jericho-html:3.1'
     compile 'io.reactivex:rxandroid:0.24.0'
-    compile project(':swipeMenuListViewLibrary')
     compile 'org.mockito:mockito-core:2.+'
+    compile 'com.android.support:design:23.3.0'
 }

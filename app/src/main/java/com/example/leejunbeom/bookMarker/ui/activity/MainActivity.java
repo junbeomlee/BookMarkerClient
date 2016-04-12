@@ -16,6 +16,7 @@ import com.example.leejunbeom.bookMarker.SwipeMenuListView.SwipeMenuCreator_impl
 import com.example.leejunbeom.bookMarker.dagger.application.AppApplication;
 import com.example.leejunbeom.bookMarker.model.Book;
 import com.example.leejunbeom.bookMarker.model.BookController;
+import com.example.leejunbeom.bookMarker.model.SIFT;
 import com.example.leejunbeom.bookMarker.ui.adapter.BookAdapter_impl;
 import com.example.leejunbeom.bookMarker.ui.presenter.MainPresenter_impl;
 import com.example.leejunbeom.bookMarker.ui.presenter.MainPresenter;
@@ -131,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
 
     @Override
     public void launchAddBookActivity() {
-        Intent intent = new Intent(this, BookAddActivity.class);
+        Intent intent = new Intent(this, NoduriActivity.class);
         startActivity(intent);
     }
 

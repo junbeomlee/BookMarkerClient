@@ -24,6 +24,13 @@ public class SIFT {
     private Bitmap inputImage; // make bitmap from image resource
     private FeatureDetector detector = FeatureDetector.create(FeatureDetector.SIFT);
 
+
+    public SIFT(ImageView imageView, Bitmap inputImage){
+        this.imageView = imageView;
+        this.inputImage = inputImage;
+    }
+
+
     public void sift() {
         Mat rgba = new Mat();
         Utils.bitmapToMat(inputImage, rgba);
