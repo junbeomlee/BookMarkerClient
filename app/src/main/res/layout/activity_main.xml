@@ -27,4 +27,13 @@
         android:layout_above="@+id/bookAddButton"
         android:layout_alignParentTop="true" />
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Test"
+        android:id="@+id/testButton"
+        android:layout_alignBottom="@+id/listView"
+        android:layout_alignParentLeft="true" />
+
 </RelativeLayout>

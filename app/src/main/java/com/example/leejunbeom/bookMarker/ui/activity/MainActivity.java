@@ -51,6 +51,14 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
     @Bind(R.id.listView)
     SwipeMenuListView listView;
 
+    @Bind(R.id.testButton)
+    Button testButton;
+
+    @OnClick(R.id.testButton)
+    public void onClickTestButton(){
+        Intent intent = new Intent(this,opencvTestActivity.class);
+        startActivity(intent);
+    }
 
     // private GoogleApiClient client;
     @Override
