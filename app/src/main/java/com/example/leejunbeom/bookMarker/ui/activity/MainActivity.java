@@ -191,20 +191,5 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
     public Button getAddButton() {
         return bookAddButton;
     }
-
-    class BitMapHandler{
-
-        public Observable<Bitmap> getBitMapImage(String bookShelfPictureName){
-            return Observable.just(bookShelfPictureName).map(new Func1<String, Bitmap>() {
-
-                @Override
-                public Bitmap call(String bookShelfPictureName) {
-                    Resources resources = mainContext.getResources();
-                    int resourceId = resources.getIdentifier(bookShelfPictureName, "drawable", mainContext.getPackageName());
-                    return BitmapFactory.decodeResource(resources, resourceId);
-                }
-            });
-        }
-    }
 }
 
