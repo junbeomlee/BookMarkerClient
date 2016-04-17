@@ -1,7 +1,13 @@
 package com.example.leejunbeom.bookMarker.ui.presenter;
 
+import android.graphics.Bitmap;
+
 import com.example.leejunbeom.bookMarker.model.BookController;
 import com.example.leejunbeom.bookMarker.ui.screen_contracts.NaviScreen;
+
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -25,6 +31,11 @@ public class NaviPresenter_impl implements NaviPresenter{
     @Override
     public void getMap(String symbolicRequest) {
 
+    }
+
+    @Override
+    public void loadBookBitmaps() {
+        ArrayList<Bitmap>
     }
 
     public BookController getBookController() {

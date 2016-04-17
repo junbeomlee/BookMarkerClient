@@ -9,4 +9,5 @@ import com.example.leejunbeom.bookMarker.ui.screen_contracts.NaviScreen;
 public interface NaviPresenter {
     void onBookSearchButtonClick(NaviScreen naviScreen);
     void getMap(String symbolicRequest);
+    void loadBookBitmaps();
 }

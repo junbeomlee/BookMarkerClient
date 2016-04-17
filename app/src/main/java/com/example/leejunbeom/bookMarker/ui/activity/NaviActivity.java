@@ -1,6 +1,8 @@
 package com.example.leejunbeom.bookMarker.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
@@ -42,6 +44,7 @@ public class NaviActivity extends AppCompatActivity implements NaviScreen{
     @Bind(R.id.libraryView)
     ImageView libraryView;
 
+    Bitmap libraryMainBitMap;
 
     //test
     @Override
@@ -50,6 +53,8 @@ public class NaviActivity extends AppCompatActivity implements NaviScreen{
         setContentView(R.layout.activity_navi);
         ((AppApplication) getApplication()).component().inject(this);
         ButterKnife.bind(this);
+        libraryMainBitMap = BitmapFactory.decodeResource(getResources(), R.drawable.non10);
+        naviPresenter.loadBookBitmaps();
     }
 
 
