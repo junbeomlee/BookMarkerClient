@@ -1,5 +1,6 @@
 package com.example.leejunbeom.bookMarker.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -34,6 +35,8 @@ public class OcrActivity extends AppCompatActivity {
     public static final String PACKAGE_NAME = "com.datumdroid.android.ocr.simple";
     public static final String DATA_PATH = Environment
             .getExternalStorageDirectory().toString() + "/SimpleAndroidOCR/";
+    //set internal storage
+    public String DATA_PATH_INTERNAL;
 
     // You should have the trained data file in assets folder
     // You can get them at:
@@ -52,6 +55,14 @@ public class OcrActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        DATA_PATH_INTERNAL = getBaseContext().getFilesDir().toString();
+        Log.v("noduritoto", DATA_PATH_INTERNAL);
+        File dir2 = new File(DATA_PATH_INTERNAL);
+        if(!dir2.exists()){
+            Log.v("noduritoto", "Internal storage djqtdj");
+            dir2.mkdirs();
+            Log.v("noduritoto", "Internal storage created");
+        }
 
         String[] paths = new String[] { DATA_PATH, DATA_PATH + "tessdata/" };
 
