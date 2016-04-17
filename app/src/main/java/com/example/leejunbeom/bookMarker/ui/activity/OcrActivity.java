@@ -242,5 +242,5 @@ public class OcrActivity extends AppCompatActivity {
     }
 
     // www.Gaut.am was here
-    // Thanks for rea
+    // Thanks for reading
 }
