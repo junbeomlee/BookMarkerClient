@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
     @Bind(R.id.listView)
     SwipeMenuListView listView;
 
+    @Bind(R.id.ocrTestButton)
+    Button ocrTestButton;
 
     // private GoogleApiClient client;
     @Override
@@ -119,13 +121,15 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
         this.mainPresenter.onBookAddButtonClick(this);
     }
 
+
+
     /**
      * test
      */
     @Override
     public void launchAddBookActivity() {
         if(Network_impl.getInstance().isOnline(this)){
-            Intent intent = new Intent(this, BookAddActivity.class);
+            Intent intent = new Intent(this, OcrActivity.class);
             startActivity(intent);
         }else {
             Toast.makeText(this, "Network Error!!",
