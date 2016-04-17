@@ -32,10 +32,17 @@ import static org.junit.Assert.assertTrue;
 public class OcrActivityTest {
 
     OcrActivity ocrActivity;
-    public static final String DATA_PATH = Environment.getExternalStorageDirectory().toString() + "/SimpleAndroidOCR/";
+    public static String DATA_PATH = Environment.getExternalStorageDirectory().toString() + "/SimpleAndroidOCR/";
     private static final String TAG = "OcrActivityTest.java";
     String[] paths;
     File dir;
+
+    //클래스 전역변수
+    private final String rootFolderName = "/BookMarkerOCR";
+    private final String tessdataFolderName = "/tessdata";
+    public static String root = null; //메모를 저장하는 폴더의 root dir
+    public static String tessDataRoot = null; //메모를 저장하는 폴더 dir
+    public String sdcard= Environment.getExternalStorageState();
 
     @Before
     public void setUp(){
@@ -54,13 +61,37 @@ public class OcrActivityTest {
     }
 
     @Test
+    public void sdCardMountTest(){
+
+        assertTrue(sdcard.equals(Environment.MEDIA_MOUNTED));
+
+        if( ! sdcard.equals(Environment.MEDIA_MOUNTED) ) {
+            //SD카드 UNMOUNTED
+            Log.d("mstag","sdcard unmounted");
+            root = "" + Environment.getRootDirectory().getAbsolutePath() + rootFolderName; //내부저장소의 주소를 얻어옴
+        }
+
+        else {
+            //SD카드 MOUNT
+            Log.d("mstag","sdcard mounted");
+            root = "" + Environment.getExternalStorageDirectory().getAbsolutePath() + rootFolderName; //외부저장소의 주소를 얻어옴
+        }
+
+        Log.d("mstag","root dir is => "+root);
+
+
+    }
+
+    @Test
     public void mkdirTest(){
+        /*
         //String[] paths = new String[] { DATA_PATH, DATA_PATH + "tessdata/" };
         File dir = new File(paths[0]);
-        assertFalse(dir.mkdirs());
+        assertTrue(dir.mkdirs());
 
         dir = new File(paths[1]);
-        assertFalse(dir.mkdirs());
+        assertTrue(dir.mkdirs());
+        */
 
         /*
 
@@ -79,6 +110,32 @@ public class OcrActivityTest {
 
         }
         */
+
+        //dir init
+        String sdcard= Environment.getExternalStorageState();
+
+        tessDataRoot = root + tessdataFolderName;
+        File rootCheck = new File(root);
+        assertNotNull(rootCheck);
+
+        if( ! rootCheck.exists() ) { //최상위 루트폴더 미 존재시
+            assertTrue(rootCheck.mkdirs());
+            Log.d("mstag","root make");
+            Log.d("mstag","check making root : " + rootCheck.exists());
+        }
+        rootCheck = new File(tessDataRoot);
+        assertNotNull(rootCheck);
+
+        if( ! rootCheck.exists() ) { //하위 메모저장폴더 미 존재시
+            assertTrue(rootCheck.mkdirs());
+            Log.d("mstag","root-son make");
+            Log.d("mstag","check making root-son : " + rootCheck.exists());
+        }
+
+        DATA_PATH = new String(root + "/");
+        Log.d("mstag",root);
+        Log.d("mstag",DATA_PATH);
+
 
     }
 

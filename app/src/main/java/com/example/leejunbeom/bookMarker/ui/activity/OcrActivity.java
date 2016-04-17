@@ -33,8 +33,8 @@ public class OcrActivity extends AppCompatActivity {
 
 
     public static final String PACKAGE_NAME = "com.datumdroid.android.ocr.simple";
-    public static final String DATA_PATH = Environment
-            .getExternalStorageDirectory().toString() + "/SimpleAndroidOCR/";
+    public static String DATA_PATH = Environment
+            .getExternalStorageDirectory().toString() + "/BookMarkerOCR/";
     //set internal storage
     public String DATA_PATH_INTERNAL;
 
@@ -43,7 +43,7 @@ public class OcrActivity extends AppCompatActivity {
     // http://code.google.com/p/tesseract-ocr/downloads/list
     public static final String lang = "eng";
 
-    private static final String TAG = "SimpleAndroidOCR.java";
+    private static final String TAG = "OcrActivity.java";
 
     protected Button _button;
     // protected ImageView _image;
@@ -53,9 +53,17 @@ public class OcrActivity extends AppCompatActivity {
 
     protected static final String PHOTO_TAKEN = "photo_taken";
 
+    //클래스 전역변수
+    private final String rootFolderName = "/BookMarkerOCR";
+    private final String tessdataFolderName = "/tessdata";
+    public static String root = null; //메모를 저장하는 폴더의 root dir
+    public static String tessDataRoot = null; //메모를 저장하는 폴더 dir
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        DATA_PATH_INTERNAL = getBaseContext().getFilesDir().toString();
+
+        /*
+        DATA_PATH_INTERNAL = getApplicationContext().getFilesDir().toString();
         Log.v("noduritoto", DATA_PATH_INTERNAL);
         File dir2 = new File(DATA_PATH_INTERNAL);
         if(!dir2.exists()){
@@ -63,6 +71,9 @@ public class OcrActivity extends AppCompatActivity {
             dir2.mkdirs();
             Log.v("noduritoto", "Internal storage created");
         }
+        */
+        //Log.v(TAG, "DATA_PATH " + DATA_PATH);
+        /*
 
         String[] paths = new String[] { DATA_PATH, DATA_PATH + "tessdata/" };
 
@@ -78,6 +89,49 @@ public class OcrActivity extends AppCompatActivity {
             }
 
         }
+        */
+
+        /////////gns sujung
+
+        //dir init
+        String sdcard= Environment.getExternalStorageState();
+        if( ! sdcard.equals(Environment.MEDIA_MOUNTED) ) {
+            //SD카드 UNMOUNTED
+            Log.d("mstag","sdcard unmounted");
+            root = "" + Environment.getRootDirectory().getAbsolutePath() + rootFolderName; //내부저장소의 주소를 얻어옴
+        } else {
+            //SD카드 MOUNT
+            Log.d("mstag","sdcard mounted");
+            root = "" + Environment.getExternalStorageDirectory().getAbsolutePath() + rootFolderName; //외부저장소의 주소를 얻어옴
+        }
+        Log.d("mstag","root dir is => "+root);
+
+        tessDataRoot = root + tessdataFolderName;
+        File rootCheck = new File(root);
+        if(!rootCheck.isDirectory()){
+            Log.d("mstag","root is not Directory");
+            return;
+        }
+        if( ! rootCheck.exists() ) { //최상위 루트폴더 미 존재시
+            rootCheck.mkdirs(); Log.d("mstag","root make");
+            Log.d("mstag","check making root : " + rootCheck.exists());
+        }
+        rootCheck = new File(tessDataRoot);
+
+
+        if( ! rootCheck.exists() ) { //하위 메모저장폴더 미 존재시
+            rootCheck.mkdirs(); Log.d("mstag","root-son make");
+            Log.d("mstag","check making root-son : " + rootCheck.exists());
+            if(!rootCheck.isDirectory()){
+                Log.d("mstag","tessDataRoot is not Directory");
+                return;
+            }
+        }
+
+        DATA_PATH = new String(root + "/");
+        Log.d("mstag",root);
+        Log.d("mstag",DATA_PATH);
+
 
         // lang.traineddata file with the app (in assets folder)
         // You can get them at:
