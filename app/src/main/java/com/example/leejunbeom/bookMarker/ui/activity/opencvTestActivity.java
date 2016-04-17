@@ -100,10 +100,6 @@ public class opencvTestActivity extends AppCompatActivity {
         goodMatches.fromList(listOfGoodMatches);
 
         Mat imageOut = new Mat();
-        //Features2d.drawMatches(rgba, keyPoints, rgba2, keyPoints2, goodMatches, imageOut);
-
-        //Utils.matToBitmap(imageOut, matcherBitMap);
-
         Bitmap bitmap = Bitmap.createBitmap(imageOut.cols(), imageOut.rows(), Bitmap.Config.ARGB_8888);
 
         Utils.matToBitmap(imageOut, bitmap);
