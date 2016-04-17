@@ -7,5 +7,5 @@ import com.example.leejunbeom.bookMarker.model.pojo.Book;
  */
 public interface Mainscreen {
     void launchAddBookActivity();
-    void launchNaviActivity(Book position);
+    void launchNaviActivity();
 }

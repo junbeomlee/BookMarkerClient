@@ -25,12 +25,6 @@ public class MainPresenter_impl implements MainPresenter {
     }
 
     @Override
-    public void onListViewItemClick(int position, Mainscreen mainscreen) {
-        Book book=this.bookController.getItem(position);
-        mainscreen.launchNaviActivity(book);
-    }
-
-    @Override
     public void onListViewMenuItemClick(int position) {
         this.bookController.deleteItem(position);
         EventBus.getDefault().post(bookController);
@@ -39,6 +33,11 @@ public class MainPresenter_impl implements MainPresenter {
     @Override
     public void refreshListViewData() {
         EventBus.getDefault().post(bookController);
+    }
+
+    @Override
+    public void onSearchButtonClick(Mainscreen mainActivity) {
+        mainActivity.launchNaviActivity();
     }
 
     public BookController getBookController() {

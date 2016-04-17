@@ -8,6 +8,7 @@ import com.example.leejunbeom.bookMarker.model.pojo.Book;
 import com.example.leejunbeom.bookMarker.model.BookController;
 import com.example.leejunbeom.bookMarker.ui.activity.BookAddActivity;
 import com.example.leejunbeom.bookMarker.ui.activity.MainActivity;
+import com.example.leejunbeom.bookMarker.ui.activity.NaviActivity;
 import com.example.leejunbeom.test.BuildConfig;
 import com.example.leejunbeom.test.R;
 import com.example.leejunbeom.test.dagger.TestApplication;
@@ -41,10 +42,12 @@ public class MainActivityTest {
 
     MainActivity mainActivity;
     Button bookAddButton;
+    Button naviButton;
     @Before
     public void setUp() {
         mainActivity = Robolectric.setupActivity(MainActivity.class);
         bookAddButton = (Button) mainActivity.findViewById(R.id.bookAddButton);
+        naviButton = (Button) mainActivity.findViewById(R.id.naviButton);
     }
 
     @After
@@ -68,8 +71,19 @@ public class MainActivityTest {
 
         //then
         Intent startedIntent = shadowActivity.getNextStartedActivity();
-        assertThat("ADDBook activtiy start fail",startedIntent.getComponent().getClassName(),
+        assertThat("ADDBook activtiy start fail", startedIntent.getComponent().getClassName(),
                 equalTo(BookAddActivity.class.getName()));
+    }
+
+    @Test
+    public void should_naviActivity_start_test(){
+        ShadowActivity shadowActivity = shadowOf(mainActivity);
+
+        naviButton.performClick();
+
+        Intent startedIntent = shadowActivity.getNextStartedActivity();
+        assertThat("Navi activtiy start fail", startedIntent.getComponent().getClassName(),
+                equalTo(NaviActivity.class.getName()));
     }
 
     @Test

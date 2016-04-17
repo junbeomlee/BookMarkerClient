@@ -1,9 +1,14 @@
 package com.example.leejunbeom.bookMarker.model.pojo;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import rx.Observable;
+import rx.functions.Func1;
 
 /**
  * Created by Jun on 16. 3. 21..
@@ -11,11 +16,13 @@ import org.json.JSONObject;
 
 public class Book {
 
+    private final String prefix="bookcase_";
     private String featureUrl;
     private String title;
     private String author;
     private String mark;
-    private String mapUrl;
+    private String bookShelf;
+    private Bitmap bookBitMap;
 
     public Book(){
 
@@ -26,7 +33,11 @@ public class Book {
         this.title = jsonBookObject.getString("title");
         this.author = jsonBookObject.getString("author");
         this.mark = jsonBookObject.getString("mark");
-        this.mapUrl = jsonBookObject.getString("map");
+        this.bookShelf = prefix+jsonBookObject.getString("bookshelf");
+    }
+
+    public void setBookBitMap(Bitmap bookBitMap) {
+        this.bookBitMap = bookBitMap;
     }
 
     public String getAuthor() {
@@ -45,14 +56,6 @@ public class Book {
         this.featureUrl = featureUrl;
     }
 
-    public String getMapUrl() {
-        return mapUrl;
-    }
-
-    public void setMapUrl(String mapUrl) {
-        this.mapUrl = mapUrl;
-    }
-
     public String getMark() {
         return mark;
     }
@@ -69,6 +72,14 @@ public class Book {
         this.title = title;
     }
 
+    public String getBookShelf() {
+        return bookShelf;
+    }
+
+    public void setBookShelf(String bookShelf) {
+        this.bookShelf = bookShelf;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
@@ -76,7 +87,7 @@ public class Book {
                 ", featureUrl='" + featureUrl + '\'' +
                 ", title='" + title + '\'' +
                 ", mark='" + mark + '\'' +
-                ", mapUrl='" + mapUrl + '\'' +
+                ", bookShelf='" + bookShelf + '\'' +
                 '}';
     }
 }

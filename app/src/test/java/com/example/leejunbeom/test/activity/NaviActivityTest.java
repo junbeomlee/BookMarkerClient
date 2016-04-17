@@ -41,9 +41,7 @@ public class NaviActivityTest {
         /**
          * intent를 넣어서 activity 생성
          */
-        Intent intent = new Intent(ShadowApplication.getInstance().getApplicationContext(), NaviActivity.class);
-        intent.putExtra("mark","123123");
-        naviActivity = Robolectric.buildActivity(NaviActivity.class).withIntent(intent).create().get();
+        naviActivity = Robolectric.setupActivity(NaviActivity.class);
     }
 
     @After
@@ -56,8 +54,6 @@ public class NaviActivityTest {
         assertNotNull("fail setup button",naviActivity.getSearchButton());
         assertNotNull("fail setup presenter",naviActivity.getNaviPresenter());
         assertNotNull("fail setup symbolicRequestTextfield",naviActivity.getSymbolicRequestText());
-        assertNotNull("fail setup symbolic Request Intent",naviActivity.getSymbolicRequest());
-        assertEquals("fail load intent","123123",naviActivity.getSymbolicRequest());
     }
 
     @Test

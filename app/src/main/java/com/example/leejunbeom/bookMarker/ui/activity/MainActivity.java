@@ -1,9 +1,14 @@
 package com.example.leejunbeom.bookMarker.ui.activity;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -14,8 +19,8 @@ import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.example.leejunbeom.bookMarker.SwipeMenuListView.SwipeMenuCreator_impl;
 import com.example.leejunbeom.bookMarker.dagger.application.AppApplication;
-import com.example.leejunbeom.bookMarker.model.pojo.Book;
 import com.example.leejunbeom.bookMarker.model.BookController;
+import com.example.leejunbeom.bookMarker.model.pojo.Book;
 import com.example.leejunbeom.bookMarker.network.Network_impl;
 import com.example.leejunbeom.bookMarker.ui.adapter.BookAdapter_impl;
 import com.example.leejunbeom.bookMarker.ui.presenter.MainPresenter;
@@ -30,6 +35,11 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 
 /**
@@ -41,6 +51,7 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity implements Mainscreen{
 
     private BookAdapter_impl bAdapter;
+    Book book;
 
     @Inject
     MainPresenter mainPresenter;
@@ -51,6 +62,10 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
     @Bind(R.id.listView)
     SwipeMenuListView listView;
 
+    @Bind(R.id.naviButton)
+    Button searchButton;
+
+    Context mainContext;
 
     // private GoogleApiClient client;
     @Override
@@ -58,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //injector.get().inject(this);
+        mainContext=this.getApplicationContext();
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         //SwipeMenuListView listView;
@@ -91,16 +107,13 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                onCallItemClick(position);
+                //onCallItemClick(position);
             }
         });
     }
 
     private void onCallMenuItemClick(int position){
         this.mainPresenter.onListViewMenuItemClick(position);
-    }
-    private void onCallItemClick(int position){
-        this.mainPresenter.onListViewItemClick(position, this);
     }
 
     @Override
@@ -119,6 +132,10 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
         this.mainPresenter.onBookAddButtonClick(this);
     }
 
+    @OnClick(R.id.naviButton)
+    public void onCallSearchButton(){
+        this.mainPresenter.onSearchButtonClick(this);
+    }
     /**
      * test
      */
@@ -135,9 +152,8 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
 
     //test
     @Override
-    public void launchNaviActivity(Book book) {
+    public void launchNaviActivity() {
         Intent intent = new Intent(this,NaviActivity.class);
-        intent.putExtra("mark",book.getMark());
         startActivity(intent);
     }
 
@@ -150,6 +166,15 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
     public void onSetBookList(BookController bookController){
         this.bAdapter.setBookData(bookController.getBookList());
         this.bAdapter.notifyDataSetChanged();
+    }
+
+    @Subscribe
+    public void onBitMapLoad(Book book){
+        Resources resources = mainContext.getResources();
+        int resourceId = resources.getIdentifier(book.getBookShelf(), "drawable", mainContext.getPackageName());
+        Bitmap bookBitMap=BitmapFactory.decodeResource(resources, resourceId);
+        book.setBookBitMap(bookBitMap);
+        Log.d("bitmap process done",book.toString());
     }
 
     //test
@@ -165,6 +190,21 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
     // test
     public Button getAddButton() {
         return bookAddButton;
+    }
+
+    class BitMapHandler{
+
+        public Observable<Bitmap> getBitMapImage(String bookShelfPictureName){
+            return Observable.just(bookShelfPictureName).map(new Func1<String, Bitmap>() {
+
+                @Override
+                public Bitmap call(String bookShelfPictureName) {
+                    Resources resources = mainContext.getResources();
+                    int resourceId = resources.getIdentifier(bookShelfPictureName, "drawable", mainContext.getPackageName());
+                    return BitmapFactory.decodeResource(resources, resourceId);
+                }
+            });
+        }
     }
 }
 

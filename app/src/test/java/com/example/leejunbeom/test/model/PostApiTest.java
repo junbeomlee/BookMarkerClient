@@ -42,7 +42,7 @@ public class PostApiTest {
         OkHttp okHttp= Mockito.mock(OkHttp.class);
         try {
             when(okHttp.doPostRequest("http://52.79.133.224/book/getbook/","34679")).
-                    thenReturn("{\"map\":\"\",\"success\":true,\"author\":\"石原愼太郞 지음 ; 李俊凡 譯\",\"title\":\"스파르타 敎育 : 强한 사나이로 키우는 冊\",\"feature\":\"\",\"mark\":\"649.1석원신스\"}");
+                    thenReturn("{\"success\":true,\"author\":\"[中央日報社 發行]\",\"title\":\"세계를간다.  6: 독일\",\"feature\":\"\",\"mark\":\"910.202 중앙일세 v.6\",\"bookshelf\":\"102-2\"}");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -50,18 +50,23 @@ public class PostApiTest {
     }
 
     @Test
+    public void testConvert() throws Exception {
+        String testString="{\"success\": true, \"author\": \"[\\u4e2d\\u592e\\u65e5\\u5831\\u793e \\u767c\\u884c]\", \"title\": \"\\uc138\\uacc4\\ub97c\\uac04\\ub2e4.  6: \\ub3c5\\uc77c\", \"feature\": \"\", \"mark\": \"910.202 \\uc911\\uc559\\uc77c\\uc138 v.6\", \"bookshelf\": \"102-2\"}";
+        JSONObject jsonObject = new JSONObject(testString);
+        System.out.print(jsonObject.toString());
+
+    }
+
+    @Test
     public void testPostApiObservableBook() throws Exception {
 
         final CountDownLatch lock = new CountDownLatch(1);
-
         postApi.postBook("34679").
-                //subscribeOn(Schedulers.io()).
-                //observeOn(AndroidSchedulers.mainThread()).
                 subscribe(new Action1<Book>() {
                     @Override
                     public void call(Book book) {
                         lock.countDown();
-                        testBook=book;
+                        testBook = book;
                     }
                 });
         try
@@ -73,6 +78,6 @@ public class PostApiTest {
             lock.notifyAll();
         }
         //System.out.print(testBook.toString());
-        assertEquals("fail post api book",testBook.toString(),"Book{author='石原愼太郞 지음 ; 李俊凡 譯', featureUrl='', title='스파르타 敎育 : 强한 사나이로 키우는 冊', mark='649.1석원신스', mapUrl=''}");
+        assertEquals("fail post api book","Book{author='[中央日報社 發行]', featureUrl='', title='세계를간다.  6: 독일', mark='910.202 중앙일세 v.6', bookShelf='bookcase_102-2'}",testBook.toString());
     }
 }
