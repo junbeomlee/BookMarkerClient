@@ -2,6 +2,7 @@ package com.example.leejunbeom.bookMarker.ui.preview;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -12,10 +13,14 @@ import java.io.IOException;
 /**
  * Created by Jun on 16. 4. 11..
  */
-public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
+public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback, Camera.PreviewCallback {
+
     String TAG = "CAMERA";
     private SurfaceHolder mHolder;
     private Camera mCamera;
+    private int imageFormat;
+    private boolean bProcessing = false;
+    private byte[] FrameData = null;
 
     public CameraPreview(Context context, Camera camera) {
         super(context);
@@ -50,6 +55,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             Log.d(TAG, "Error setting camera preview: " + e.getMessage());
         }
     }
+
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
@@ -111,6 +117,18 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
         } catch (Exception e){
             Log.d(TAG, "Error starting camera preview: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void onPreviewFrame(byte[] data, Camera camera) {
+        if (imageFormat == ImageFormat.NV21)
+        {
+            //We only accept the NV21(YUV420) format.
+            if ( !bProcessing )
+            {
+                FrameData = data;
+            }
         }
     }
 }

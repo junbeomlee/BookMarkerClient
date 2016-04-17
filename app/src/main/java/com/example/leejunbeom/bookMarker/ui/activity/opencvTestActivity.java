@@ -4,7 +4,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.leejunbeom.test.R;
 
@@ -19,6 +21,10 @@ import org.opencv.features2d.FeatureDetector;
 import org.opencv.features2d.Features2d;
 import org.opencv.imgproc.Imgproc;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.regex.Matcher;
 
 public class opencvTestActivity extends AppCompatActivity {
@@ -33,8 +39,8 @@ public class opencvTestActivity extends AppCompatActivity {
     private Bitmap bookListBitMap; // make bitmap from image resource
     private Bitmap bookBitMap;
     private Bitmap matcherBitMap;
-    private FeatureDetector detector = FeatureDetector.create(FeatureDetector.SIFT);
-    private DescriptorExtractor extractor = DescriptorExtractor.create(DescriptorExtractor.SIFT);
+    private FeatureDetector detector = FeatureDetector.create(FeatureDetector.FAST);
+    private DescriptorExtractor extractor = DescriptorExtractor.create(DescriptorExtractor.ORB);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,22 +51,20 @@ public class opencvTestActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_opencv_test_activitiy);
         Bitmap.Config conf = Bitmap.Config.ARGB_4444; // see other conf types
-        matcherBitMap= Bitmap.createBitmap(300,300, conf);
-        bookView = (ImageView) this.findViewById(R.id.bookView);
-        bookListView = (ImageView) this.findViewById(R.id.bookListView);
-        matcherImageView =(ImageView) this.findViewById(R.id.matcherImageView);
 
+        //bookView = (ImageView) this.findViewById(R.id.bookView);
+        //bookListView = (ImageView) this.findViewById(R.id.bookListView);
+        matcherImageView =(ImageView) this.findViewById(R.id.matcherImageView);
 
         Mat desc= new Mat();
         Mat desc2= new Mat();
         Mat rgba = new Mat();
 
+        System.out.print("start");
         Utils.bitmapToMat(bookBitMap, rgba);
         MatOfKeyPoint keyPoints = new MatOfKeyPoint();
         Imgproc.cvtColor(rgba, rgba, Imgproc.COLOR_RGBA2GRAY);
         detector.detect(rgba, keyPoints);
-
-        //extractor.compute(rgba, keyPoints, desc);
 
         Mat rgba2 = new Mat();
         Utils.bitmapToMat(bookListBitMap, rgba2);
@@ -71,18 +75,41 @@ public class opencvTestActivity extends AppCompatActivity {
         extractor.compute(rgba, keyPoints, desc);
         extractor.compute(rgba2, keyPoints2, desc2);
 
-        DescriptorMatcher matcher = DescriptorMatcher.create(DescriptorMatcher.BRUTEFORCE);
+        DescriptorMatcher matcher = DescriptorMatcher.create(DescriptorMatcher.BRUTEFORCE_HAMMINGLUT);
 
         MatOfDMatch matches= new MatOfDMatch();
 
-        matcher.match(desc,desc2,matches);
-        DMatch[] dMatch = matches.toArray();
+        matcher.match(desc, desc2, matches);
+
+        double max_dist = 0;
+        double min_dist = 100;
+        List<DMatch> matchesList = matches.toList();
+        LinkedList<DMatch> listOfGoodMatches = new LinkedList<>();
+        MatOfDMatch goodMatches = new MatOfDMatch();
+
+
+        for (int i = 0; i < matchesList.size() ;i++) {
+            if (matchesList.get(i).distance < 30) {
+                listOfGoodMatches.add(matchesList.get(i));
+            }
+        }
+
+
+
+
+        goodMatches.fromList(listOfGoodMatches);
 
         Mat imageOut = new Mat();
-        Features2d.drawMatches(rgba, keyPoints, rgba2, keyPoints2, matches, imageOut);
+        //Features2d.drawMatches(rgba, keyPoints, rgba2, keyPoints2, goodMatches, imageOut);
 
-        Utils.matToBitmap(imageOut,matcherBitMap);
-        matcherImageView.setImageBitmap(matcherBitMap);
+        //Utils.matToBitmap(imageOut, matcherBitMap);
+
+        Bitmap bitmap = Bitmap.createBitmap(imageOut.cols(), imageOut.rows(), Bitmap.Config.ARGB_8888);
+
+        Utils.matToBitmap(imageOut, bitmap);
+        matcherImageView.setImageBitmap(bitmap);
+
+        Log.d("asdasdasdasd",String.valueOf(listOfGoodMatches.size()));
     }
 
     @Override
