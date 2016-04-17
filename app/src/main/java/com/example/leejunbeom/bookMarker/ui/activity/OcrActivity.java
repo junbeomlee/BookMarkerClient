@@ -41,7 +41,7 @@ public class OcrActivity extends AppCompatActivity {
     // You should have the trained data file in assets folder
     // You can get them at:
     // http://code.google.com/p/tesseract-ocr/downloads/list
-    public static final String lang = "eng";
+    public static final String lang = "kor";
 
     private static final String TAG = "OcrActivity.java";
 
@@ -107,14 +107,19 @@ public class OcrActivity extends AppCompatActivity {
         Log.d("mstag","root dir is => "+root);
 
         tessDataRoot = root + tessdataFolderName;
-        File rootCheck = new File(root);
-        if(!rootCheck.isDirectory()){
-            Log.d("mstag","root is not Directory");
-            return;
-        }
+        //File rootCheck = new File(root);
+        File rootCheck = new File(Environment.getExternalStorageDirectory().getAbsolutePath() , "BookMarkerOCR1");
+        rootCheck.setExecutable(true);
+        rootCheck.setReadable(true);
+        rootCheck.setWritable(true);
+
         if( ! rootCheck.exists() ) { //최상위 루트폴더 미 존재시
             rootCheck.mkdirs(); Log.d("mstag","root make");
             Log.d("mstag","check making root : " + rootCheck.exists());
+            if(!rootCheck.isDirectory()){
+                Log.d("mstag","root is not Directory");
+                return;
+            }
         }
         rootCheck = new File(tessDataRoot);
 
@@ -122,10 +127,11 @@ public class OcrActivity extends AppCompatActivity {
         if( ! rootCheck.exists() ) { //하위 메모저장폴더 미 존재시
             rootCheck.mkdirs(); Log.d("mstag","root-son make");
             Log.d("mstag","check making root-son : " + rootCheck.exists());
+            /*
             if(!rootCheck.isDirectory()){
                 Log.d("mstag","tessDataRoot is not Directory");
                 return;
-            }
+            }*/
         }
 
         DATA_PATH = new String(root + "/");
