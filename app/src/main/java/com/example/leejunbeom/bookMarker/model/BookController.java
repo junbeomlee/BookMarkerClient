@@ -30,4 +30,8 @@ public class BookController {
     public void deleteItem(int position) {
         this.bookList.remove(position);
     }
+
+    public int size() {
+        return this.bookList.size();
+    }
 }

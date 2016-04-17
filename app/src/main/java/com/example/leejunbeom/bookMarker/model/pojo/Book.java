@@ -39,6 +39,9 @@ public class Book {
     public void setBookBitMap(Bitmap bookBitMap) {
         this.bookBitMap = bookBitMap;
     }
+    public Bitmap getBookBitMap(){
+        return this.bookBitMap;
+    }
 
     public String getAuthor() {
         return author;
