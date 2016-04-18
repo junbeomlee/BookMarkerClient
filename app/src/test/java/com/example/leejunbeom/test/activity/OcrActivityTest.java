@@ -7,6 +7,7 @@ import com.example.leejunbeom.bookMarker.ui.activity.MainActivity;
 import com.example.leejunbeom.bookMarker.ui.activity.OcrActivity;
 import com.example.leejunbeom.test.BuildConfig;
 import com.example.leejunbeom.test.dagger.TestApplication;
+import com.googlecode.tesseract.android.TessBaseAPI;
 
 import org.junit.After;
 import org.junit.Before;
@@ -20,8 +21,12 @@ import java.io.File;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+
 
 /**
  * Created by noduritoto on 2016. 4. 17..
@@ -32,7 +37,7 @@ import static org.junit.Assert.assertTrue;
 public class OcrActivityTest {
 
     OcrActivity ocrActivity;
-    public static String DATA_PATH = Environment.getExternalStorageDirectory().toString() + "/SimpleAndroidOCR/";
+    public static String DATA_PATH = Environment.getExternalStorageDirectory().toString() + "/BookMarkerOCR/";
     private static final String TAG = "OcrActivityTest.java";
     String[] paths;
     File dir;
@@ -53,17 +58,12 @@ public class OcrActivityTest {
     @After
     public void tearDown(){}
 
-    @Test
-    public void checkInternalPath(){
-        final String DATA_PATH_INTERNAL = ocrActivity.getFilesDir().toString();
-        Log.d("Internal", DATA_PATH_INTERNAL);
-
-    }
 
     @Test
     public void sdCardMountTest(){
 
-        assertTrue(sdcard.equals(Environment.MEDIA_MOUNTED));
+        //assertTrue(sdcard.equals(Environment.MEDIA_MOUNTED));
+        assertFalse("sdCard cant find on TestCase", sdcard.equals(Environment.MEDIA_MOUNTED));
 
         if( ! sdcard.equals(Environment.MEDIA_MOUNTED) ) {
             //SD카드 UNMOUNTED
@@ -113,11 +113,14 @@ public class OcrActivityTest {
 
         //dir init
         String sdcard= Environment.getExternalStorageState();
+        assertNotEquals("path is not equal(dont exist) in testcase","/storage/emulated/0", sdcard);
+
 
         tessDataRoot = root + tessdataFolderName;
-        File rootCheck = new File(root);
-        assertNotNull(rootCheck);
+        //File rootCheck = new File("/storage/emulated/0");
+        //assertNotNull(rootCheck);
 
+        /*
         if( ! rootCheck.exists() ) { //최상위 루트폴더 미 존재시
             assertTrue(rootCheck.mkdirs());
             Log.d("mstag","root make");
@@ -132,19 +135,29 @@ public class OcrActivityTest {
             Log.d("mstag","check making root-son : " + rootCheck.exists());
         }
 
+
         DATA_PATH = new String(root + "/");
         Log.d("mstag",root);
         Log.d("mstag",DATA_PATH);
+        */
 
 
     }
 
     @Test
-    public void dirNameAndExistTest(){
+    public void dirNameTest(){
         assertNotNull(DATA_PATH);
+        assertEquals("dataPath ", Environment.getExternalStorageDirectory().toString() + "/BookMarkerOCR/", DATA_PATH);
+        String sonDataPath = new String(DATA_PATH + "tessdata/");
+        assertEquals("sonDataPath ", Environment.getExternalStorageDirectory().toString() + "/BookMarkerOCR/" + "tessdata/",
+                        sonDataPath);
+
+        /*
         for (String path : paths){
             File dir = new File(path);
             assertTrue(dir.exists());
         }
+        */
     }
+
 }

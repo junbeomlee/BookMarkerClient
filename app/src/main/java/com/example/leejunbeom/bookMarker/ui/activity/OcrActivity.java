@@ -41,7 +41,7 @@ public class OcrActivity extends AppCompatActivity {
     // You should have the trained data file in assets folder
     // You can get them at:
     // http://code.google.com/p/tesseract-ocr/downloads/list
-    public static final String lang = "kor";
+    public static final String lang = "eng1";
 
     private static final String TAG = "OcrActivity.java";
 
