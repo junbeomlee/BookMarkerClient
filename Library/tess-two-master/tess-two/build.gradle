@@ -46,6 +46,7 @@ android {
         }
     }
 
+
     // Call external ndk-build(.cmd) script to build the native code
     task ndkBuild(type: Exec) {
         //def ndkBuildExt = Os.isFamily(Os.FAMILY_WINDOWS) ? ".cmd" : ""
@@ -68,7 +69,8 @@ android {
 
     tasks.withType(Delete) {
         cleanTask -> cleanTask.dependsOn ndkClean
-    } 
+    }
+
 }
 
 dependencies {

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.leejunbeom.test">
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-feature android:name="android.hardware.camera" />
@@ -37,8 +38,8 @@
 
         <activity android:name="com.example.leejunbeom.bookMarker.ui.activity.BookAddActivity" />
         <activity android:name="com.example.leejunbeom.bookMarker.ui.activity.SearchActivity" />
-        <activity android:name="com.example.leejunbeom.bookMarker.ui.activity.OcrActivity"></activity>
-
+        <activity android:name="com.example.leejunbeom.bookMarker.ui.activity.OcrActivity" />
+        <activity android:name="com.example.leejunbeom.bookMarker.ui.activity.ImageMatchingActivity"></activity>
     </application>
 
 </manifest>

@@ -20,9 +20,19 @@ public class SIFT {
         System.loadLibrary("nonfree");
     }
 
-    private ImageView imageView;
-    private Bitmap inputImage; // make bitmap from image resource
+    private ImageView imageView = null;
+    private Bitmap inputImage = null; // make bitmap from image resource
     private FeatureDetector detector = FeatureDetector.create(FeatureDetector.SIFT);
+
+
+    public SIFT(){
+
+    }
+
+    public SIFT(ImageView _imageView, Bitmap _inputImage){
+        this.imageView = _imageView;
+        this.inputImage = _inputImage;
+    }
 
     public void sift() {
         Mat rgba = new Mat();
@@ -34,4 +44,23 @@ public class SIFT {
         Utils.matToBitmap(rgba, inputImage);
         imageView.setImageBitmap(inputImage);
     }
+
+
+    public void setImageView(ImageView imageView){
+        this.imageView = imageView;
+    }
+
+    public ImageView getImageView(){
+        return this.imageView;
+    }
+
+    public void setInputImage(Bitmap inputImage){
+        this.inputImage = inputImage;
+    }
+
+
+    public Bitmap getInputImage(){
+        return this.inputImage;
+    }
+
 }
