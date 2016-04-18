@@ -30,7 +30,7 @@ public class AppApplication extends Application {
 
     @Override public void onCreate() {
         super.onCreate();
-        component = DaggerAppApplication_ApplicationComponent.builder().appModule(new AppModule()).build();
+        component = DaggerAppApplication_ApplicationComponent.builder().appModule(new AppModule(this.getApplicationContext())).build();
     }
 
     public ApplicationComponent component() {

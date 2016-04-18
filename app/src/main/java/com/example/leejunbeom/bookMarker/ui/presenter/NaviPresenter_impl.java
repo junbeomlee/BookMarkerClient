@@ -35,7 +35,7 @@ public class NaviPresenter_impl implements NaviPresenter{
 
     @Override
     public void loadBookBitmaps() {
-        ArrayList<Bitmap>
+        //ArrayList<Bitmap>
     }
 
     public BookController getBookController() {

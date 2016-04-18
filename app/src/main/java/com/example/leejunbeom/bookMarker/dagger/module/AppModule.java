@@ -1,5 +1,9 @@
 package com.example.leejunbeom.bookMarker.dagger.module;
 
+import android.content.Context;
+
+import com.example.leejunbeom.bookMarker.dagger.application.AppApplication;
+import com.example.leejunbeom.bookMarker.model.BitMapController;
 import com.example.leejunbeom.bookMarker.model.PostApi;
 import com.example.leejunbeom.bookMarker.network.jericho.Jericho;
 import com.example.leejunbeom.bookMarker.model.BookController;
@@ -29,7 +33,11 @@ public class AppModule {
     SIFT provideTest(){
         return new SIFT();
     }*/
+    private Context context;
 
+    public AppModule(Context context){
+        this.context=context;
+    }
 
     @Provides
     @Singleton
@@ -66,6 +74,12 @@ public class AppModule {
     @Singleton
     MainPresenter provideMainPresenter(BookController bookController){
         return new MainPresenter_impl(bookController);
+    }
+
+    @Provides
+    @Singleton
+    BitMapController provideBitMapController(){
+        return new BitMapController(context);
     }
 
     @Provides

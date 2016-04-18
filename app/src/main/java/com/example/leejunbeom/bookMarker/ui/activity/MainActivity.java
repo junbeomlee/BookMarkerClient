@@ -19,6 +19,7 @@ import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.example.leejunbeom.bookMarker.SwipeMenuListView.SwipeMenuCreator_impl;
 import com.example.leejunbeom.bookMarker.dagger.application.AppApplication;
+import com.example.leejunbeom.bookMarker.model.BitMapController;
 import com.example.leejunbeom.bookMarker.model.BookController;
 import com.example.leejunbeom.bookMarker.model.pojo.Book;
 import com.example.leejunbeom.bookMarker.network.Network_impl;
@@ -66,6 +67,9 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
     Button searchButton;
 
     Context mainContext;
+
+    @Inject
+    BitMapController bitMapController;
 
     // private GoogleApiClient client;
     @Override
@@ -174,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
         int resourceId = resources.getIdentifier(book.getBookShelf(), "drawable", mainContext.getPackageName());
         Bitmap bookBitMap=BitmapFactory.decodeResource(resources, resourceId);
         book.setBookBitMap(bookBitMap);
-        Log.d("bitmap process done",book.toString());
+        //Log.d("bitmap process done",book.toString());
     }
 
     //test
