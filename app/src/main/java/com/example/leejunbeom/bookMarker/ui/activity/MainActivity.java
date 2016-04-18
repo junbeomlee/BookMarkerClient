@@ -116,11 +116,17 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
         super.onStart();
     }
 
-    @OnClick(R.id.bookAddButton)
-    public void onCallClick(){
-        this.mainPresenter.onBookAddButtonClick(this);
+    @OnClick({R.id.bookAddButton, R.id.ocrTestButton})
+    public void onCallClick(View v){
+        switch(v.getId()){
+            case R.id.bookAddButton:
+                this.mainPresenter.onBookAddButtonClick(this);
+                break;
+            case R.id.ocrTestButton:
+                this.mainPresenter.onOcrTestButtonClick(this);
+        }
+        //this.mainPresenter.onBookAddButtonClick(this);
     }
-
 
 
     /**
@@ -129,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
     @Override
     public void launchAddBookActivity() {
         if(Network_impl.getInstance().isOnline(this)){
-            Intent intent = new Intent(this, OcrActivity.class);
+            Intent intent = new Intent(this, BookAddActivity.class);
             startActivity(intent);
         }else {
             Toast.makeText(this, "Network Error!!",
@@ -137,12 +143,20 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
         }
     }
 
+
     //test
     @Override
     public void launchNaviActivity(Book book) {
         Intent intent = new Intent(this,NaviActivity.class);
         intent.putExtra("mark",book.getMark());
         startActivity(intent);
+    }
+
+    @Override
+    public void launchOcrActivity(){
+        Intent intent = new Intent(this,OcrActivity.class);
+        startActivity(intent);
+
     }
 
 

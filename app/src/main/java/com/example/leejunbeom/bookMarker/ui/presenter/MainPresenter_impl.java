@@ -24,6 +24,8 @@ public class MainPresenter_impl implements MainPresenter {
         mainscreen.launchAddBookActivity();
     }
 
+    public void onOcrTestButtonClick(Mainscreen mainscreen) { mainscreen.launchOcrActivity(); }
+
     @Override
     public void onListViewItemClick(int position, Mainscreen mainscreen) {
         Book book=this.bookController.getItem(position);

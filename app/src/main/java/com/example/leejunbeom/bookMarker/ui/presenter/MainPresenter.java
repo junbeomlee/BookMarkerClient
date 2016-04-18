@@ -10,6 +10,7 @@ import com.example.leejunbeom.bookMarker.ui.screen_contracts.Mainscreen;
  */
 public interface MainPresenter {
     void onBookAddButtonClick(Mainscreen mainActivity);
+    void onOcrTestButtonClick(Mainscreen mainActivity);
     void onListViewItemClick(int position, Mainscreen mainScreen);
     void onListViewMenuItemClick(int position);
     void refreshListViewData();
