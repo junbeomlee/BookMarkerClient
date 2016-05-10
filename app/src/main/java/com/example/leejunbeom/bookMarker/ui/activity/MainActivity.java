@@ -132,20 +132,24 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
      */
     @Override
     public void launchAddBookActivity() {
-        if(Network_impl.getInstance().isOnline(this)){
+        /*if(Network_impl.getInstance().isOnline(this)){
             Intent intent = new Intent(this, BookAddActivity.class);
             startActivity(intent);
         }else {
             Toast.makeText(this, "Network Error!!",
                     Toast.LENGTH_LONG).show();
-        }
+        }*/
+
+        Intent intent = new Intent(this,SearchActivity.class);
+        //intent.putExtra("mark", book.getMark());
+        startActivity(intent);
     }
 
     //test
     @Override
     public void launchNaviActivity(Book book) {
-        Intent intent = new Intent(this,NaviActivity.class);
-        intent.putExtra("mark",book.getMark());
+        Intent intent = new Intent(this,SearchActivity.class);
+        //intent.putExtra("mark", book.getMark());
         startActivity(intent);
     }
 

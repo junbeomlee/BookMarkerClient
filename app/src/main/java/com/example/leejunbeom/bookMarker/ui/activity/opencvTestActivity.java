@@ -39,7 +39,7 @@ public class opencvTestActivity extends AppCompatActivity {
     private Bitmap bookListBitMap; // make bitmap from image resource
     private Bitmap bookBitMap;
     private Bitmap matcherBitMap;
-    private FeatureDetector detector = FeatureDetector.create(FeatureDetector.FAST);
+    private FeatureDetector detector = FeatureDetector.create(FeatureDetector.ORB);
     private DescriptorExtractor extractor = DescriptorExtractor.create(DescriptorExtractor.ORB);
 
     @Override
@@ -100,6 +100,8 @@ public class opencvTestActivity extends AppCompatActivity {
         goodMatches.fromList(listOfGoodMatches);
 
         Mat imageOut = new Mat();
+
+        Features2d.drawMatches(rgba, keyPoints, rgba2, keyPoints2, matches, imageOut);
         Bitmap bitmap = Bitmap.createBitmap(imageOut.cols(), imageOut.rows(), Bitmap.Config.ARGB_8888);
 
         Utils.matToBitmap(imageOut, bitmap);

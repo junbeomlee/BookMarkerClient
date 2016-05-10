@@ -13,6 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.leejunbeom.bookMarker.dagger.application.AppApplication;
@@ -38,6 +39,7 @@ public class SearchActivity extends AppCompatActivity {
     private Context mContext = this;
     private Camera mCamera;
     private CameraPreview mPreview;
+    private ImageView ImageView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,7 +60,8 @@ public class SearchActivity extends AppCompatActivity {
         mCamera = getCameraInstance();
 
         // 프리뷰창을 생성하고 액티비티의 레아이웃으로 지정
-        mPreview = new CameraPreview(this, mCamera);
+        ImageView = (ImageView) findViewById(R.id.imageView);
+        mPreview = new CameraPreview(this, mCamera,ImageView);
         FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
         preview.addView(mPreview);
 
@@ -97,6 +100,7 @@ public class SearchActivity extends AppCompatActivity {
         try {
             // open() 의 매개변수로 int 값을 받을 수 도 있는데, 일반적으로 0이 후면 카메라, 1이 전면 카메라를 의미합니다.
             mCamera = Camera.open();
+
         } catch (Exception e) {
             Log.i(TAG, "Error : Using Camera");
             e.printStackTrace();
@@ -154,4 +158,34 @@ public class SearchActivity extends AppCompatActivity {
             }
         }
     };
+
+    public void onPreviewFrame(byte[] data, Camera camera) {
+        /*Size size = mCamera.getParameters().getPreviewSize();
+        PlanarYUVLuminanceSource source = new PlanarYUVLuminanceSource(data, size.width, size.height, 0, 0, size.width, size.height, false);
+        HybridBinarizer hybBin = new HybridBinarizer(source);
+        BinaryBitmap bitmap = new BinaryBitmap(hybBin);
+
+        ImageView myImage = (ImageView) findViewById(R.id.foto);
+
+        try {
+            result = reader.decode(bitmap);
+            Log.d("Result", "Result found!: " + String.valueOf(result));
+
+            myImage.setVisibility(View.VISIBLE);
+
+            if (String.valueOf(result).contentEquals("1"))
+                myImage.setImageResource(R.drawable.juan);
+            else if (String.valueOf(result).contentEquals("2"))
+                myImage.setImageResource(R.drawable.antonio);
+
+        } catch (NotFoundException e1) {
+
+            if (myImage != null)
+                myImage.setVisibility(View.INVISIBLE);
+
+            Log.d("NotFoundException", "NotFoundException");
+        } finally {
+            reader.reset();
+        }*/
+    }
 }

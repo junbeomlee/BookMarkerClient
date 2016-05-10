@@ -21,10 +21,10 @@ public class SIFT {
     }
 
     private ImageView imageView;
-    private Bitmap inputImage; // make bitmap from image resource
     private FeatureDetector detector = FeatureDetector.create(FeatureDetector.SIFT);
 
-    public void sift() {
+    public Bitmap sift(Bitmap inputImage) {
+
         Mat rgba = new Mat();
         Utils.bitmapToMat(inputImage, rgba);
         MatOfKeyPoint keyPoints = new MatOfKeyPoint();
@@ -32,6 +32,7 @@ public class SIFT {
         detector.detect(rgba, keyPoints);
         Features2d.drawKeypoints(rgba, keyPoints, rgba);
         Utils.matToBitmap(rgba, inputImage);
-        imageView.setImageBitmap(inputImage);
+
+        return inputImage;
     }
 }
