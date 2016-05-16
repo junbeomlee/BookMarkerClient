@@ -39,11 +39,11 @@ public class CameraPreview implements SurfaceHolder.Callback, Camera.PreviewCall
     Handler mHandler = new Handler(Looper.getMainLooper());
 
     public CameraPreview(int PreviewlayoutWidth, int PreviewlayoutHeight,
-                         ImageView CameraPreview, ImageView imageView, Bitmap bookBitMap)
+                         ImageView CameraPreview, Bitmap bookBitMap)
     {
         PreviewSizeWidth = PreviewlayoutWidth;
         PreviewSizeHeight = PreviewlayoutHeight;
-        imageView2=imageView;
+        //imageView2=imageView;
         MyCameraPreview = CameraPreview;
         bitmap = Bitmap.createBitmap(PreviewSizeWidth, PreviewSizeHeight, Bitmap.Config.ARGB_8888);
         pixels = new int[PreviewSizeWidth * PreviewSizeHeight];
@@ -56,8 +56,10 @@ public class CameraPreview implements SurfaceHolder.Callback, Camera.PreviewCall
         if (imageFormat == ImageFormat.NV21) {
             //We only accept the NV21(YUV420) format.
             if (!bProcessing) {
+                bProcessing=true;
+
                 FrameData = arg0;
-                imageView2.setImageBitmap(bitmap);
+                //imageView2.setImageBitmap(bitmap);
                 // mHandler.post(DoImageProcessing);
                 Camera.Parameters params = mCamera.getParameters();
                 int w = params.getPreviewSize().width;
@@ -79,8 +81,11 @@ public class CameraPreview implements SurfaceHolder.Callback, Camera.PreviewCall
                 Bitmap asdbitmap = BitmapFactory.decodeByteArray(out.toByteArray(), 0, out.size());
                 asd asd=new asd();
                 //asd.sift(asdbitmap,imageView2);
-                asd.drawMatchedPoint(asdbitmap,bookBitMap,imageView2);
+
+                MyCameraPreview.setImageBitmap(asd.drawMatchedPoint(asdbitmap,bookBitMap,imageView2));
+                //mCamera.setParameters(params);
                 //imageView2.setImageBitmap(asdbitmap);
+                bProcessing=false;
             }
         }
     }
@@ -96,8 +101,10 @@ public class CameraPreview implements SurfaceHolder.Callback, Camera.PreviewCall
         Camera.Parameters parameters;
 
         parameters = mCamera.getParameters();
+        //parameters.setPictureSize(MyCameraPreview.getWidth(),MyCameraPreview.getHeight());
         // Set the camera preview size
-        parameters.setPreviewSize(PreviewSizeWidth, PreviewSizeHeight);
+        //parameters.getPictureSize().width
+
 
         imageFormat = parameters.getPreviewFormat();
 

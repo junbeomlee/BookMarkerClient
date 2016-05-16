@@ -122,7 +122,7 @@ public class asd{
         imageView.setImageBitmap(inputImage);
     }
 
-    public void drawMatchedPoint(Bitmap bookBitMap,Bitmap CameraBitMap,ImageView imageView) {
+    public Bitmap drawMatchedPoint(Bitmap bookBitMap,Bitmap CameraBitMap,ImageView imageView) {
 
         Mat desc= new Mat();
         Mat desc2= new Mat();
@@ -161,9 +161,6 @@ public class asd{
             }
         }
 
-
-
-
         goodMatches.fromList(listOfGoodMatches);
 
         Mat imageOut = new Mat();
@@ -172,6 +169,6 @@ public class asd{
         Bitmap bitmap = Bitmap.createBitmap(imageOut.cols(), imageOut.rows(), Bitmap.Config.ARGB_8888);
 
         Utils.matToBitmap(imageOut, bitmap);
-        imageView.setImageBitmap(bitmap);
+        return bitmap;
     }
 }
