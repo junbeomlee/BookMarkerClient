@@ -3,6 +3,8 @@ package com.example.leejunbeom.bookMarker.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Environment;
@@ -62,7 +64,9 @@ public class SearchActivity extends AppCompatActivity {
         SurfaceView camView = new SurfaceView(this);
         SurfaceHolder camHolder = camView.getHolder();
         imageView = (ImageView) findViewById(R.id.imageView2);
-        camPreview = new CameraPreview(PreviewSizeWidth, PreviewSizeHeight, MyCameraPreview,imageView);
+
+        Bitmap bookBitMap = BitmapFactory.decodeResource(getResources(), R.drawable.book);
+        camPreview = new CameraPreview(PreviewSizeWidth, PreviewSizeHeight, MyCameraPreview,imageView,bookBitMap);
 
         camHolder.addCallback(camPreview);
         camHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);

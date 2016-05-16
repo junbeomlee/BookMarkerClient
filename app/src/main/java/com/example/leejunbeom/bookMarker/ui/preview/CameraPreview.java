@@ -34,11 +34,12 @@ public class CameraPreview implements SurfaceHolder.Callback, Camera.PreviewCall
     private int PreviewSizeHeight;
     private boolean bProcessing = false;
     private ImageView imageView2;
+    private Bitmap bookBitMap;
 
     Handler mHandler = new Handler(Looper.getMainLooper());
 
     public CameraPreview(int PreviewlayoutWidth, int PreviewlayoutHeight,
-                         ImageView CameraPreview, ImageView imageView)
+                         ImageView CameraPreview, ImageView imageView, Bitmap bookBitMap)
     {
         PreviewSizeWidth = PreviewlayoutWidth;
         PreviewSizeHeight = PreviewlayoutHeight;
@@ -46,6 +47,7 @@ public class CameraPreview implements SurfaceHolder.Callback, Camera.PreviewCall
         MyCameraPreview = CameraPreview;
         bitmap = Bitmap.createBitmap(PreviewSizeWidth, PreviewSizeHeight, Bitmap.Config.ARGB_8888);
         pixels = new int[PreviewSizeWidth * PreviewSizeHeight];
+        this.bookBitMap=bookBitMap;
     }
 
     @Override
@@ -58,12 +60,9 @@ public class CameraPreview implements SurfaceHolder.Callback, Camera.PreviewCall
                 imageView2.setImageBitmap(bitmap);
                 // mHandler.post(DoImageProcessing);
                 Camera.Parameters params = mCamera.getParameters();
-
-
                 int w = params.getPreviewSize().width;
-
                 int h = params.getPreviewSize().height;
-
+                
                 @SuppressWarnings("deprecation")
                 int format = params.getPreviewFormat();
 
@@ -78,8 +77,10 @@ public class CameraPreview implements SurfaceHolder.Callback, Camera.PreviewCall
                         +"params.getPreviewSize().height : "+h);
 
                 Bitmap asdbitmap = BitmapFactory.decodeByteArray(out.toByteArray(), 0, out.size());
-                imageView2.setImageBitmap(asdbitmap);
-
+                asd asd=new asd();
+                //asd.sift(asdbitmap,imageView2);
+                asd.drawMatchedPoint(asdbitmap,bookBitMap,imageView2);
+                //imageView2.setImageBitmap(asdbitmap);
             }
         }
     }
@@ -101,7 +102,7 @@ public class CameraPreview implements SurfaceHolder.Callback, Camera.PreviewCall
         imageFormat = parameters.getPreviewFormat();
 
         mCamera.setParameters(parameters);
-
+        mCamera.setDisplayOrientation(90);
         mCamera.startPreview();
     }
 
