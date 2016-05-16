@@ -125,7 +125,6 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         // 새로 변경된 설정으로 프리뷰를 재생성한다
         try {
             mCamera.setPreviewDisplay(mHolder);
-            mCamera.setPreviewCallback((Camera.PreviewCallback) context);
             mCamera.startPreview();
 
         } catch (Exception e){

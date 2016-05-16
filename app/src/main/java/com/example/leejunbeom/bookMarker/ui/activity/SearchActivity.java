@@ -3,6 +3,8 @@ package com.example.leejunbeom.bookMarker.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Environment;
@@ -17,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.leejunbeom.bookMarker.dagger.application.AppApplication;
+import com.example.leejunbeom.bookMarker.model.SIFT;
 import com.example.leejunbeom.bookMarker.ui.preview.CameraPreview;
 import com.example.leejunbeom.test.R;
 
@@ -62,6 +65,9 @@ public class SearchActivity extends AppCompatActivity {
         // 프리뷰창을 생성하고 액티비티의 레아이웃으로 지정
         ImageView = (ImageView) findViewById(R.id.imageView);
         mPreview = new CameraPreview(this, mCamera,ImageView);
+        CameraPreviewCallBack cameraPreviewCallBack=new CameraPreviewCallBack();
+        mCamera.setPreviewCallback(cameraPreviewCallBack);
+
         FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
         preview.addView(mPreview);
 
@@ -158,6 +164,15 @@ public class SearchActivity extends AppCompatActivity {
             }
         }
     };
+
+    public class CameraPreviewCallBack implements Camera.PreviewCallback {
+
+        @Override
+        public void onPreviewFrame(byte[] data, Camera camera) {
+            int a =0;
+
+        }
+    }
 
     public void onPreviewFrame(byte[] data, Camera camera) {
         /*Size size = mCamera.getParameters().getPreviewSize();
