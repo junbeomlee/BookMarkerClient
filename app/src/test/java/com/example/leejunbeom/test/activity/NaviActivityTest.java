@@ -53,7 +53,7 @@ public class NaviActivityTest {
     public void activity_setup_properly_test(){
         assertNotNull("fail setup button",naviActivity.getSearchButton());
         assertNotNull("fail setup presenter",naviActivity.getNaviPresenter());
-        assertNotNull("fail setup symbolicRequestTextfield",naviActivity.getSymbolicRequestText());
+        //assertNotNull("fail setup symbolicRequestTextfield",naviActivity.getSymbolicRequestText());
     }
 
     @Test

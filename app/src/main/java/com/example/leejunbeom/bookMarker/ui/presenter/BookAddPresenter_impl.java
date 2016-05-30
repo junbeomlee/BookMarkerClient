@@ -39,6 +39,7 @@ public class BookAddPresenter_impl implements BookAddPresenter{
                     @Override
                     public void call(Book book) {
                         System.out.print(book.toString());
+                        EventBus.getDefault().post(book);
                         bookController.addBook(book);
                         EventBus.getDefault().post(bookController);
                     }

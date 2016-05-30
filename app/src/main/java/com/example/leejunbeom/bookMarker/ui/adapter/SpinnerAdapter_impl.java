@@ -40,6 +40,8 @@ public class SpinnerAdapter_impl extends BaseAdapter {
         return listBook.get(position);
     }
 
+
+
     @Override
     public long getItemId(int position) {
         return position;
@@ -48,7 +50,7 @@ public class SpinnerAdapter_impl extends BaseAdapter {
     @Override
     public int getViewTypeCount() {
         // menu type count
-        return 3;
+        return 1;
     }
 
     @Override

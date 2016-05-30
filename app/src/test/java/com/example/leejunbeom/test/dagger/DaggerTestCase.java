@@ -1,5 +1,7 @@
 package com.example.leejunbeom.test.dagger;
 
+import android.app.Application;
+
 import com.example.leejunbeom.bookMarker.dagger.application.AppApplication;
 import com.example.leejunbeom.bookMarker.dagger.module.AppModule;
 import com.example.leejunbeom.bookMarker.ui.activity.BookAddActivity;
@@ -16,9 +18,9 @@ import dagger.Component;
 /**
  * Created by Jun on 16. 4. 10..
  */
-public class DaggerTestCase {
+public class DaggerTestCase extends Application {
 
-    private static TestComponent testComponent=DaggerDaggerTestCase_TestComponent.builder().appModule(new AppModule()).build();;
+    private TestComponent testComponent=DaggerDaggerTestCase_TestComponent.builder().appModule(new AppModule(this)).build();
     @Singleton
     @Component(modules = {AppModule.class})
     public interface TestComponent{
@@ -26,7 +28,7 @@ public class DaggerTestCase {
         void inject(NaviPresenterTest naviPresenterTest);
         void inject(BookAddPresenterTest bookAddPresenterTest);
     }
-    public static TestComponent getTestComponent(){
+    public TestComponent getTestComponent(){
         return testComponent;
     }
 }

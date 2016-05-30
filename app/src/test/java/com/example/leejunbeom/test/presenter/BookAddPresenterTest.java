@@ -31,7 +31,8 @@ public class BookAddPresenterTest {
 
     @Before
     public void setUp(){
-        DaggerTestCase.getTestComponent().inject(this);
+        DaggerTestCase daggerTestCase= new DaggerTestCase();
+        daggerTestCase.getTestComponent().inject(this);
     }
 
     @Test

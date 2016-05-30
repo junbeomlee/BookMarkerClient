@@ -65,8 +65,8 @@ public class SearchActivity extends AppCompatActivity {
         SurfaceHolder camHolder = camView.getHolder();
         //imageView = (ImageView) findViewById(R.id.imageView2);
 
-        Bitmap bookBitMap = BitmapFactory.decodeResource(getResources(), R.drawable.book2);
-        camPreview = new CameraPreview(PreviewSizeWidth, PreviewSizeHeight, MyCameraPreview,bookBitMap,getApplicationContext());
+        Bitmap bookBitMap = BitmapFactory.decodeResource(getResources(), R.drawable.book3);
+        camPreview = new CameraPreview(MyCameraPreview,bookBitMap,getApplicationContext(),this);
 
         camHolder.addCallback(camPreview);
         camHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);

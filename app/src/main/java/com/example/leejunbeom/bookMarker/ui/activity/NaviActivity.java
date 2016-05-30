@@ -66,7 +66,7 @@ public class NaviActivity extends AppCompatActivity implements NaviScreen{
     private boolean mapDraw = true;
     private Bitmap libraryViewBitMap;
     private Bitmap computedBitMap;
-    private BookAdapter_impl spinnerAdapter;
+    private SpinnerAdapter_impl spinnerAdapter;
     private ArrayList<Book> spinnerBookList;
     private Context myContext;
     private Resources myResources;
@@ -84,7 +84,12 @@ public class NaviActivity extends AppCompatActivity implements NaviScreen{
         this.myContext=this.getApplicationContext();
         this.myResources=this.getResources();
 
-        spinnerAdapter = new BookAdapter_impl(this.getApplicationContext());
+
+
+        spinnerAdapter = new SpinnerAdapter_impl(this.getApplicationContext());
+        //spinnerAdapter.setBookData(spinnerBookList);
+        //spinnerAdapter.notifyDataSetChanged();
+
         spinner.setAdapter(spinnerAdapter);
         addlistener();
 

@@ -20,8 +20,10 @@ import org.opencv.features2d.Features2d;
 import org.opencv.features2d.KeyPoint;
 import org.opencv.imgproc.Imgproc;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by Jun on 16. 5. 16..
@@ -44,6 +46,8 @@ public class asd{
     private Mat firstBookMat;
     private Mat extractBookMat;
     private Context context;
+    private int bookWidth;
+    private int bookHeight;
 
     public asd(Bitmap bookBitMap, Context context){
 
@@ -51,6 +55,7 @@ public class asd{
         firstBookMat = new Mat();
         extractBookMat = new Mat();
         Utils.bitmapToMat(bookBitMap, firstBookMat);
+        this.bookWidth
         keyPoints = new MatOfKeyPoint();
         Imgproc.cvtColor(firstBookMat, firstBookMat, Imgproc.COLOR_RGBA2GRAY);
         detector.detect(firstBookMat, keyPoints);
@@ -74,12 +79,27 @@ public class asd{
 
     public Bitmap drawMatchedPoint(Bitmap CameraBitMap) {
 
+        int THREAD_SIZE=3;
+        ArrayList<Thread> threads = new ArrayList<Thread>();
+        Mat matarray[] = new Mat[9];
         Mat desc2= new Mat();
-
-
         Mat rgba2 = new Mat();
         Utils.bitmapToMat(CameraBitMap, rgba2);
-        rgba2=rgba2.colRange(CameraBitMap.getWidth()/3,CameraBitMap.getWidth()/3*2);
+
+        int bitMapWidth=CameraBitMap.getWidth();
+        int bitMapHeight=CameraBitMap.getHeight();
+
+        for(int i=0;i<THREAD_SIZE;i++){
+            Mat colMat1=rgba2.colRange(bitMapWidth*i/3,bitMapHeight*(i+1)/3);
+            Mat colMat2=firstBookMat.colRange(*i/3,bitMapHeight*(i+1)/3);
+            for(int j=0;j<THREAD_SIZE;j++){
+                matarray[i*3+j]=colMat.rowRange(bitMapHeight*j/3,bitMapHeight*(j+1)/3);
+                Thread t = new Test(matarray[i*3+j]);
+                t.start();
+                threads.add(t);
+            }
+        }
+
         MatOfKeyPoint keyPoints2 = new MatOfKeyPoint();
         Imgproc.cvtColor(rgba2, rgba2, Imgproc.COLOR_RGBA2GRAY);
         detector.detect(rgba2, keyPoints2);
@@ -100,7 +120,7 @@ public class asd{
 
 
                 for (int i = 0; i < matchesList.size() ;i++) {
-                    if (matchesList.get(i).distance < 30) {
+                    if (matchesList.get(i).distance < 40) {
                         listOfGoodMatches.add(matchesList.get(i));
                     }
                 }
@@ -120,5 +140,19 @@ public class asd{
         }
         return null;
 
+    }
+
+    public class Test extends Thread {
+
+        Mat matfirst;
+        Mat matsecond;
+
+        public Test(Mat matfirst,Mat matsecond) {
+            this.matfirst=matfirst;
+            this.matsecond=matsecond;
+        }
+        public void run() {
+
+        }
     }
 }

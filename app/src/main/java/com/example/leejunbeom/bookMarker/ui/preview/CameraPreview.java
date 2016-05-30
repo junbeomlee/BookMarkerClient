@@ -1,23 +1,31 @@
 package com.example.leejunbeom.bookMarker.ui.preview;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
+import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.graphics.YuvImage;
 import android.hardware.Camera;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.ImageView;
 
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.security.AccessControlContext;
 import java.util.List;
 
 /**
@@ -31,21 +39,17 @@ public class CameraPreview implements SurfaceHolder.Callback, Camera.PreviewCall
     private int[] pixels = null;
     private byte[] FrameData = null;
     private int imageFormat;
-    private int PreviewSizeWidth;
-    private int PreviewSizeHeight;
     private boolean bProcessing = false;
     private ImageView imageView2;
     private Bitmap bookBitMap;
     private asd asd;
-
+    private ByteArrayOutputStream out;
+    private Activity activity;
     private Context context;
     Handler mHandler = new Handler(Looper.getMainLooper());
 
-    public CameraPreview(int PreviewlayoutWidth, int PreviewlayoutHeight,
-                         ImageView CameraPreview, Bitmap bookBitMap,Context context)
+    public CameraPreview(ImageView CameraPreview, Bitmap bookBitMap,Context context,Activity activity)
     {
-        PreviewSizeWidth = PreviewlayoutWidth;
-        PreviewSizeHeight = PreviewlayoutHeight;
         this.context=context;
         //imageView2=imageView;
         MyCameraPreview = CameraPreview;
@@ -53,6 +57,7 @@ public class CameraPreview implements SurfaceHolder.Callback, Camera.PreviewCall
         //pixels = new int[PreviewSizeWidth * PreviewSizeHeight];
         this.bookBitMap=bookBitMap;
         asd=new asd(bookBitMap,context);
+        this.activity=activity;
     }
 
     @Override
@@ -61,42 +66,81 @@ public class CameraPreview implements SurfaceHolder.Callback, Camera.PreviewCall
         if (imageFormat == ImageFormat.NV21) {
             //We only accept the NV21(YUV420) format.
             if (!bProcessing) {
-                //bProcessing=true;
+                bProcessing=true;
 
                 FrameData = arg0;
                 //imageView2.setImageBitmap(bitmap);
                 // mHandler.post(DoImageProcessing);
                 Camera.Parameters params = mCamera.getParameters();
-                int w = params.getPreviewSize().width;
-                int h = params.getPreviewSize().height;
-                
+                final int w = params.getPreviewSize().width;
+                final int h = params.getPreviewSize().height;
+
                 @SuppressWarnings("deprecation")
                 int format = params.getPreviewFormat();
-
-                YuvImage image = new YuvImage(arg0, format, w, h, null);
-
-                ByteArrayOutputStream out = new ByteArrayOutputStream();
-
-                Rect area = new Rect(0, 0, w, h);
-
+                final YuvImage image = new YuvImage(arg0, format, w, h, null);
+                out = new ByteArrayOutputStream();
+                final Rect area = new Rect(0, 0, w, h);
                 image.compressToJpeg(area, 100, out);
-                System.out.println("getPreviewSize().width : " + w + "\n"
-                        + "params.getPreviewSize().height : " + h + "booksize:" + bookBitMap.getWidth());
+                //final byte[] jdata = out.toByteArray();
+                /*((Activity) context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Bitmap bmp;
+                        bmp = BitmapFactory.decodeByteArray(jdata, 0, jdata.length);
+                        MyCameraPreview.setImageBitmap(rotateImage(bmp, 90));
+                    }
+                });*/
 
 
-                Bitmap asdbitmap = BitmapFactory.decodeByteArray(out.toByteArray(), 0, out.size());
-                System.out.print(asdbitmap.toString());
-                //asd.sift(asdbitmap,imageView2);
-                Bitmap bitmap=asd.drawMatchedPoint(asdbitmap);
-                if(bitmap!=null){
-                    MyCameraPreview.setImageBitmap(bitmap);
-                }
+                /*tStart= System.currentTimeMillis();
+                final Bitmap asdbitmap = BitmapFactory.decodeByteArray(out.toByteArray(), 0, out.size());
+
+                tEnd=System.currentTimeMillis();
+                tDelta=tEnd-tStart;
+                elapsedSeconds = tDelta/1000.0;
+                Log.d("first---2:",String.valueOf(elapsedSeconds));*/
+
+                /*tStart= System.currentTimeMillis();
+                MyCameraPreview.setImageBitmap(rotateImage(asdbitmap,90));
+                tEnd=System.currentTimeMillis();
+                tDelta=tEnd-tStart;
+                elapsedSeconds = tDelta/1000.0;
+                System.out.print("first3---:"+elapsedSeconds);*/
+
+
+
+
+                //if(bitmap!=null){
+
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            final Bitmap asdbitmap = BitmapFactory.decodeByteArray(out.toByteArray(), 0, out.size());
+                            Bitmap bitmap=asd.drawMatchedPoint(asdbitmap);
+                            if(bitmap!=null)
+                                MyCameraPreview.setImageBitmap(rotateImage(asdbitmap, 90));
+                        }
+                    });
+
+
+                //}
 
                 //mCamera.setParameters(params);
                 //imageView2.setImageBitmap(asdbitmap);
-                //bProcessing=false;
+                bProcessing=false;
             }
         }
+    }
+
+    public Bitmap rotateImage(Bitmap src, float degree) {
+
+        // Matrix 객체 생성
+        Matrix matrix = new Matrix();
+        // 회전 각도 셋팅
+        matrix.postRotate(degree);
+        // 이미지와 Matrix 를 셋팅해서 Bitmap 객체 생성
+        return Bitmap.createBitmap(src, 0, 0, src.getWidth(),
+                src.getHeight(), matrix, true);
     }
 
     public void onPause()
@@ -114,11 +158,10 @@ public class CameraPreview implements SurfaceHolder.Callback, Camera.PreviewCall
         // Set the camera preview size
         //parameters.getPictureSize().width
 
-        //Camera.Parameters.
         List<Camera.Size> tmpList=mCamera.getParameters().getSupportedPreviewSizes();
         Log.d("camera====",parameters.flatten());
         //Camera.Size size = getBestPreviewSize(w, h);
-        parameters.setPreviewSize(1920,1088);
+        parameters.setPreviewSize(1280,720);
         imageFormat = parameters.getPreviewFormat();
 
         mCamera.setParameters(parameters);
