@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/Library/opencv/opencv.iml" filepath="$PROJECT_DIR$/Library/opencv/opencv.iml" />
       <module fileurl="file://$PROJECT_DIR$/Library/SwipeMenuListView/demo/swipeMenuListViewDemo.iml" filepath="$PROJECT_DIR$/Library/SwipeMenuListView/demo/swipeMenuListViewDemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/Library/SwipeMenuListView/library/swipeMenuListViewLibrary.iml" filepath="$PROJECT_DIR$/Library/SwipeMenuListView/library/swipeMenuListViewLibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Library/tess-two/tess-two.iml" filepath="$PROJECT_DIR$/Library/tess-two/tess-two.iml" />
     </modules>
   </component>
 </project>

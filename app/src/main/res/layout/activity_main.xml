@@ -34,4 +34,20 @@
         android:layout_below="@+id/listView"
         android:layout_alignParentEnd="true" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TessTwo"
+        android:id="@+id/tessTwo_button"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OCR_Camera"
+        android:id="@+id/ocr_camera"
+        android:layout_toEndOf="@+id/bookAddButton"
+        android:layout_above="@+id/tessTwo_button" />
+
 </RelativeLayout>
