@@ -70,6 +70,8 @@ public class NaviActivity extends AppCompatActivity implements NaviScreen{
     private ArrayList<Book> spinnerBookList;
     private Context myContext;
     private Resources myResources;
+
+
     //// TODO: 16. 4. 18.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,6 +169,9 @@ public class NaviActivity extends AppCompatActivity implements NaviScreen{
 
         if(mapDraw){
             computedBitMap = BitmapFactory.decodeResource(this.getApplicationContext().getResources(), R.drawable.non10);
+            /*
+             포문 돌면서 이미지 중첩
+             */
             for(int i=0;i<bookController.size();i++) {
                 Book book=bookController.getItem(i);
                 Resources resources = this.getResources();
@@ -174,6 +179,7 @@ public class NaviActivity extends AppCompatActivity implements NaviScreen{
                 Bitmap bookBitMap=BitmapFactory.decodeResource(resources, resourceId);
                 computedBitMap=this.overlayMark(computedBitMap,bookBitMap);
             }
+            // 중첩된 이미지를 셋 한다.
             mapDraw=false;
             this.libraryView.setImageBitmap(rotateImage(computedBitMap,90));
         }
