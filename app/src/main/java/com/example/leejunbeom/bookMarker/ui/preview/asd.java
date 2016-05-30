@@ -1,7 +1,9 @@
 package com.example.leejunbeom.bookMarker.ui.preview;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Vibrator;
 import android.widget.ImageView;
 
 import com.example.leejunbeom.test.R;
@@ -15,6 +17,7 @@ import org.opencv.features2d.DescriptorExtractor;
 import org.opencv.features2d.DescriptorMatcher;
 import org.opencv.features2d.FeatureDetector;
 import org.opencv.features2d.Features2d;
+import org.opencv.features2d.KeyPoint;
 import org.opencv.imgproc.Imgproc;
 
 import java.util.LinkedList;
@@ -32,83 +35,29 @@ public class asd{
         System.loadLibrary("nonfree");
     }
 
-    private Bitmap bookListBitMap; // make bitmap from image resource
-    private Bitmap bookBitMap;
-    private Bitmap matcherBitMap;
     private FeatureDetector detector = FeatureDetector.create(FeatureDetector.ORB);
     private DescriptorExtractor extractor = DescriptorExtractor.create(DescriptorExtractor.ORB);
+    DescriptorMatcher matcher = DescriptorMatcher.create(DescriptorMatcher.BRUTEFORCE_HAMMINGLUT);
 
-    /*public Bitmap asd(){
+    private Bitmap firstBookBitMap;
+    private MatOfKeyPoint keyPoints;
+    private Mat firstBookMat;
+    private Mat extractBookMat;
+    private Context context;
 
+    public asd(Bitmap bookBitMap, Context context){
 
-        bookBitMap = BitmapFactory.decodeResource(getResources(), R.drawable.book);
-        bookListBitMap = BitmapFactory.decodeResource(getResources(), R.drawable.booklist);
+        this.firstBookBitMap=bookBitMap;
+        firstBookMat = new Mat();
+        extractBookMat = new Mat();
+        Utils.bitmapToMat(bookBitMap, firstBookMat);
+        keyPoints = new MatOfKeyPoint();
+        Imgproc.cvtColor(firstBookMat, firstBookMat, Imgproc.COLOR_RGBA2GRAY);
+        detector.detect(firstBookMat, keyPoints);
+        extractor.compute(firstBookMat, keyPoints, extractBookMat);
+        this.context=context;
 
-        setContentView(R.layout.activity_opencv_test_activitiy);
-        Bitmap.Config conf = Bitmap.Config.ARGB_4444; // see other conf types
-
-        //bookView = (ImageView) this.findViewById(R.id.bookView);
-        //bookListView = (ImageView) this.findViewById(R.id.bookListView);
-        matcherImageView =(ImageView) this.findViewById(R.id.matcherImageView);
-
-        Mat desc= new Mat();
-        Mat desc2= new Mat();
-        Mat rgba = new Mat();
-
-        System.out.print("start");
-        Utils.bitmapToMat(bookBitMap, rgba);
-        MatOfKeyPoint keyPoints = new MatOfKeyPoint();
-        Imgproc.cvtColor(rgba, rgba, Imgproc.COLOR_RGBA2GRAY);
-        detector.detect(rgba, keyPoints);
-
-        Mat rgba2 = new Mat();
-        Utils.bitmapToMat(bookListBitMap, rgba2);
-        MatOfKeyPoint keyPoints2 = new MatOfKeyPoint();
-        Imgproc.cvtColor(rgba2, rgba2, Imgproc.COLOR_RGBA2GRAY);
-        detector.detect(rgba2, keyPoints2);
-
-        extractor.compute(rgba, keyPoints, desc);
-        extractor.compute(rgba2, keyPoints2, desc2);
-
-        DescriptorMatcher matcher = DescriptorMatcher.create(DescriptorMatcher.BRUTEFORCE_HAMMINGLUT);
-
-        MatOfDMatch matches= new MatOfDMatch();
-
-        matcher.match(desc, desc2, matches);
-
-        double max_dist = 0;
-        double min_dist = 100;
-        List<DMatch> matchesList = matches.toList();
-        LinkedList<DMatch> listOfGoodMatches = new LinkedList<>();
-        MatOfDMatch goodMatches = new MatOfDMatch();
-
-
-        for (int i = 0; i < matchesList.size() ;i++) {
-            if (matchesList.get(i).distance < 30) {
-                listOfGoodMatches.add(matchesList.get(i));
-            }
-        }
-
-
-
-
-        goodMatches.fromList(listOfGoodMatches);
-
-        Mat imageOut = new Mat();
-
-        Features2d.drawMatches(rgba, keyPoints, rgba2, keyPoints2, matches, imageOut);
-        Bitmap bitmap = Bitmap.createBitmap(imageOut.cols(), imageOut.rows(), Bitmap.Config.ARGB_8888);
-
-        Utils.matToBitmap(imageOut, bitmap);
-        matcherImageView.setImageBitmap(bitmap);
-
-        Log.d("asdasdasdasd",String.valueOf(listOfGoodMatches.size()));
     }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }*/
 
     public void sift(Bitmap inputImage,ImageView imageView){
 
@@ -120,55 +69,56 @@ public class asd{
         Features2d.drawKeypoints(rgba, keyPoints, rgba);
         Utils.matToBitmap(rgba, inputImage);
         imageView.setImageBitmap(inputImage);
+
     }
 
-    public Bitmap drawMatchedPoint(Bitmap bookBitMap,Bitmap CameraBitMap,ImageView imageView) {
+    public Bitmap drawMatchedPoint(Bitmap CameraBitMap) {
 
-        Mat desc= new Mat();
         Mat desc2= new Mat();
-        Mat rgba = new Mat();
 
-        Utils.bitmapToMat(bookBitMap, rgba);
-        MatOfKeyPoint keyPoints = new MatOfKeyPoint();
-        Imgproc.cvtColor(rgba, rgba, Imgproc.COLOR_RGBA2GRAY);
-        detector.detect(rgba, keyPoints);
 
         Mat rgba2 = new Mat();
         Utils.bitmapToMat(CameraBitMap, rgba2);
+        rgba2=rgba2.colRange(CameraBitMap.getWidth()/3,CameraBitMap.getWidth()/3*2);
         MatOfKeyPoint keyPoints2 = new MatOfKeyPoint();
         Imgproc.cvtColor(rgba2, rgba2, Imgproc.COLOR_RGBA2GRAY);
         detector.detect(rgba2, keyPoints2);
 
-        extractor.compute(rgba, keyPoints, desc);
-        extractor.compute(rgba2, keyPoints2, desc2);
-
-        DescriptorMatcher matcher = DescriptorMatcher.create(DescriptorMatcher.BRUTEFORCE_HAMMINGLUT);
 
         MatOfDMatch matches= new MatOfDMatch();
-
-        matcher.match(desc, desc2, matches);
-
-        double max_dist = 0;
-        double min_dist = 100;
-        List<DMatch> matchesList = matches.toList();
-        LinkedList<DMatch> listOfGoodMatches = new LinkedList<>();
-        MatOfDMatch goodMatches = new MatOfDMatch();
+        extractor.compute(rgba2, keyPoints2, desc2);
 
 
-        for (int i = 0; i < matchesList.size() ;i++) {
-            if (matchesList.get(i).distance < 30) {
-                listOfGoodMatches.add(matchesList.get(i));
-            }
+        if(extractBookMat.type() == desc2.type() && extractBookMat.cols() == desc2.cols()){
+
+                matcher.match(extractBookMat, desc2, matches);
+                double max_dist = 0;
+                double min_dist = 100;
+                List<DMatch> matchesList = matches.toList();
+                LinkedList<DMatch> listOfGoodMatches = new LinkedList<>();
+                MatOfDMatch goodMatches = new MatOfDMatch();
+
+
+                for (int i = 0; i < matchesList.size() ;i++) {
+                    if (matchesList.get(i).distance < 30) {
+                        listOfGoodMatches.add(matchesList.get(i));
+                    }
+                }
+
+                goodMatches.fromList(listOfGoodMatches);
+
+                Mat imageOut = new Mat();
+
+                Features2d.drawMatches(firstBookMat, keyPoints, rgba2, keyPoints2, goodMatches, imageOut);
+                Bitmap bitmap = Bitmap.createBitmap(imageOut.cols(), imageOut.rows(), Bitmap.Config.ARGB_8888);
+                Utils.matToBitmap(imageOut, bitmap);
+                if(listOfGoodMatches.size()>3){
+                    Vibrator vibe = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
+                    vibe.vibrate(1000);
+                }
+            return bitmap;
         }
+        return null;
 
-        goodMatches.fromList(listOfGoodMatches);
-
-        Mat imageOut = new Mat();
-
-        Features2d.drawMatches(rgba, keyPoints, rgba2, keyPoints2, goodMatches, imageOut);
-        Bitmap bitmap = Bitmap.createBitmap(imageOut.cols(), imageOut.rows(), Bitmap.Config.ARGB_8888);
-
-        Utils.matToBitmap(imageOut, bitmap);
-        return bitmap;
     }
 }
