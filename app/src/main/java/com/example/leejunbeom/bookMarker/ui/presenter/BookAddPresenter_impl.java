@@ -38,7 +38,7 @@ public class BookAddPresenter_impl implements BookAddPresenter{
                 subscribe(new Action1<Book>() {
                     @Override
                     public void call(Book book) {
-                        EventBus.getDefault().post(book);
+                        System.out.print(book.toString());
                         bookController.addBook(book);
                         EventBus.getDefault().post(bookController);
                     }

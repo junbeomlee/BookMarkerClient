@@ -1,11 +1,15 @@
 package com.example.leejunbeom.bookMarker.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -18,10 +22,14 @@ import com.example.leejunbeom.bookMarker.model.BitMapController;
 import com.example.leejunbeom.bookMarker.model.BookController;
 import com.example.leejunbeom.bookMarker.model.pojo.Book;
 import com.example.leejunbeom.bookMarker.ui.adapter.BookAdapter_impl;
+import com.example.leejunbeom.bookMarker.ui.adapter.SpinnerAdapter_impl;
 import com.example.leejunbeom.bookMarker.ui.presenter.NaviPresenter;
 import com.example.leejunbeom.bookMarker.ui.presenter.NaviPresenter_impl;
 import com.example.leejunbeom.bookMarker.ui.screen_contracts.NaviScreen;
 import com.example.leejunbeom.test.R;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 
@@ -55,15 +63,13 @@ public class NaviActivity extends AppCompatActivity implements NaviScreen{
     @Bind(R.id.spinner2)
     Spinner spinner;
 
-    Bitmap libraryMainBitMap;
-
-    @Inject
-    BitMapController bitMapController;
-
-    private BookAdapter_impl bAdapter;
-
-    //test
-    
+    private boolean mapDraw = true;
+    private Bitmap libraryViewBitMap;
+    private Bitmap computedBitMap;
+    private BookAdapter_impl spinnerAdapter;
+    private ArrayList<Book> spinnerBookList;
+    private Context myContext;
+    private Resources myResources;
     //// TODO: 16. 4. 18.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,31 +77,38 @@ public class NaviActivity extends AppCompatActivity implements NaviScreen{
         setContentView(R.layout.activity_navi);
         ((AppApplication) getApplication()).component().inject(this);
         ButterKnife.bind(this);
-        libraryView.setImageBitmap(this.rotateImage(bitMapController.getBitMap("0"), 90));
-        bAdapter = new BookAdapter_impl(this.getApplicationContext());
+        EventBus.getDefault().register(this);
 
-        ////문제점 spinner에는 한개의 원소가 추가되어야 하고 나머지는 bookController
-        ////문제점 spinner에는 한개의 원소가 추가되어야 하고 나머지는 bookController의 arrayList이다. 효과적인 구조로 refactor해야한다.
-        Book computedBook = new Book();
-        computedBook.setMark("0");
-        ArrayList<Book> bookArrayList= ((NaviPresenter_impl) naviPresenter).getBookController().getBookList();
-        ArrayList<Book> spinnerArrayList = new ArrayList<Book>(bookArrayList);
-        spinnerArrayList.add(0,computedBook);
-        ////
-        bAdapter.setBookData(spinnerArrayList);
-        spinner.setAdapter(bAdapter);
+        this.myContext=this.getApplicationContext();
+        this.myResources=this.getResources();
+
+        spinnerAdapter = new BookAdapter_impl(this.getApplicationContext());
+        spinner.setAdapter(spinnerAdapter);
         addlistener();
+
+        if(mapDraw) {
+            libraryViewBitMap = BitmapFactory.decodeResource(this.getApplicationContext().getResources(), R.drawable.non10);
+            this.libraryView.setImageBitmap(rotateImage(libraryViewBitMap,90));
+            mapDraw=false;
+        }
     }
+
+    public void setComputedImage(){
+        //spinnerBookList.add(0,spinnerBookList);
+    }
+
 
     private void addlistener() {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position==0){
-                    libraryView.setImageBitmap(rotateImage(bitMapController.getBitMap("0"), 90));
-                }else{
-                    Book book = ((NaviPresenter_impl) naviPresenter).getBookController().getBookList().get(position-1);
-                    libraryView.setImageBitmap(rotateImage(bitMapController.getBitMap(book.getMark()), 90));
+                if (position == 0) {
+                    libraryView.setImageBitmap(rotateImage(computedBitMap, 90));
+                } else {
+                    Book book=spinnerBookList.get(position);
+                    int resourceId = myResources.getIdentifier(book.getBookShelf(), "drawable", myContext.getPackageName());
+                    Bitmap bookBitMap=BitmapFactory.decodeResource(myResources, resourceId);
+                    libraryView.setImageBitmap(rotateImage(overlayMark(libraryViewBitMap,bookBitMap), 90));
                 }
             }
 
@@ -108,7 +121,6 @@ public class NaviActivity extends AppCompatActivity implements NaviScreen{
 
     }
 
-
     @OnClick(R.id.naviButton)
     public void onSearchButton(){
         naviPresenter.onBookSearchButtonClick(this);
@@ -119,6 +131,14 @@ public class NaviActivity extends AppCompatActivity implements NaviScreen{
     public void launchSearchActivity() {
         Intent intent = new Intent(this, SearchActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mapDraw=true;
+        naviPresenter.refreshListViewData();
+
     }
 
     @Override
@@ -136,6 +156,57 @@ public class NaviActivity extends AppCompatActivity implements NaviScreen{
     protected void onDestroy() {
         super.onDestroy();
         this.libraryView.setImageBitmap(null);
+    }
+
+    @Subscribe
+    public void onSetBookList(BookController bookController){
+
+        this.setSpinnerArrayList(bookController.getBookList());
+        this.spinnerAdapter.setBookData(spinnerBookList);
+        this.spinnerAdapter.notifyDataSetChanged();
+
+        if(mapDraw){
+            computedBitMap = BitmapFactory.decodeResource(this.getApplicationContext().getResources(), R.drawable.non10);
+            for(int i=0;i<bookController.size();i++) {
+                Book book=bookController.getItem(i);
+                Resources resources = this.getResources();
+                int resourceId = resources.getIdentifier(book.getBookShelf(), "drawable", this.getPackageName());
+                Bitmap bookBitMap=BitmapFactory.decodeResource(resources, resourceId);
+                computedBitMap=this.overlayMark(computedBitMap,bookBitMap);
+            }
+            mapDraw=false;
+            this.libraryView.setImageBitmap(rotateImage(computedBitMap,90));
+        }
+    }
+
+    public ArrayList<Book> setSpinnerArrayList(ArrayList<Book> bookArrayList){
+
+        Book computedBook = new Book();
+        computedBook.setMark("All");
+        spinnerBookList = new ArrayList<Book>(bookArrayList);
+        spinnerBookList.add(0, computedBook);
+        //spinnerBookList.addAll(1,bookArrayList);
+
+        return null;
+    }
+
+
+    private Bitmap overlayMark(Bitmap main, Bitmap sub)
+
+    {
+
+        Bitmap bmOverlay = Bitmap.createBitmap(main.getWidth(), main.getHeight(), main.getConfig());
+
+        Canvas canvas = new Canvas(bmOverlay);
+
+        canvas.drawBitmap(main, 0, 0, null);
+
+        canvas.drawBitmap(sub, 0, 0, null);
+
+        //main.recycle();
+        //sub.recycle();
+
+        return bmOverlay;
     }
 
     public Bitmap rotateImage(Bitmap src, float degree) {

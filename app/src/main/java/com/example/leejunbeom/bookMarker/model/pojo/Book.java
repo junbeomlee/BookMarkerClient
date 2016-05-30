@@ -22,7 +22,6 @@ public class Book {
     private String author;
     private String mark;
     private String bookShelf;
-    private Bitmap bookBitMap;
 
     public Book(){
 
@@ -34,13 +33,6 @@ public class Book {
         this.author = jsonBookObject.getString("author");
         this.mark = jsonBookObject.getString("mark");
         this.bookShelf = prefix+jsonBookObject.getString("bookshelf");
-    }
-
-    public void setBookBitMap(Bitmap bookBitMap) {
-        this.bookBitMap = bookBitMap;
-    }
-    public Bitmap getBookBitMap(){
-        return this.bookBitMap;
     }
 
     public String getAuthor() {

@@ -10,4 +10,5 @@ public interface NaviPresenter {
     void onBookSearchButtonClick(NaviScreen naviScreen);
     void getMap(String symbolicRequest);
     void loadBookBitmaps();
+    void refreshListViewData();
 }
