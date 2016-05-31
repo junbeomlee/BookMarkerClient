@@ -165,10 +165,7 @@ public class asd{
                     Paint paint = new Paint();
                     paint.setStyle(Paint.Style.STROKE);
                     paint.setColor(Color.YELLOW);
-                    /*
-                    Paint paint = new Paint();
-                    paint.setStyle(Paint.Style.STROKE);
-                    canvas.drawCircle(bitmapCopied.getWidth()/2,bitmapCopied.getHeight()/2,40,paint);*/
+
                     for(int i=0;i<keyPointList.size();i++){
                         Point point2= new Point((int)keyPointList.get(i).pt.x,(int)keyPointList.get(i).pt.y);
                         canvas.drawRect(point2.x-10,point2.y-10, point2.x+10,point2.y+10,paint);
