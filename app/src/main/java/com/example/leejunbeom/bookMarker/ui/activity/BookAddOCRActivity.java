@@ -23,7 +23,9 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.example.leejunbeom.bookMarker.model.OCR;
 import com.example.leejunbeom.bookMarker.ui.preview.CameraPreview;
+import com.example.leejunbeom.bookMarker.ui.preview.OCRCameraPreview;
 import com.example.leejunbeom.test.R;
 import com.googlecode.tesseract.android.TessBaseAPI;
 
@@ -41,7 +43,7 @@ public class BookAddOCRActivity extends AppCompatActivity {
     String TAG = "CAMERA";
     private Context mContext = this;
     private Camera mCamera;
-    private CameraPreview mPreview;
+    private OCRCameraPreview mPreview;
 
     //for OCR
     public static final String DATA_PATH = Environment
@@ -53,7 +55,7 @@ public class BookAddOCRActivity extends AppCompatActivity {
     public static final String lang = "eng";
     private static final String TAG1 = "SimpleAndroidOCR.java";
     protected String _path;
-    private String resultString;
+    String resultString;
 
     private Camera.PictureCallback mPicture = new Camera.PictureCallback() {
         @Override
@@ -73,98 +75,11 @@ public class BookAddOCRActivity extends AppCompatActivity {
                 fos.close();
                 //Thread.sleep(500);
 
-                // ocr 프로세스 시작
-                _path = pictureFile.getAbsolutePath();
-                String TAG1 = "noduriOCR";
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inSampleSize = 4;
+                //ocr
 
-                //_path = DATA_PATH + "ocr2.jpg";
-                Log.i("photo path : ", _path);
-
-                Bitmap bitmap = BitmapFactory.decodeFile(_path, options);
-
-                // bitmap image modified needed
-
-                try {
-                    ExifInterface exif = new ExifInterface(_path);
-                    int exifOrientation = exif.getAttributeInt(
-                            ExifInterface.TAG_ORIENTATION,
-                            ExifInterface.ORIENTATION_NORMAL);
-
-                    Log.v(TAG1, "Orient: " + exifOrientation);
-
-                    int rotate = 0;
-
-                    switch (exifOrientation) {
-                        case ExifInterface.ORIENTATION_ROTATE_90:
-                            rotate = 90;
-                            break;
-                        case ExifInterface.ORIENTATION_ROTATE_180:
-                            rotate = 180;
-                            break;
-                        case ExifInterface.ORIENTATION_ROTATE_270:
-                            rotate = 270;
-                            break;
-                    }
-
-                    Log.v(TAG1, "Rotation: " + rotate);
-
-                    if (rotate != 0) {
-
-                        // Getting width & height of the given image.
-                        int w = bitmap.getWidth();
-                        int h = bitmap.getHeight();
-
-                        // Setting pre rotate
-                        Matrix mtx = new Matrix();
-                        mtx.preRotate(rotate);
-
-                        // Rotating Bitmap
-                        bitmap = Bitmap.createBitmap(bitmap, 0, 0, w, h, mtx, false);
-                    }
-
-                    // Convert to ARGB_8888, required by tess
-                    bitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-
-                } catch (IOException e) {
-                    Log.e(TAG1, "Couldn't correct orientation: " + e.toString());
-                }
-
-                // _image.setImageBitmap( bitmap );
-
-                Log.v(TAG1, "Before baseApi");
-
-                TessBaseAPI baseApi = new TessBaseAPI();
-                baseApi.setDebug(true);
-                baseApi.init(DATA_PATH, lang);
-                baseApi.setImage(bitmap);
-
-                String recognizedText = baseApi.getUTF8Text();
-
-                baseApi.end();
-
-                // You now have the text in recognizedText var, you can do anything with it.
-                // We will display a stripped out trimmed alpha-numeric version of it (if lang is eng)
-                // so that garbage doesn't make it to the display.
-
-                Log.v(TAG, "OCRED TEXT: " + recognizedText);
-
-                if ( lang.equalsIgnoreCase("eng") ) {
-                    recognizedText = recognizedText.replaceAll("[^a-zA-Z0-9]+", " ");
-                }
-
-                recognizedText = recognizedText.trim();
-                Log.v(TAG, "RESULT TEXT: " + recognizedText);
-                /*
-
-                if ( recognizedText.length() != 0 ) {
-                    _field.setText(_field.getText().toString().length() == 0 ? recognizedText : _field.getText() + " " + recognizedText);
-                    _field.setSelection(_field.getText().toString().length());
-                }
-                */
-
-                // Cycle done.
+                OCR ocr = new OCR(pictureFile, lang, DATA_PATH, ScanLineView.cropSize);
+                ocr.ocrProcessing();
+                resultString = ocr.get_result();
 
 
                 mCamera.startPreview();
@@ -180,10 +95,48 @@ public class BookAddOCRActivity extends AppCompatActivity {
     };
 
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setOCRDataPath();
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        setContentView(R.layout.activity_book_add_ocr);
+
+        ScanLineView mDraw = new ScanLineView(this);
+        addContentView(mDraw, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+
+        mContext = this;
+        // 카메라 인스턴스 생성
+        if (checkCameraHardware(mContext)) {
+            mCamera = getCameraInstance();
+
+            // 프리뷰창을 생성하고 액티비티의 레이아웃으로 지정합니다
+            mPreview = new OCRCameraPreview(this, mCamera);
+            FrameLayout preview = (FrameLayout) findViewById(R.id.ocr_camera_preview);
+            preview.addView(mPreview);
+
+            Button captureButton = (Button) findViewById(R.id.button_capture_ocr);
+            captureButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // JPEG 콜백 메소드로 이미지를 가져옵니다
+                    mCamera.takePicture(null, null, mPicture);
+                }
+            });
+        }
+        else{
+            Toast.makeText(mContext, "no camera on this device!", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private void setOCRDataPath(){
         //OCR DATA PATH ////////////////////////////////////////////////////////
         String[] paths = new String[] { DATA_PATH, DATA_PATH + "tessdata/" };
 
@@ -232,38 +185,6 @@ public class BookAddOCRActivity extends AppCompatActivity {
 
         _path = DATA_PATH + "/ocr.jpg";
         ////////////////////////////////////////////////////////////////////////
-
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-        setContentView(R.layout.activity_book_add_ocr);
-
-        ScanLineView mDraw = new ScanLineView(this);
-        addContentView(mDraw, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-
-        mContext = this;
-        // 카메라 인스턴스 생성
-        if (checkCameraHardware(mContext)) {
-            mCamera = getCameraInstance();
-
-            // 프리뷰창을 생성하고 액티비티의 레이아웃으로 지정합니다
-            mPreview = new CameraPreview(this, mCamera);
-            FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
-            preview.addView(mPreview);
-
-            Button captureButton = (Button) findViewById(R.id.button_capture_ocr);
-            captureButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // JPEG 콜백 메소드로 이미지를 가져옵니다
-                    mCamera.takePicture(null, null, mPicture);
-                }
-            });
-        }
-        else{
-            Toast.makeText(mContext, "no camera on this device!", Toast.LENGTH_SHORT).show();
-        }
 
     }
 
@@ -326,9 +247,12 @@ public class BookAddOCRActivity extends AppCompatActivity {
         // 보통 안쓰는 객체는 onDestroy에서 해제 되지만 카메라는 확실히 제거해주는게 안전하다.
 
     }
+
 }
 
 class ScanLineView extends View {
+
+    public static int cropSize;
 
     public ScanLineView(Context context) {
         super(context);
@@ -348,6 +272,7 @@ class ScanLineView extends View {
         int centerY = getHeight()/2;
 
         int rectWidth = getWidth() /3;
+        cropSize = rectWidth*5/6;
 
         paint.setColor(Color.CYAN);                        // 펜색깔
         paint.setStyle(Paint.Style.STROKE);                 // STROKE 빈화면
@@ -355,7 +280,8 @@ class ScanLineView extends View {
 
         paint.setColor(Color.RED);                        // 펜색깔
         paint.setStyle(Paint.Style.STROKE);                 // STROKE 빈화면
-        canvas.drawRect(centerX - rectWidth*3/4, centerY - rectWidth*3/4, centerX + rectWidth*3/4, centerY + rectWidth*3/4, paint);   // 사각형
+        paint.setStrokeWidth(5);
+        canvas.drawRect(centerX - cropSize, centerY - cropSize, centerX + cropSize, centerY + cropSize, paint);   // 사각형
 
         super.onDraw(canvas);
     }

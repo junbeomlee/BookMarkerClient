@@ -39,7 +39,6 @@
         <activity android:name="com.example.leejunbeom.bookMarker.ui.activity.BookAddActivity" />
         <activity android:name="com.example.leejunbeom.bookMarker.ui.activity.SearchActivity" />
         <activity android:name="com.example.leejunbeom.bookMarker.ui.activity.BookAddOCRActivity" />
-        <activity android:name="com.example.leejunbeom.bookMarker.ui.activity.TessTwoActivity"></activity>
     </application>
 
 </manifest>

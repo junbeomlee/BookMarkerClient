@@ -66,11 +66,8 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
     @Bind(R.id.naviButton)
     Button searchButton;
 
-    @Bind(R.id.ocr_camera)
+    @Bind(R.id.bookAddOCRButton)
     Button ocrCameraButton;
-
-    @Bind(R.id.tessTwo_button)
-    Button tessTwoButton;
 
     Context mainContext;
 
@@ -147,10 +144,7 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
         this.mainPresenter.onSearchButtonClick(this);
     }
 
-    @OnClick(R.id.tessTwo_button)
-    public void onCallTessTwoButton() {}
-
-    @OnClick(R.id.ocr_camera)
+    @OnClick(R.id.bookAddOCRButton)
     public void onCallOCRCameraButton() {}
 
     /**
@@ -170,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
     //test
     @Override
     public void launchNaviActivity() {
-        Intent intent = new Intent(this,BookAddOCRActivity.class);
+        Intent intent = new Intent(this,SearchActivity.class);
         startActivity(intent);
     }
 
