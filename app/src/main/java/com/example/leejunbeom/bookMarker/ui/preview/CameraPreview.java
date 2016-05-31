@@ -88,60 +88,21 @@ public class CameraPreview implements SurfaceHolder.Callback, Camera.PreviewCall
                 long tDelta=tEnd-tStart;
                 double elapsedSeconds = tDelta/1000.0;
                 Log.d("first---2:",String.valueOf(elapsedSeconds));
-
-                //final byte[] jdata = out.toByteArray();
-                /*((Activity) context).runOnUiThread(new Runnable() {
+                activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Bitmap bmp;
-                        bmp = BitmapFactory.decodeByteArray(jdata, 0, jdata.length);
-                        MyCameraPreview.setImageBitmap(rotateImage(bmp, 90));
-                    }
-                });*/
-
-
-                /*tStart= System.currentTimeMillis();
-                final Bitmap asdbitmap = BitmapFactory.decodeByteArray(out.toByteArray(), 0, out.size());
-
-                tEnd=System.currentTimeMillis();
-                tDelta=tEnd-tStart;
-                elapsedSeconds = tDelta/1000.0;
-                Log.d("first---2:",String.valueOf(elapsedSeconds));*/
-
-                /*tStart= System.currentTimeMillis();
-                MyCameraPreview.setImageBitmap(rotateImage(asdbitmap,90));
-                tEnd=System.currentTimeMillis();
-                tDelta=tEnd-tStart;
-                elapsedSeconds = tDelta/1000.0;
-                System.out.print("first3---:"+elapsedSeconds);*/
-
-
-
-
-                //if(bitmap!=null){
-
-                    activity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            final Bitmap asdbitmap = BitmapFactory.decodeByteArray(out.toByteArray(), 0, out.size());
-                            Bitmap bitmap=asd.drawMatchedPoint(asdbitmap);
-                            if(bitmap!=null) {
-                                MyCameraPreview.setImageBitmap(rotateImage(bitmap, 90));
-                                Vibrator vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-                                vibe.vibrate(1000);
-                            }else{
-                                MyCameraPreview.setImageBitmap(rotateImage(asdbitmap,90));
-                            }
-                            //MyCameraPreview.setImageBitmap(asdbitmap);
-
+                        final Bitmap asdbitmap = BitmapFactory.decodeByteArray(out.toByteArray(), 0, out.size());
+                        Bitmap bitmap = asd.drawMatchedPoint(asdbitmap);
+                        if (bitmap != null) {
+                            MyCameraPreview.setImageBitmap(rotateImage(bitmap, 90));
+                            Vibrator vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                            vibe.vibrate(1000);
+                        } else {
+                            MyCameraPreview.setImageBitmap(rotateImage(asdbitmap, 90));
                         }
-                    });
+                    }
+                });
 
-
-                //}
-
-                //mCamera.setParameters(params);
-                //imageView2.setImageBitmap(asdbitmap);
                 bProcessing=false;
             }
         }

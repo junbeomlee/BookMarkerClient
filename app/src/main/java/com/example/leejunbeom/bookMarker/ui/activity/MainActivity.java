@@ -66,6 +66,9 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
     @Bind(R.id.naviButton)
     Button searchButton;
 
+    @Bind(R.id.bookAddOCRButton)
+    Button ocrCameraButton;
+
     Context mainContext;
 
     // private GoogleApiClient client;
@@ -137,6 +140,12 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
     public void onCallSearchButton(){
         this.mainPresenter.onSearchButtonClick(this);
     }
+
+    @OnClick(R.id.bookAddOCRButton)
+    public void onCallOCRCameraButton() {
+        this.mainPresenter.onBookAddOCRButtonClick(this);
+    }
+
     /**
      * test
      */
@@ -154,7 +163,13 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
     //test
     @Override
     public void launchNaviActivity() {
-        Intent intent = new Intent(this,NaviActivity.class);
+        Intent intent = new Intent(this,SearchActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void launchBookAddOCRActivity() {
+        Intent intent = new Intent(this,BookAddOCRActivity.class);
         startActivity(intent);
     }
 
@@ -167,14 +182,6 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
     public void onSetBookList(BookController bookController){
         this.bAdapter.setBookData(bookController.getBookList());
         this.bAdapter.notifyDataSetChanged();
-    }
-    @Subscribe
-    public void onBitMapLoad(Book book){
-        /*Resources resources = mainContext.getResources();
-        int resourceId = resources.getIdentifier(book.getBookShelf(), "drawable", mainContext.getPackageName());
-        Bitmap bookBitMap=BitmapFactory.decodeResource(resources, resourceId);
-        book.setBookBitMap(bookBitMap);*/
-        //Log.d("bitmap process done",book.toString());
     }
 
     //test

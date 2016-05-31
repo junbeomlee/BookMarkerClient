@@ -34,4 +34,12 @@
         android:layout_below="@+id/listView"
         android:layout_alignParentEnd="true" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BOOK ADD OCR"
+        android:id="@+id/bookAddOCRButton"
+        android:layout_below="@+id/listView"
+        android:layout_toEndOf="@+id/bookAddButton" />
+
 </RelativeLayout>

@@ -40,6 +40,11 @@ public class MainPresenter_impl implements MainPresenter {
         mainActivity.launchNaviActivity();
     }
 
+    @Override
+    public void onBookAddOCRButtonClick(Mainscreen mainscreen) {
+        mainscreen.launchBookAddOCRActivity();
+    }
+
     public BookController getBookController() {
         return bookController;
     }
