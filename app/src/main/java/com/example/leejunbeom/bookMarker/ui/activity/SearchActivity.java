@@ -65,7 +65,7 @@ public class SearchActivity extends AppCompatActivity {
         SurfaceHolder camHolder = camView.getHolder();
         //imageView = (ImageView) findViewById(R.id.imageView2);
 
-        Bitmap bookBitMap = BitmapFactory.decodeResource(getResources(), R.drawable.book3);
+        Bitmap bookBitMap = BitmapFactory.decodeResource(getResources(), R.drawable.book5);
         camPreview = new CameraPreview(MyCameraPreview,bookBitMap,getApplicationContext(),this);
 
         camHolder.addCallback(camPreview);

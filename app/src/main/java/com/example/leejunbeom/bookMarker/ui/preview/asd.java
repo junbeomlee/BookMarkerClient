@@ -3,8 +3,13 @@ package com.example.leejunbeom.bookMarker.ui.preview;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Point;
 import android.os.Vibrator;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.example.leejunbeom.test.R;
@@ -58,10 +63,10 @@ public class asd{
         Utils.bitmapToMat(bookBitMap, firstBookMat);
         this.bookWidth=bookBitMap.getWidth();
         this.bookHeight=bookBitMap.getHeight();
-        /*keyPoints = new MatOfKeyPoint();
+        keyPoints = new MatOfKeyPoint();
         Imgproc.cvtColor(firstBookMat, firstBookMat, Imgproc.COLOR_RGBA2GRAY);
         detector.detect(firstBookMat, keyPoints);
-        extractor.compute(firstBookMat, keyPoints, extractBookMat);*/
+        extractor.compute(firstBookMat, keyPoints, extractBookMat);
         this.context=context;
 
     }
@@ -81,16 +86,18 @@ public class asd{
 
     public Bitmap drawMatchedPoint(Bitmap CameraBitMap) {
 
-        int THREAD_SIZE=3;
-        ArrayList<Thread> threads = new ArrayList<Thread>();
-        Mat matarray[] = new Mat[THREAD_SIZE*THREAD_SIZE];
+
         Mat desc2= new Mat();
         Mat rgba2 = new Mat();
         Utils.bitmapToMat(CameraBitMap, rgba2);
 
+        /*
         int bitMapWidth=CameraBitMap.getWidth();
         int bitMapHeight=CameraBitMap.getHeight();
 
+        int THREAD_SIZE=3;
+        ArrayList<Thread> threads = new ArrayList<Thread>();
+        Mat matarray[] = new Mat[THREAD_SIZE*THREAD_SIZE];
         for(int i=0;i<THREAD_SIZE;i++){
             Log.d("Log=====",String.valueOf(bookWidth));
             Mat colMat1=rgba2.colRange(bitMapWidth*i/THREAD_SIZE,bitMapWidth*(i+1)/THREAD_SIZE);
@@ -101,26 +108,26 @@ public class asd{
                 t.start();
                 threads.add(t);
             }
-        }
+        }*/
 
-        /*MatOfKeyPoint keyPoints2 = new MatOfKeyPoint();
+        MatOfKeyPoint keyPoints2 = new MatOfKeyPoint();
         Imgproc.cvtColor(rgba2, rgba2, Imgproc.COLOR_RGBA2GRAY);
         detector.detect(rgba2, keyPoints2);
 
 
         MatOfDMatch matches= new MatOfDMatch();
-        extractor.compute(rgba2, keyPoints2, desc2);*/
+        extractor.compute(rgba2, keyPoints2, desc2);
 
 
-        for(int i=0; i<threads.size(); i++) {
+        /*for(int i=0; i<threads.size(); i++) {
             Thread t = threads.get(i);
             try{
                 t.join();
             }catch(Exception e){
             }
-        }
+        }*/
 
-        /*
+
         if(extractBookMat.type() == desc2.type() && extractBookMat.cols() == desc2.cols()){
 
                 matcher.match(extractBookMat, desc2, matches);
@@ -132,24 +139,67 @@ public class asd{
 
 
                 for (int i = 0; i < matchesList.size() ;i++) {
-                    if (matchesList.get(i).distance < 40) {
+                    if (matchesList.get(i).distance < 30) {
                         listOfGoodMatches.add(matchesList.get(i));
                     }
                 }
 
                 goodMatches.fromList(listOfGoodMatches);
 
-                Mat imageOut = new Mat();
+                List<KeyPoint> keyPointList= new ArrayList<KeyPoint>();
+                MatOfKeyPoint keyPointsMatched = new MatOfKeyPoint();
 
-                Features2d.drawMatches(firstBookMat, keyPoints, rgba2, keyPoints2, goodMatches, imageOut);
-                Bitmap bitmap = Bitmap.createBitmap(imageOut.cols(), imageOut.rows(), Bitmap.Config.ARGB_8888);
-                Utils.matToBitmap(imageOut, bitmap);
+                Bitmap bitmapCopied=null;
                 if(listOfGoodMatches.size()>3){
+                    for (int i=0;i<goodMatches.toList().size();i++){
+                        DMatch dMatch=goodMatches.toList().get(i);
+                        KeyPoint keyPoint=keyPoints2.toList().get(dMatch.trainIdx);
+                        keyPointList.add(keyPoint);
+                    }
+
+                    keyPointsMatched.fromList(keyPointList);
+
+
+                    bitmapCopied=CameraBitMap.copy(Bitmap.Config.ARGB_8888,true);
+                    Canvas canvas = new Canvas(bitmapCopied);
+                    Paint paint = new Paint();
+                    paint.setStyle(Paint.Style.STROKE);
+                    paint.setColor(Color.YELLOW);
+                    /*
+                    Paint paint = new Paint();
+                    paint.setStyle(Paint.Style.STROKE);
+                    canvas.drawCircle(bitmapCopied.getWidth()/2,bitmapCopied.getHeight()/2,40,paint);*/
+                    for(int i=0;i<keyPointList.size();i++){
+                        Point point2= new Point((int)keyPointList.get(i).pt.x,(int)keyPointList.get(i).pt.y);
+                        canvas.drawRect(point2.x-10,point2.y-10, point2.x+10,point2.y+10,paint);
+                    }
+
+                }
+
+
+                //Bitmap bitmap = null;
+               // Features2d.drawKeypoints(rgba2, keyPointsMatched, rgba2);
+                //Utils.matToBitmap(rgba2, CameraBitMap);
+
+                return bitmapCopied;
+
+                /*Mat imageOut = new Mat();
+
+
+                if(listOfGoodMatches.size()>3){
+                    long tStart= System.currentTimeMillis();
+                    Features2d.drawMatches(firstBookMat, keyPoints, rgba2, keyPoints2, goodMatches, imageOut);
+                    bitmap = Bitmap.createBitmap(imageOut.cols(), imageOut.rows(), Bitmap.Config.ARGB_8888);
+                    Utils.matToBitmap(imageOut, bitmap);
+                    long tEnd=System.currentTimeMillis();
+                    long tDelta=tEnd-tStart;
+                    double elapsedSeconds = tDelta/1000.0;
+                    Log.d("first---3:", String.valueOf(elapsedSeconds));
                     Vibrator vibe = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
                     vibe.vibrate(1000);
                 }
-            return bitmap;
-        }*/
+            return bitmap;*/
+        }
         return null;
 
     }

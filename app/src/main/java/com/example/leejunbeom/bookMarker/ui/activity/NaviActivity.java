@@ -109,6 +109,7 @@ public class NaviActivity extends AppCompatActivity implements NaviScreen{
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                libraryViewBitMap = BitmapFactory.decodeResource(myResources, R.drawable.non10);
                 if (position == 0) {
                     libraryView.setImageBitmap(rotateImage(computedBitMap, 90));
                 } else {
@@ -174,6 +175,8 @@ public class NaviActivity extends AppCompatActivity implements NaviScreen{
 
         if(mapDraw){
             computedBitMap = BitmapFactory.decodeResource(this.getApplicationContext().getResources(), R.drawable.non10);
+            this.libraryView.setImageBitmap(null);
+            this.libraryViewBitMap=null;
             /*
              포문 돌면서 이미지 중첩
              */

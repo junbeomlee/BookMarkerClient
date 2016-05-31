@@ -12,6 +12,7 @@ import android.graphics.YuvImage;
 import android.hardware.Camera;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Vibrator;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.util.Log;
@@ -124,8 +125,15 @@ public class CameraPreview implements SurfaceHolder.Callback, Camera.PreviewCall
                         public void run() {
                             final Bitmap asdbitmap = BitmapFactory.decodeByteArray(out.toByteArray(), 0, out.size());
                             Bitmap bitmap=asd.drawMatchedPoint(asdbitmap);
-                            //if(bitmap!=null)
-                            MyCameraPreview.setImageBitmap(rotateImage(asdbitmap, 90));
+                            if(bitmap!=null) {
+                                MyCameraPreview.setImageBitmap(rotateImage(bitmap, 90));
+                                Vibrator vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                                vibe.vibrate(1000);
+                            }else{
+                                MyCameraPreview.setImageBitmap(rotateImage(asdbitmap,90));
+                            }
+                            //MyCameraPreview.setImageBitmap(asdbitmap);
+
                         }
                     });
 
@@ -166,9 +174,12 @@ public class CameraPreview implements SurfaceHolder.Callback, Camera.PreviewCall
         //parameters.getPictureSize().width
 
         List<Camera.Size> tmpList=mCamera.getParameters().getSupportedPreviewSizes();
+        parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
         Log.d("camera====",parameters.flatten());
-        //Camera.Size size = getBestPreviewSize(w, h);
-        parameters.setPreviewSize(640,480);
+
+        Camera.Size size = getBestPreviewSize(w, h);
+        Log.d("camera====best previes size",size.toString());
+        parameters.setPreviewSize(size.width,size.height);
         imageFormat = parameters.getPreviewFormat();
 
         mCamera.setParameters(parameters);
