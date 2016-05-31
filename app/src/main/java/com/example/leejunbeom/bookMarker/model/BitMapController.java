@@ -49,10 +49,9 @@ public class BitMapController {
 
     }
 
-    @Subscribe
     public void setBitMap(BookController bookController){
         //Log.d("call bitMapController setBitMap","asdasdasasdasdasdas");
-        this.bitmapMap.clear();
+        /*this.bitmapMap.clear();
         this.bitmapMap.put(COMPOSED_LIBRARY_BIT_MAP,baseLibraryBitMap);
         for(int i=0;i<bookController.size();i++){
             Book book=bookController.getItem(i);
@@ -65,10 +64,10 @@ public class BitMapController {
              * key는 청구기호
              * 다 합쳐진거는 "0"이 key값
              */
-            this.bitmapMap.put(mark, overlayMark(baseLibraryBitMap, bookBitMap));
+            //this.bitmapMap.put(mark, overlayMark(baseLibraryBitMap, bookBitMap));
             //1 done
-            this.bitmapMap.put(COMPOSED_LIBRARY_BIT_MAP,overlayMark(this.bitmapMap.get(COMPOSED_LIBRARY_BIT_MAP),bookBitMap));
-        }
+            //this.bitmapMap.put(COMPOSED_LIBRARY_BIT_MAP,overlayMark(this.bitmapMap.get(COMPOSED_LIBRARY_BIT_MAP),bookBitMap));
+        //}
     }
 
 

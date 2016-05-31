@@ -71,9 +71,6 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
 
     Context mainContext;
 
-    @Inject
-    BitMapController bitMapController;
-
     // private GoogleApiClient client;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,13 +175,12 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
         this.bAdapter.setBookData(bookController.getBookList());
         this.bAdapter.notifyDataSetChanged();
     }
-
     @Subscribe
     public void onBitMapLoad(Book book){
-        Resources resources = mainContext.getResources();
+        /*Resources resources = mainContext.getResources();
         int resourceId = resources.getIdentifier(book.getBookShelf(), "drawable", mainContext.getPackageName());
         Bitmap bookBitMap=BitmapFactory.decodeResource(resources, resourceId);
-        book.setBookBitMap(bookBitMap);
+        book.setBookBitMap(bookBitMap);*/
         //Log.d("bitmap process done",book.toString());
     }
 

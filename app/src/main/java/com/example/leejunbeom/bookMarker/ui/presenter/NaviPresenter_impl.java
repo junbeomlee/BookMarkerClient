@@ -2,6 +2,7 @@ package com.example.leejunbeom.bookMarker.ui.presenter;
 
 import android.graphics.Bitmap;
 
+import com.example.leejunbeom.bookMarker.model.BitMapController;
 import com.example.leejunbeom.bookMarker.model.BookController;
 import com.example.leejunbeom.bookMarker.ui.screen_contracts.NaviScreen;
 
@@ -36,6 +37,11 @@ public class NaviPresenter_impl implements NaviPresenter{
     @Override
     public void loadBookBitmaps() {
         //ArrayList<Bitmap>
+    }
+
+    @Override
+    public void refreshListViewData() {
+        EventBus.getDefault().post(bookController);
     }
 
     public BookController getBookController() {

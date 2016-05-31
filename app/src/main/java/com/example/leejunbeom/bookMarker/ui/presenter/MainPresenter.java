@@ -13,5 +13,4 @@ public interface MainPresenter {
     void onListViewMenuItemClick(int position);
     void refreshListViewData();
     void onSearchButtonClick(Mainscreen mainActivity);
-    void onBookAddOCRButtonClick();
 }
