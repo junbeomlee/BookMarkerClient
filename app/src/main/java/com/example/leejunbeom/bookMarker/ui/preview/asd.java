@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Vibrator;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.example.leejunbeom.test.R;
@@ -55,11 +56,12 @@ public class asd{
         firstBookMat = new Mat();
         extractBookMat = new Mat();
         Utils.bitmapToMat(bookBitMap, firstBookMat);
-        this.bookWidth
-        keyPoints = new MatOfKeyPoint();
+        this.bookWidth=bookBitMap.getWidth();
+        this.bookHeight=bookBitMap.getHeight();
+        /*keyPoints = new MatOfKeyPoint();
         Imgproc.cvtColor(firstBookMat, firstBookMat, Imgproc.COLOR_RGBA2GRAY);
         detector.detect(firstBookMat, keyPoints);
-        extractor.compute(firstBookMat, keyPoints, extractBookMat);
+        extractor.compute(firstBookMat, keyPoints, extractBookMat);*/
         this.context=context;
 
     }
@@ -81,7 +83,7 @@ public class asd{
 
         int THREAD_SIZE=3;
         ArrayList<Thread> threads = new ArrayList<Thread>();
-        Mat matarray[] = new Mat[9];
+        Mat matarray[] = new Mat[THREAD_SIZE*THREAD_SIZE];
         Mat desc2= new Mat();
         Mat rgba2 = new Mat();
         Utils.bitmapToMat(CameraBitMap, rgba2);
@@ -90,25 +92,35 @@ public class asd{
         int bitMapHeight=CameraBitMap.getHeight();
 
         for(int i=0;i<THREAD_SIZE;i++){
-            Mat colMat1=rgba2.colRange(bitMapWidth*i/3,bitMapHeight*(i+1)/3);
-            Mat colMat2=firstBookMat.colRange(*i/3,bitMapHeight*(i+1)/3);
+            Log.d("Log=====",String.valueOf(bookWidth));
+            Mat colMat1=rgba2.colRange(bitMapWidth*i/THREAD_SIZE,bitMapWidth*(i+1)/THREAD_SIZE);
+            Mat colMat2=firstBookMat.colRange(bookWidth*i/THREAD_SIZE,bookWidth*(i+1)/THREAD_SIZE);
             for(int j=0;j<THREAD_SIZE;j++){
-                matarray[i*3+j]=colMat.rowRange(bitMapHeight*j/3,bitMapHeight*(j+1)/3);
-                Thread t = new Test(matarray[i*3+j]);
+                matarray[i*THREAD_SIZE+j]=colMat1.rowRange(bitMapHeight*j/THREAD_SIZE,bitMapHeight*(j+1)/THREAD_SIZE);
+                Thread t = new Test(matarray[i*THREAD_SIZE+j],colMat2.rowRange(bookHeight*j/THREAD_SIZE,bookHeight*(j+1)/THREAD_SIZE));
                 t.start();
                 threads.add(t);
             }
         }
 
-        MatOfKeyPoint keyPoints2 = new MatOfKeyPoint();
+        /*MatOfKeyPoint keyPoints2 = new MatOfKeyPoint();
         Imgproc.cvtColor(rgba2, rgba2, Imgproc.COLOR_RGBA2GRAY);
         detector.detect(rgba2, keyPoints2);
 
 
         MatOfDMatch matches= new MatOfDMatch();
-        extractor.compute(rgba2, keyPoints2, desc2);
+        extractor.compute(rgba2, keyPoints2, desc2);*/
 
 
+        for(int i=0; i<threads.size(); i++) {
+            Thread t = threads.get(i);
+            try{
+                t.join();
+            }catch(Exception e){
+            }
+        }
+
+        /*
         if(extractBookMat.type() == desc2.type() && extractBookMat.cols() == desc2.cols()){
 
                 matcher.match(extractBookMat, desc2, matches);
@@ -137,7 +149,7 @@ public class asd{
                     vibe.vibrate(1000);
                 }
             return bitmap;
-        }
+        }*/
         return null;
 
     }
@@ -152,7 +164,35 @@ public class asd{
             this.matsecond=matsecond;
         }
         public void run() {
+            Mat desc = new Mat();
+            MatOfKeyPoint keyPoints = new MatOfKeyPoint();
+            Imgproc.cvtColor(matfirst, matfirst, Imgproc.COLOR_RGBA2GRAY);
+            detector.detect(matfirst, keyPoints);
+            extractor.compute(matfirst, keyPoints, desc);
 
+            Mat desc2= new Mat();
+            MatOfKeyPoint keyPoints2 = new MatOfKeyPoint();
+            Imgproc.cvtColor(matsecond, matsecond, Imgproc.COLOR_RGBA2GRAY);
+            detector.detect(matsecond, keyPoints2);
+            extractor.compute(matsecond, keyPoints2, desc2);
+
+            MatOfDMatch matches= new MatOfDMatch();
+
+            if(desc.type() == desc2.type() && desc.cols() == desc2.cols()){
+
+                matcher.match(desc, desc2, matches);
+                double max_dist = 0;
+                double min_dist = 100;
+                List<DMatch> matchesList = matches.toList();
+                LinkedList<DMatch> listOfGoodMatches = new LinkedList<>();
+                MatOfDMatch goodMatches = new MatOfDMatch();
+                for (int i = 0; i < matchesList.size() ;i++) {
+                    if (matchesList.get(i).distance < 40) {
+                        listOfGoodMatches.add(matchesList.get(i));
+                    }
+                }
+                goodMatches.fromList(listOfGoodMatches);
+            }
         }
     }
 }

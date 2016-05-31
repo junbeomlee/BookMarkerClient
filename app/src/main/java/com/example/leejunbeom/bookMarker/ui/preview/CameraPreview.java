@@ -77,10 +77,17 @@ public class CameraPreview implements SurfaceHolder.Callback, Camera.PreviewCall
 
                 @SuppressWarnings("deprecation")
                 int format = params.getPreviewFormat();
+
+                long tStart= System.currentTimeMillis();
                 final YuvImage image = new YuvImage(arg0, format, w, h, null);
-                out = new ByteArrayOutputStream();
                 final Rect area = new Rect(0, 0, w, h);
+                out = new ByteArrayOutputStream();
                 image.compressToJpeg(area, 100, out);
+                long tEnd=System.currentTimeMillis();
+                long tDelta=tEnd-tStart;
+                double elapsedSeconds = tDelta/1000.0;
+                Log.d("first---2:",String.valueOf(elapsedSeconds));
+
                 //final byte[] jdata = out.toByteArray();
                 /*((Activity) context).runOnUiThread(new Runnable() {
                     @Override
@@ -117,8 +124,8 @@ public class CameraPreview implements SurfaceHolder.Callback, Camera.PreviewCall
                         public void run() {
                             final Bitmap asdbitmap = BitmapFactory.decodeByteArray(out.toByteArray(), 0, out.size());
                             Bitmap bitmap=asd.drawMatchedPoint(asdbitmap);
-                            if(bitmap!=null)
-                                MyCameraPreview.setImageBitmap(rotateImage(asdbitmap, 90));
+                            //if(bitmap!=null)
+                            MyCameraPreview.setImageBitmap(rotateImage(asdbitmap, 90));
                         }
                     });
 
@@ -161,7 +168,7 @@ public class CameraPreview implements SurfaceHolder.Callback, Camera.PreviewCall
         List<Camera.Size> tmpList=mCamera.getParameters().getSupportedPreviewSizes();
         Log.d("camera====",parameters.flatten());
         //Camera.Size size = getBestPreviewSize(w, h);
-        parameters.setPreviewSize(1280,720);
+        parameters.setPreviewSize(640,480);
         imageFormat = parameters.getPreviewFormat();
 
         mCamera.setParameters(parameters);
