@@ -163,13 +163,13 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
     //test
     @Override
     public void launchNaviActivity() {
-        Intent intent = new Intent(this,SearchActivity.class);
+        Intent intent = new Intent(this,NaviActivity.class);
         startActivity(intent);
     }
 
     @Override
     public void launchBookAddOCRActivity() {
-        Intent intent = new Intent(this,BookAddOCRActivity.class);
+        Intent intent = new Intent(this,TestActivity.class);
         startActivity(intent);
     }
 

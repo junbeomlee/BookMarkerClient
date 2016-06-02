@@ -1,5 +1,6 @@
 package com.example.leejunbeom.bookMarker.ui.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -16,7 +17,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.leejunbeom.bookMarker.dagger.application.AppApplication;
 import com.example.leejunbeom.bookMarker.model.BitMapController;
 import com.example.leejunbeom.bookMarker.model.BookController;
@@ -70,7 +75,8 @@ public class NaviActivity extends AppCompatActivity implements NaviScreen{
     private ArrayList<Book> spinnerBookList;
     private Context myContext;
     private Resources myResources;
-
+    private int spinnerPosition;
+    private Activity mActivity;
 
     //// TODO: 16. 4. 18.
     @Override
@@ -81,15 +87,13 @@ public class NaviActivity extends AppCompatActivity implements NaviScreen{
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
 
+        this.mActivity = this;
         this.myContext=this.getApplicationContext();
         this.myResources=this.getResources();
-
-
-
         spinnerAdapter = new SpinnerAdapter_impl(this.getApplicationContext());
         //spinnerAdapter.setBookData(spinnerBookList);
         //spinnerAdapter.notifyDataSetChanged();
-
+        spinnerPosition=0;
         spinner.setAdapter(spinnerAdapter);
         addlistener();
 
@@ -109,14 +113,26 @@ public class NaviActivity extends AppCompatActivity implements NaviScreen{
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                libraryView.setImageBitmap(null);
+                libraryViewBitMap=null;
+
+                spinnerPosition=position;
                 libraryViewBitMap = BitmapFactory.decodeResource(myResources, R.drawable.non10);
                 if (position == 0) {
+
                     libraryView.setImageBitmap(rotateImage(computedBitMap, 90));
                 } else {
                     Book book=spinnerBookList.get(position);
                     int resourceId = myResources.getIdentifier(book.getBookShelf(), "drawable", myContext.getPackageName());
-                    Bitmap bookBitMap=BitmapFactory.decodeResource(myResources, resourceId);
-                    libraryView.setImageBitmap(rotateImage(overlayMark(libraryViewBitMap,bookBitMap), 90));
+                    Glide.with(mActivity).load(resourceId).asBitmap().into(new SimpleTarget<Bitmap>(500, 500) {
+                        @Override
+                        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                            libraryView.setImageBitmap(rotateImage(overlayMark(libraryViewBitMap,resource), 90));
+                        }
+                    });
+                    //Bitmap bookBitMap=BitmapFactory.decodeResource(myResources, resourceId);
+
                 }
             }
 
@@ -137,8 +153,16 @@ public class NaviActivity extends AppCompatActivity implements NaviScreen{
 
     @Override
     public void launchSearchActivity() {
-        Intent intent = new Intent(this, SearchActivity.class);
-        startActivity(intent);
+
+        Book book=spinnerBookList.get(spinnerPosition);
+        if(book.getFeatureUrl()!=null) {
+
+            Intent intent = new Intent(this, SearchActivity.class);
+            intent.putExtra("imageURL", book.getFeatureUrl());
+            startActivity(intent);
+        }else{
+            Toast.makeText(this,"책 이미지 등록이 안되있습니다",Toast.LENGTH_SHORT);
+        }
     }
 
     @Override

@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.VIBRATE"></uses-permission>
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name="com.example.leejunbeom.bookMarker.dagger.application.AppApplication"
@@ -40,6 +40,7 @@
         <activity android:name="com.example.leejunbeom.bookMarker.ui.activity.BookAddActivity" />
         <activity android:name="com.example.leejunbeom.bookMarker.ui.activity.SearchActivity" />
         <activity android:name="com.example.leejunbeom.bookMarker.ui.activity.BookAddOCRActivity" />
+        <activity android:name="com.example.leejunbeom.bookMarker.ui.activity.TestActivity"></activity>
     </application>
 
 </manifest>

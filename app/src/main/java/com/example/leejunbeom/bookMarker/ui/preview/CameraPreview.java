@@ -43,7 +43,7 @@ public class CameraPreview implements SurfaceHolder.Callback, Camera.PreviewCall
     private boolean bProcessing = false;
     private ImageView imageView2;
     private Bitmap bookBitMap;
-    private asd asd;
+    private ImageProcessing imageProcessing;
     private ByteArrayOutputStream out;
     private Activity activity;
     private Context context;
@@ -57,7 +57,8 @@ public class CameraPreview implements SurfaceHolder.Callback, Camera.PreviewCall
         //bitmap = Bitmap.createBitmap(PreviewSizeWidth, PreviewSizeHeight, Bitmap.Config.ARGB_8888);
         //pixels = new int[PreviewSizeWidth * PreviewSizeHeight];
         this.bookBitMap=bookBitMap;
-        asd=new asd(bookBitMap,context);
+        imageProcessing=new ImageProcessing(bookBitMap,context);
+        //imageProcessing.sift(bookBitMap,CameraPreview);
         this.activity=activity;
     }
 
@@ -92,7 +93,7 @@ public class CameraPreview implements SurfaceHolder.Callback, Camera.PreviewCall
                     @Override
                     public void run() {
                         final Bitmap asdbitmap = BitmapFactory.decodeByteArray(out.toByteArray(), 0, out.size());
-                        Bitmap bitmap = asd.drawMatchedPoint(asdbitmap);
+                        Bitmap bitmap = imageProcessing.drawMatchedPoint(asdbitmap);
                         if (bitmap != null) {
                             MyCameraPreview.setImageBitmap(rotateImage(bitmap, 90));
                             Vibrator vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
@@ -139,8 +140,9 @@ public class CameraPreview implements SurfaceHolder.Callback, Camera.PreviewCall
         Log.d("camera====",parameters.flatten());
 
         Camera.Size size = getBestPreviewSize(w, h);
-        Log.d("camera====best previes size",size.toString());
-        parameters.setPreviewSize(size.width,size.height);
+        Log.d("camera====best previes size", String.valueOf(size.width) + String.valueOf(size.height));
+        parameters.setPreviewSize(320,240);
+        //parameters.setPreviewSize(size.width,size.height);
         imageFormat = parameters.getPreviewFormat();
 
         mCamera.setParameters(parameters);

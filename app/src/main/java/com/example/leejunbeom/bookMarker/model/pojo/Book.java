@@ -22,6 +22,7 @@ public class Book {
     private String author;
     private String mark;
     private String bookShelf;
+    private String imageURL;
 
     public Book(){
 

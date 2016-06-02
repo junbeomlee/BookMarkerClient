@@ -1,5 +1,6 @@
 package com.example.leejunbeom.bookMarker.ui.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -20,6 +21,9 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.leejunbeom.bookMarker.dagger.application.AppApplication;
 import com.example.leejunbeom.bookMarker.ui.preview.CameraPreview;
 import com.example.leejunbeom.test.R;
@@ -44,8 +48,10 @@ public class SearchActivity extends AppCompatActivity {
     private Camera mCamera;
     private CameraPreview camPreview;
     private ImageView MyCameraPreview = null;
+    private final String BASE_URL = "http://52.79.133.224";
     private ImageView imageView;
     private FrameLayout mainLayout;
+    private Activity mActivity;
     private int PreviewSizeWidth = 640;
     private int PreviewSizeHeight= 480;
 
@@ -58,23 +64,38 @@ public class SearchActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_search);
         mContext = this;
+        mActivity = this;
+        Log.v("intent load", this.getIntent().getStringExtra("imageURL"));
 
         MyCameraPreview = new ImageView(this);
 
-        SurfaceView camView = new SurfaceView(this);
-        SurfaceHolder camHolder = camView.getHolder();
-        //imageView = (ImageView) findViewById(R.id.imageView2);
-
-        Bitmap bookBitMap = BitmapFactory.decodeResource(getResources(), R.drawable.book5);
-        camPreview = new CameraPreview(MyCameraPreview,bookBitMap,getApplicationContext(),this);
-
-        camHolder.addCallback(camPreview);
-        camHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
 
-        mainLayout = (FrameLayout) findViewById(R.id.camera_preview);
-        mainLayout.addView(camView);
-        mainLayout.addView(MyCameraPreview);
+
+        try {
+            Glide.with(this)
+                    .load(BASE_URL + this.getIntent().getStringExtra("imageURL"))
+                    //.load(R.drawable.book13)
+                    .asBitmap()
+                    .into(new SimpleTarget<Bitmap>(500, 500) {
+
+                        @Override
+                        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                            //MyCameraPreview.setImageBitmap(resource);
+                            //Bitmap bookBitMap = BitmapFactory.decodeResource(getResources(), R.drawable.book5);
+                            camPreview = new CameraPreview(MyCameraPreview,resource,getApplicationContext(),mActivity);
+                            SurfaceView camView = new SurfaceView(mActivity);
+                            SurfaceHolder camHolder = camView.getHolder();
+                            camHolder.addCallback(camPreview);
+                            camHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+                            mainLayout = (FrameLayout) findViewById(R.id.camera_preview);
+                            mainLayout.addView(camView);
+                            mainLayout.addView(MyCameraPreview);
+                        }
+                    });
+        }catch (Exception e){
+            Toast.makeText(this,"glide error",Toast.LENGTH_SHORT);
+        }
     }
 
 
