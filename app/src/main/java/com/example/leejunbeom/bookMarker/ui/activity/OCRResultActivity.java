@@ -18,6 +18,7 @@ public class OCRResultActivity extends AppCompatActivity {
 
     String imageUrl;
     String outputPath;
+    String resultText;
 
     TextView tv;
 
@@ -58,11 +59,13 @@ public class OCRResultActivity extends AppCompatActivity {
                 fis.close();
             }
 
-            //
-            String resultText = contents.toString();
+            //정규식 부분 처리
+            resultText = contents.toString();
             Log.i("result1", resultText);
             //resultText = resultText.replaceAll("[^a-zA-Z0-9\\.]+", "");
+            resultText = resultText.replaceAll("[\\t\\f[ ]]+","");
             resultText = resultText.replaceAll("[\n\r]+", " ");
+            //resultText = resultText.replaceAll("[\\s]", "");
             resultText = resultText.trim();
 
             //displayMessage(resultText);
@@ -73,25 +76,7 @@ public class OCRResultActivity extends AppCompatActivity {
             Log.e("Error: ", e.getMessage());
         }
     }
-    /*
-
-    public void displayMessage( String text )
-    {
-        tv.post( new MessagePoster( text ) );
+    public String getResultText(){
+        return this.resultText;
     }
-
-    class MessagePoster implements Runnable {
-        public MessagePoster( String message )
-        {
-            _message = message;
-        }
-
-        public void run() {
-            tv.append( _message + "\n" );
-            setContentView( tv );
-        }
-
-        private final String _message;
-    }
-    */
 }
