@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements Mainscreen{
 
     @Override
     public void launchBookAddOCRActivity() {
-        Intent intent = new Intent(this,TestActivity.class);
+        Intent intent = new Intent(this,BookAddOCRActivity.class);
         startActivity(intent);
     }
 

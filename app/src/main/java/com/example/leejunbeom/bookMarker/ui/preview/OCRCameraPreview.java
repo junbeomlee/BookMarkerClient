@@ -106,7 +106,7 @@ public class OCRCameraPreview extends SurfaceView implements SurfaceHolder.Callb
         Log.v("camera preview size",parameters.flatten());
         //parameters.setPreviewSize();
         Camera.Size size = getBestPreviewSize(w, h);
-        parameters.setPreviewSize(320,240);
+        //parameters.setPreviewSize(320,240);
         mCamera.setParameters(parameters);
         // 새로 변경된 설정으로 프리뷰를 재생성한다
         try {
