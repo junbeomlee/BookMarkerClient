@@ -131,18 +131,6 @@ public class BookAddOCRActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     // JPEG 콜백 메소드로 이미지를 가져옵니다
                     mCamera.takePicture(null, null, mPicture);
-                    // ocr processing////////////////
-                    //Remove output file
-                    deleteFile(outputPath);
-
-                    // activity 전환
-                    Intent results = new Intent(BookAddOCRActivity.this, OCRResultActivity.class);
-                    results.putExtra("IMAGE_PATH", _path);
-                    results.putExtra("RESULT_PATH", outputPath);
-                    Log.i("input path1", _path);
-                    Log.i("output path1", outputPath);
-                    startActivity(results);
-
                 }
             });
         }
